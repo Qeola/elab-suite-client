@@ -1,0 +1,55 @@
+name: Test
+on: workflow_call
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout #copy the repository to the runner
+        uses: actions/checkout@v3
+      - name: Setup Node.js environment #use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+      - name: Install dependencies #install the dependencies
+        run: npm ci
+      - name: Check formatting #check the formatting
+        run: npm run format
+      - name: Check for linting errors #check for linting errors
+        run: npm run lint
+      - name: Check for type errors #check for type errors
+        run: npm run typecheck
+      - name: Build #build the project
+        run: npm run build
+      - uses: actions/upload-artifact@v3 #upload the build artifact
+        with:
+          name: build
+          path: .next/
+      - name: Run unit tests #run the unit tests
+        run: npm run test
+      - uses: actions/upload-artifact@v3 #upload the test results
+        if: always()
+        with:
+          name: coverage
+          path: ./coverage/
+      - name: Upload coverage to Codecov #upload the coverage to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: OlaOkegbemi/gha-nextjs-cicd
+      - name: Cache playwright browsers #cache the browsers
+        uses: actions/cache@v3
+        id: cache-playwright
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/playwright.config.ts') }}
+      - name: Install playwright browsers #install the browsers
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+      - name: Run e2e tests #run the e2e tests
+        run: npm run test:e2e
+      - name: Upload e2e test results #upload the e2e test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: playwright-test-results
+          path: ./playwright-test-results/
