@@ -82,7 +82,7 @@ export default function Register() {
       >
         <Box p={4} width={'100%'} >
           <AuthRegister
-            title="Signup with ennovateLab"
+            title="Signup with eLab suite"
             subtext={
               <Typography variant="subtitle1" color="textSecondary" mb={1}>
                 Your Admin Dashboard
