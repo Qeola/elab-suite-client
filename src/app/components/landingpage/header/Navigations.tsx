@@ -12,6 +12,7 @@ import DemosDD from './DemosDD';
 
 const Navigations = () => {
 
+
     const StyledButton = styled(Button)(({ theme }) => ({
         fontSize: '16px',
         color: theme.palette.text.secondary
@@ -38,6 +39,15 @@ const Navigations = () => {
 
     const handleClose2 = () => {
         setOpen2(false);
+    };
+
+    // Password
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+  
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
     };
 
 
@@ -119,7 +129,7 @@ const Navigations = () => {
             <StyledButton color="inherit" variant="text" href="https://adminmart.com/support">
                 Support
             </StyledButton>
-            <Button color="primary" variant="contained" href="/auth/signup">
+            <Button color="primary" variant="contained" href="/auth1/register">
                 Sign up
             </Button>
         </>

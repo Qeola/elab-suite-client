@@ -11,6 +11,8 @@ import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import AuthSocialButtons from "./AuthSocialButtons";
+import { InputAdornment, OutlinedInput } from '@mui/material';
+import { LockOutlined, MailLockOutlined } from '@mui/icons-material';
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
   <>
@@ -20,10 +22,8 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
       </Typography>
     ) : null}
 
-    {subtext}
-
-    <AuthSocialButtons title="Sign in with" />
-    <Box mt={3}>
+    {/* <AuthSocialButtons title="Sign in with" /> */}
+    {/* <Box mt={3}>
       <Divider>
         <Typography
           component="span"
@@ -36,21 +36,33 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
           or sign in with
         </Typography>
       </Divider>
-    </Box>
+    </Box> */}
 
     <Stack>
       <Box>
-        <CustomFormLabel htmlFor="username">Username</CustomFormLabel>
-        <CustomTextField id="username" variant="outlined" fullWidth />
+      <CustomFormLabel htmlFor="email">Email Address</CustomFormLabel>
+        <OutlinedInput
+            startAdornment={
+              <InputAdornment position="start">
+                <MailLockOutlined fontSize='small' />
+              </InputAdornment>
+            }
+            id="mail"
+            fullWidth
+          />
       </Box>
       <Box>
-        <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-        <CustomTextField
-          id="password"
-          type="password"
-          variant="outlined"
-          fullWidth
-        />
+      <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
+        <OutlinedInput
+        //  type={showPassword ? 'text' : 'password'}
+            startAdornment={
+              <InputAdornment position="start">
+                <LockOutlined fontSize='small' />
+              </InputAdornment>
+            }
+            id="password"
+            fullWidth
+          />
       </Box>
       <Stack
         justifyContent="space-between"
@@ -61,12 +73,12 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
         <FormGroup>
           <FormControlLabel
             control={<CustomCheckbox defaultChecked />}
-            label="Remeber this Device"
+            label="Remember this Device"
           />
         </FormGroup>
         <Typography
           component={Link}
-          href="/auth/auth1/forgot-password"
+          href="/auth/forgot-password"
           fontWeight="500"
           sx={{
             textDecoration: "none",
@@ -78,14 +90,23 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
       </Stack>
     </Stack>
     <Box>
-      <Button
-        color="primary"
+    <Button
         variant="contained"
         size="large"
+        sx={{
+          color:'black',
+          backgroundColor:"#FFCC03",
+          fontWeight:700,
+          '&:hover':{
+            opacity:0.8,
+            transition: 'opacity 200ms ease-in',
+            backgroundColor:"#FFCC03",
+            boxShadow:'none'
+          }
+        }}
         fullWidth
         component={Link}
-        href="/"
-        type="submit"
+        href="/dashboard"
       >
         Sign In
       </Button>

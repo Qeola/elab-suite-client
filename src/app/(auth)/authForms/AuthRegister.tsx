@@ -11,6 +11,7 @@ import AuthSocialButtons from "./AuthSocialButtons";
 import { InputAdornment, OutlinedInput } from '@mui/material';
 import { Business, BusinessOutlined, Lock, LockOutlined, Mail, MailLockOutlined, MailOutline, PasswordOutlined } from '@mui/icons-material';
 
+
 const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
   <>
     {title ? (
@@ -59,6 +60,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
           />
         <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
         <OutlinedInput
+        //  type={showPassword ? 'text' : 'password'}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlined fontSize='small' />
@@ -84,7 +86,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
         }}
         fullWidth
         component={Link}
-        href="/auth/auth1/login"
+        href="/auth1/login"
       >
         Sign Up
       </Button>
