@@ -25,7 +25,7 @@ export default function ForgotPassword() {
         sm={6}
         lg={4}
         xl={4}
-        sx={{ borderRight:'1px solid #060016',alignSelf:'stretch'}}
+        sx={{ borderRight:'0.5px solid #060016',alignSelf:'stretch'}}
         // sx={{
         //   position: "relative",
         //   "&:before": {

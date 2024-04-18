@@ -12,7 +12,7 @@ export default function AuthForgotPassword(){
   <>
     <Box>
       <h1>Forgot your Password ?</h1>
-      <p>No worries.Please enter the email address associated with your account and We will email you a link to reset your password.</p>
+      <p>No worries.Please enter the email address associated with your account and we will email you a link to reset your password.</p>
     </Box>
     <Stack mt={4} spacing={2}>
       <CustomFormLabel htmlFor="reset-email">Email Address</CustomFormLabel>

@@ -3,7 +3,7 @@ import { Providers } from "@/store/providers";
 import MyApp from "./app";
 
 export const metadata = {
-  title: "Modernize Main Demo",
+  title: "eLab suite ",
   description: "Modernize Main kit",
 };
 
