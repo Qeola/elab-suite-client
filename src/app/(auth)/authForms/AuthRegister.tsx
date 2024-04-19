@@ -1,4 +1,5 @@
-
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -25,6 +26,27 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
     event.preventDefault();
   };
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Organisation name is required'),
+    email: Yup.string().email('Invalid email format').required('Email is required'),
+    password: Yup.string()
+      .required('Password is required')
+      .matches(
+        RegExp("(.*[a-z].*)"),
+        "Password must contain at least one lowercase letter",
+      )
+      .matches(
+        RegExp("(.*[A-Z].*)"),
+        "Password must contain at least one uppercase letter",
+      )
+      .matches(RegExp("(.*\\d.*)"), "Password must contain a number")
+      .matches(
+        RegExp('[!@#$%^&*(),.?":{}|<>]'),
+        "Password must contain a special character",
+      )
+      .min(8, "Password must be at least 8 characters"),
+  });
+
   return (
   <>
     {title ? (
@@ -32,47 +54,61 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         {title}
       </Typography>
     ) : null}
-    {/* <AuthSocialButtons title="Sign up with" /> */}
-
-    {/* <Box mt={3}>
-      <Divider>
-        <Typography
-          component="span"
-          color="textSecondary"
-          variant="h6"
-          fontWeight="400"
-          position="relative"
-          px={2}
-        >
-          or sign up with
-        </Typography>
-      </Divider>
-    </Box> */}
 
     <Box>
+    <Formik
+          initialValues={{ name: '', email: '', password: '' }}
+          validationSchema={validationSchema}
+          onSubmit={(values) => {
+            // Handle form submission logic here
+            console.log({values});
+          }}
+        >
+           {({ values, handleChange, errors, touched, setFieldTouched }) => (
+        <Form>
       <Stack mb={3}>
         <CustomFormLabel htmlFor="name">Name of Organisation</CustomFormLabel>
         <OutlinedInput
+         id="name"
+         name="name"
+         value={values.name}
+         onChange={handleChange}
+         onBlur={() => setFieldTouched('name')}
+         error={!!errors.name && touched.name}
+         fullWidth
             startAdornment={
               <InputAdornment position="start">
                 <BusinessOutlined fontSize='small' />
               </InputAdornment>
             }
-            id="name"
-            fullWidth
           />
+          <ErrorMessage name="name" component="span" className="error" />
         <CustomFormLabel htmlFor="email">Email Address</CustomFormLabel>
         <OutlinedInput
+         id="email"
+         name="email"
+         value={values.email}
+         onChange={handleChange}
+         onBlur={() => setFieldTouched('email')}
+         error={!!errors.email && touched.email}
+         fullWidth
             startAdornment={
               <InputAdornment position="start">
                 <MailLockOutlined fontSize='small' />
               </InputAdornment>
             }
-            id="mail"
-            fullWidth
+           
           />
+           <ErrorMessage name="email" component="span" className="error" />
         <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
         <OutlinedInput
+         id="password"
+         name="password"
+         value={values.password}
+         onChange={handleChange}
+         onBlur={() => setFieldTouched('password')}
+         error={!!errors.password && touched.password}
+         fullWidth
          type={showPassword ? 'text' : 'password'}
             startAdornment={
               <InputAdornment position="start">
@@ -91,9 +127,8 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
                 </IconButton>
               </InputAdornment>
             }
-            id="password"
-            fullWidth
           />
+           <ErrorMessage name="password" component="span" className="error" />
       </Stack>
       <Button
         variant="contained"
@@ -110,11 +145,16 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
           }
         }}
         fullWidth
-        component={Link}
-        href="/auth1/login"
+        // component={Link}
+        // href="/auth1/login"
+        type='submit'
       >
         Sign Up
       </Button>
+            </Form>
+           )}
+     </Formik>
+    
     </Box>
     {subtitle}
   </>

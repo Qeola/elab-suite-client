@@ -1,6 +1,7 @@
 import React from "react";
 import { Providers } from "@/store/providers";
 import MyApp from "./app";
+import '../app/global.css';
 
 export const metadata = {
   title: "eLab suite ",

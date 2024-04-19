@@ -28,44 +28,14 @@ export default function Register() {
         lg={4}
         xl={4}
         sx={{ borderRight:'1px solid #060016',alignSelf:'stretch'}}
-        // sx={{
-        //   position: "relative",
-        //   "&:before": {
-        //     content: '""',
-        //     // background: "radial-gradient(#d2f1df, #d3d7fa, #bad8f4)",
-        //     // backgroundSize: "400% 400%",
-        //     borderRight:'2px solid #060016',
-        //     animation: "gradient 15s ease infinite",
-        //     position: "absolute",
-        //     height: "100%",
-        //     width: "100%",
-        //     opacity: "0.3",
-        //   },
-        // }}
       >
         <Box style={{ height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} >
           <Box px={3}>
             <Image src='/images/logos/eLab-black.png' width={200} height={200} alt='ennovatelab-logo' priority />
           </Box>
           <Box
-            // alignItems="center"
-            // justifyContent="center"
-            // height={"calc(100vh - 75px)"}
-            // sx={{
-            //   display: {
-            //     xs: "none",
-            //     lg: "flex",
-            //   },
-            // }}
           >
-            {/* <Image
-              src={"/images/backgrounds/login-bg.svg"}
-              alt="bg" width={500} height={500}
-              style={{
-                width: "100%",
-                maxWidth: "500px",  maxHeight: '500px',
-              }}
-            /> */}
+            
             <h2 style={{textAlign:'center',lineHeight:'38px',maxWidth:'25ch'}} >Streamline your workflows,boost your efficiency!</h2>
             <h4 style={{textAlign:'center',maxWidth:'40ch'}} >Run your business smarter, not harder.One platform,complete control!</h4>
           </Box>
