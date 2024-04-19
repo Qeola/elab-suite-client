@@ -1,3 +1,4 @@
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -8,11 +9,23 @@ import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLab
 import { Stack } from "@mui/system";
 import { registerType } from "@/app/(DashboardLayout)/types/auth/auth";
 import AuthSocialButtons from "./AuthSocialButtons";
-import { InputAdornment, OutlinedInput } from '@mui/material';
+import { IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { Business, BusinessOutlined, Lock, LockOutlined, Mail, MailLockOutlined, MailOutline, PasswordOutlined } from '@mui/icons-material';
+import { IconEye, IconEyeOff } from '@tabler/icons-react';
+import { useState } from 'react';
 
 
-const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
+const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  return (
   <>
     {title ? (
       <Typography fontWeight="700" variant="h4" mb={1}>
@@ -60,10 +73,22 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
           />
         <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
         <OutlinedInput
-        //  type={showPassword ? 'text' : 'password'}
+         type={showPassword ? 'text' : 'password'}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlined fontSize='small' />
+              </InputAdornment>
+            }
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <IconEyeOff size="20" /> : <IconEye size="20" />}
+                </IconButton>
               </InputAdornment>
             }
             id="password"
@@ -93,6 +118,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
     </Box>
     {subtitle}
   </>
-);
+  )
+  };
 
 export default AuthRegister;

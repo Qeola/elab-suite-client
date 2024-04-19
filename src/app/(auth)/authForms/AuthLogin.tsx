@@ -11,10 +11,24 @@ import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import AuthSocialButtons from "./AuthSocialButtons";
-import { InputAdornment, OutlinedInput } from '@mui/material';
+import { IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { LockOutlined, MailLockOutlined } from '@mui/icons-material';
+import { useState } from 'react';
+import { IconEyeOff } from '@tabler/icons-react';
+import { IconEye } from '@tabler/icons-react';
 
-const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
+const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  return (
+
   <>
     {title ? (
       <Typography fontWeight="700" variant="h3" mb={1}>
@@ -38,10 +52,22 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
       <Box>
       <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
         <OutlinedInput
-        //  type={showPassword ? 'text' : 'password'}
+         type={showPassword ? 'text' : 'password'}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlined fontSize='small' />
+              </InputAdornment>
+            }
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <IconEyeOff size="20" /> : <IconEye size="20" />}
+                </IconButton>
               </InputAdornment>
             }
             id="password"
@@ -97,6 +123,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
     </Box>
     {subtitle}
   </>
-);
+  )
+};
 
 export default AuthLogin;

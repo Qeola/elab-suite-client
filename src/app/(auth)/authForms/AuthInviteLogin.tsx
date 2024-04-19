@@ -11,10 +11,33 @@ import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import AuthSocialButtons from "./AuthSocialButtons";
-import { InputAdornment, OutlinedInput } from '@mui/material';
+import { IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
+import { useState } from 'react';
+import { IconEye, IconEyeOff } from '@tabler/icons-react';
 
-const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => (
+const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
+ //   password
+  //
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  //   confirm password
+  //
+  const [showPassword2, setShowPassword2] = useState(false);
+
+  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
+
+  const handleMouseDownPassword2 = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  return (
+
   <>
     {title ? (
       <Typography fontWeight="700" variant="h3" mb={1}>
@@ -42,9 +65,22 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => (
       <Box>
       <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
         <OutlinedInput
+      type={showPassword ? 'text' : 'password'}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlined fontSize='small' />
+              </InputAdornment>
+            }
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <IconEyeOff size="20" /> : <IconEye size="20" />}
+                </IconButton>
               </InputAdornment>
             }
             id="password"
@@ -54,10 +90,22 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => (
       <Box>
       <CustomFormLabel htmlFor="confirmPassword">Confirm Password</CustomFormLabel>
         <OutlinedInput
-        //  type={showPassword ? 'text' : 'password'}
+         type={showPassword2 ? 'text' : 'password'}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlined fontSize='small' />
+              </InputAdornment>
+            }
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword2}
+                  onMouseDown={handleMouseDownPassword2}
+                  edge="end"
+                >
+                  {showPassword2 ? <IconEyeOff size="20" /> : <IconEye size="20" />}
+                </IconButton>
               </InputAdornment>
             }
             id="confirmPassword"
@@ -96,6 +144,7 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => (
     </Box>
     {subtitle}
   </>
-);
+  )
+};
 
 export default AuthInviteLogin;
