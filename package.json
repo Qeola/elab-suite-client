@@ -1,12 +1,17 @@
 {
-  "name": "modernize-next-starterkit",
+  "name": "elab-suite-client",
   "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typecheck": "tsc",
+    "format": "prettier . --check",
+    "format:fix": "prettier . --write",
+    "test": "jest --coverage",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",

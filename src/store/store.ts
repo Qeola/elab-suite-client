@@ -4,12 +4,10 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import CustomizerReducer from "./customizer/CustomizerSlice";
 
-
 const persistConfig = {
   key: "root",
   storage,
 };
-
 
 export const store = configureStore({
   reducer: {
@@ -21,7 +19,7 @@ export const store = configureStore({
 });
 
 const rootReducer = combineReducers({
- customizer: CustomizerReducer,
+  customizer: CustomizerReducer,
 });
 
 export const persistor = persistStore(store);

@@ -1,9 +1,9 @@
 import React from "react";
-import Box from '@mui/material/Box';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Grid from '@mui/material/Grid';
-import { Theme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import Box from "@mui/material/Box";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Grid from "@mui/material/Grid";
+import { Theme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 import NextLink from "next/link";
 
 import breadcrumbImg from "public/images/breadcrumb/ChatBc.png";

@@ -13,7 +13,7 @@ import flagsmith from "@/utils/flagsmith";
 
 export default function Dashboard() {
   // const flags = await flagsmith.getEnvironmentFlags();
-  
+
   return (
     <PageContainer title="Dashboard" description="this is Dashboard">
       <Box mt={3}>

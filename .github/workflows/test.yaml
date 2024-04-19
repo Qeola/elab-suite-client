@@ -34,11 +34,6 @@ jobs:
           name: coverage
           path: coverage/
           if-no-files-found: error
-      - name: Upload coverage to Codecov #upload the coverage to Codecov
-        uses: codecov/codecov-action@v4.0.1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          slug: OlaOkegbemi/gha-nextjs-cicd
       - name: Cache playwright browsers #cache the browsers
         uses: actions/cache@v3
         id: cache-playwright
