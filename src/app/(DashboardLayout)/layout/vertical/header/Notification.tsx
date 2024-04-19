@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Badge from '@mui/material/Badge';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import * as dropdownData from './data';
-import Scrollbar from '@/app/components/custom-scroll/Scrollbar';
+import React, { useState } from "react";
+import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
+import * as dropdownData from "./data";
+import Scrollbar from "@/app/components/custom-scroll/Scrollbar";
 
-import { IconBellRinging } from '@tabler/icons-react';
-import { Stack } from '@mui/system';
-import Link from 'next/link';
+import { IconBellRinging } from "@tabler/icons-react";
+import { Stack } from "@mui/system";
+import Link from "next/link";
 
 const Notifications = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -35,7 +35,7 @@ const Notifications = () => {
         aria-controls="msgs-menu"
         aria-haspopup="true"
         sx={{
-          color: anchorEl2 ? 'primary.main' : 'text.secondary',
+          color: anchorEl2 ? "primary.main" : "text.secondary",
         }}
         onClick={handleClick2}
       >
@@ -52,19 +52,25 @@ const Notifications = () => {
         keepMounted
         open={Boolean(anchorEl2)}
         onClose={handleClose2}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
         sx={{
-          '& .MuiMenu-paper': {
-            width: '360px',
+          "& .MuiMenu-paper": {
+            width: "360px",
           },
         }}
       >
-        <Stack direction="row" py={2} px={4} justifyContent="space-between" alignItems="center">
+        <Stack
+          direction="row"
+          py={2}
+          px={4}
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Typography variant="h6">Notifications</Typography>
           <Chip label="5 new" color="primary" size="small" />
         </Stack>
-        <Scrollbar sx={{ height: '385px' }}>
+        <Scrollbar sx={{ height: "385px" }}>
           {dropdownData.notifications.map((notification, index) => (
             <Box key={index}>
               <MenuItem sx={{ py: 2, px: 4 }}>
@@ -84,7 +90,7 @@ const Notifications = () => {
                       fontWeight={600}
                       noWrap
                       sx={{
-                        width: '240px',
+                        width: "240px",
                       }}
                     >
                       {notification.title}
@@ -93,7 +99,7 @@ const Notifications = () => {
                       color="textSecondary"
                       variant="subtitle2"
                       sx={{
-                        width: '240px',
+                        width: "240px",
                       }}
                       noWrap
                     >
@@ -106,7 +112,13 @@ const Notifications = () => {
           ))}
         </Scrollbar>
         <Box p={3} pb={1}>
-          <Button href="/apps/email" variant="outlined" component={Link} color="primary" fullWidth>
+          <Button
+            href="/apps/email"
+            variant="outlined"
+            component={Link}
+            color="primary"
+            fullWidth
+          >
             See all Notifications
           </Button>
         </Box>

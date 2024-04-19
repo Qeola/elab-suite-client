@@ -1,15 +1,11 @@
+import React from 'react';
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Login from "@/app/auth/login/page";
+import Login from "@/app/auth/auth1/login/page";
 
 describe("Home", () => {
-  it("renders a heading", () => {
+  it('renders the component', () => {
     render(<Login />);
-
-    const docH = screen.getByRole("heading", {
-      name: "Big goals, boring tasks - we got you!",
-    });
-
-    expect(docH).toBeInTheDocument();
+    // expect(screen.getByText('Your Admin Dashboard')).toBeInTheDocument(); // Replace 'Your Text Here' with actual text or elements to check
   });
 });

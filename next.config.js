@@ -10,8 +10,8 @@ const nextConfig = {
     // },
   },
   env: {
-    FLAGSMITH_KEY: 'ser.LYjfiGuo9tUXofHqqmGXWo'
-  }
+    FLAGSMITH_KEY: "ser.LYjfiGuo9tUXofHqqmGXWo",
+  },
 };
 
 module.exports = nextConfig;

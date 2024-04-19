@@ -1,14 +1,18 @@
-import { useEffect, ReactElement } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, ReactElement } from "react";
+import { useRouter } from "next/router";
 
-export default function ScrollToTop({ children }: { children: ReactElement | null }) {
+export default function ScrollToTop({
+  children,
+}: {
+  children: ReactElement | null;
+}) {
   const { pathname } = useRouter();
 
   useEffect(() => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
   }, [pathname]);
 

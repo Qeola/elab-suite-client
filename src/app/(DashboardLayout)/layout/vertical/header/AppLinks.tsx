@@ -1,11 +1,11 @@
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import * as dropdownData from './data';
-import Link from 'next/link';
-import React from 'react';
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import * as dropdownData from "./data";
+import Link from "next/link";
+import React from "react";
 
 const AppLinks = () => {
   return (
@@ -40,7 +40,7 @@ const AppLinks = () => {
                   noWrap
                   className="text-hover"
                   sx={{
-                    width: '240px',
+                    width: "240px",
                   }}
                 >
                   {links.title}
@@ -50,7 +50,7 @@ const AppLinks = () => {
                   variant="subtitle2"
                   fontSize="12px"
                   sx={{
-                    width: '240px',
+                    width: "240px",
                   }}
                   noWrap
                 >
