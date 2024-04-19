@@ -22,22 +22,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
       </Typography>
     ) : null}
 
-    {/* <AuthSocialButtons title="Sign in with" /> */}
-    {/* <Box mt={3}>
-      <Divider>
-        <Typography
-          component="span"
-          color="textSecondary"
-          variant="h6"
-          fontWeight="400"
-          position="relative"
-          px={2}
-        >
-          or sign in with
-        </Typography>
-      </Divider>
-    </Box> */}
-
     <Stack>
       <Box>
       <CustomFormLabel htmlFor="email">Email Address</CustomFormLabel>
