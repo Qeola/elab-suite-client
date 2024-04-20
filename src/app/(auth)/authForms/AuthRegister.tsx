@@ -15,13 +15,15 @@ import { Business, BusinessOutlined, Lock, LockOutlined, Mail, MailLockOutlined,
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import { useState } from 'react';
 import { redirect, useRouter } from 'next/navigation';
+import PasswordStrengthBar from './PasswordStrengthBar';
 
 
 
 const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
+  const [isPasswordFocus, setIsPasswordFocus] = useState(false);
+  const [password,setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -71,7 +73,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         >
            {({ values, handleChange, errors, touched, setFieldTouched }) => (
         <Form>
-      <Stack mb={3}>
+      <Stack mb={1}>
         <CustomFormLabel htmlFor="name">Name of Organisation</CustomFormLabel>
         <OutlinedInput
          id="name"
@@ -110,8 +112,12 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
          id="password"
          name="password"
          value={values.password}
-         onChange={handleChange}
+         onChange={(event) => {
+          handleChange(event);
+          setPassword(event.target.value);
+        }}
          onBlur={() => setFieldTouched('password')}
+         onFocus={()=> setIsPasswordFocus(true)}
          error={!!errors.password && touched.password}
          fullWidth
          type={showPassword ? 'text' : 'password'}
@@ -135,6 +141,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
           />
            <ErrorMessage name="password" component="span" className="error" />
       </Stack>
+      {isPasswordFocus && <PasswordStrengthBar password={password} />}
       <Button
         variant="contained"
         size="large"
@@ -142,6 +149,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
           color:'black',
           backgroundColor:"#FFCC03",
           fontWeight:700,
+          marginTop:'1rem',
           '&:hover':{
             opacity:0.8,
             transition: 'opacity 200ms ease-in',
