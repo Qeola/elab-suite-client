@@ -32,8 +32,7 @@ jobs:
         if: always()
         with:
           name: coverage
-          path: /coverage
-          if-no-files-found: error
+          path: ./coverage/
       - name: Cache playwright browsers #cache the browsers
         uses: actions/cache@v3
         id: cache-playwright
