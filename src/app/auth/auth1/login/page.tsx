@@ -8,7 +8,6 @@ import PageContainer from "@/app/components/container/PageContainer";
 import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
 import AuthLogin from "../../authForms/AuthLogin";
 import Image from "next/image";
-import { Provider } from "react-redux";
 
 export default function Login() {
   return (
@@ -80,7 +79,7 @@ export default function Login() {
         >
           <Box p={4}>
             <AuthLogin
-              title="Welcome to Modernize"
+              title="Welcome to eLab Suite"
               subtext={
                 <Typography variant="subtitle1" color="textSecondary" mb={1}>
                   Your Admin Dashboard

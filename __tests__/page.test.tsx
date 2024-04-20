@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Login from "@/app/auth/auth1/login/page";
 
 describe("Home", () => {
-  it('renders the component', () => {
+  it("renders the component", () => {
     render(<Login />);
-    // expect(screen.getByText('Your Admin Dashboard')).toBeInTheDocument(); // Replace 'Your Text Here' with actual text or elements to check
+
+    expect(screen.getByText("Welcome to eLab Suite")).toBeInTheDocument(); // Replace 'Your Text Here' with actual text or elements to check
   });
 });
