@@ -4,19 +4,20 @@ import Link from "next/link";
 
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
-import { Box, InputAdornment, OutlinedInput } from '@mui/material';
+import { Box, InputAdornment, OutlinedInput, Typography } from '@mui/material';
 import { MailLockOutlined } from '@mui/icons-material';
 
 export default function AuthForgotPassword(){
  return (
   <>
     <Box>
-      <h1>Forgot your Password ?</h1>
+      <Typography variant='h2' >Forgot your Password ?</Typography>
       <p>No worries.Please enter the email address associated with your account and we will email you a link to reset your password.</p>
     </Box>
     <Stack mt={4} spacing={2}>
       <CustomFormLabel htmlFor="reset-email">Email Address</CustomFormLabel>
       <OutlinedInput
+            type='email'
             startAdornment={
               <InputAdornment position="start">
                 <MailLockOutlined fontSize='small' />

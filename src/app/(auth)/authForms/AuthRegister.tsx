@@ -14,6 +14,8 @@ import { IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { Business, BusinessOutlined, Lock, LockOutlined, Mail, MailLockOutlined, MailOutline, PasswordOutlined } from '@mui/icons-material';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import { useState } from 'react';
+import { redirect, useRouter } from 'next/navigation';
+
 
 
 const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
@@ -47,6 +49,8 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
       .min(8, "Password must be at least 8 characters"),
   });
 
+  const router = useRouter()
+
   return (
   <>
     {title ? (
@@ -60,8 +64,9 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
           initialValues={{ name: '', email: '', password: '' }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
-            // Handle form submission logic here
             console.log({values});
+            router.push('/auth1/login')
+          
           }}
         >
            {({ values, handleChange, errors, touched, setFieldTouched }) => (
@@ -145,8 +150,6 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
           }
         }}
         fullWidth
-        // component={Link}
-        // href="/auth1/login"
         type='submit'
       >
         Sign Up

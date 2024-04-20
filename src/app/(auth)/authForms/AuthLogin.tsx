@@ -1,3 +1,5 @@
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -16,6 +18,7 @@ import { LockOutlined, MailLockOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { IconEyeOff } from '@tabler/icons-react';
 import { IconEye } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
 
@@ -27,6 +30,13 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
     event.preventDefault();
   };
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email format').required('Email is required'),
+    password: Yup.string().required('Password is required')
+  });
+
+  const router = useRouter();
+
   return (
 
   <>
@@ -36,23 +46,46 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
       </Typography>
     ) : null}
 
-    <Stack>
+    <Formik 
+     initialValues={{ email: '', password: '' }}
+     validationSchema={validationSchema}
+     onSubmit={(values) => {
+       console.log({values});
+       router.push('/dashboard')
+     }}
+    >
+      {({ values, handleChange, errors, touched, setFieldTouched }) => (
+        <Form>
+        <Stack>
       <Box>
       <CustomFormLabel htmlFor="email">Email Address</CustomFormLabel>
         <OutlinedInput
+            type='email'
+            id="email"
+            name="email"
+            value={values.email}
+            onChange={handleChange}
+            onBlur={() => setFieldTouched('email')}
+            error={!!errors.email && touched.email}
             startAdornment={
               <InputAdornment position="start">
                 <MailLockOutlined fontSize='small' />
               </InputAdornment>
             }
-            id="mail"
             fullWidth
           />
+           <ErrorMessage name="email" component="span" className="error" />
       </Box>
       <Box>
       <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
         <OutlinedInput
          type={showPassword ? 'text' : 'password'}
+         id="password"
+         name="password"
+         value={values.password}
+         onChange={handleChange}
+         onBlur={() => setFieldTouched('password')}
+         error={!!errors.password && touched.password}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlined fontSize='small' />
@@ -70,9 +103,9 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                 </IconButton>
               </InputAdornment>
             }
-            id="password"
             fullWidth
           />
+           <ErrorMessage name="password" component="span" className="error" />
       </Box>
       <Stack
         justifyContent="space-between"
@@ -101,6 +134,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
     </Stack>
     <Box>
     <Button
+        type='submit'
         variant="contained"
         size="large"
         sx={{
@@ -115,12 +149,14 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           }
         }}
         fullWidth
-        component={Link}
-        href="/dashboard"
       >
         Sign In
       </Button>
-    </Box>
+    </Box> 
+        </Form>
+      )}
+   
+    </Formik>
     {subtitle}
   </>
   )

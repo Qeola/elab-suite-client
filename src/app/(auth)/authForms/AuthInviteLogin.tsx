@@ -1,3 +1,5 @@
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -15,6 +17,7 @@ import { IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
+import { useRouter } from 'next/navigation';
 
 const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
  //   password
@@ -36,8 +39,31 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
   const handleMouseDownPassword2 = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
-  return (
 
+  const router = useRouter();
+
+  const validationSchema = Yup.object().shape({
+    password: Yup.string()
+      .required('Password is required')
+      .matches(
+        RegExp("(.*[a-z].*)"),
+        "Password must contain at least one lowercase letter",
+      )
+      .matches(
+        RegExp("(.*[A-Z].*)"),
+        "Password must contain at least one uppercase letter",
+      )
+      .matches(RegExp("(.*\\d.*)"), "Password must contain a number")
+      .matches(
+        RegExp('[!@#$%^&*(),.?":{}|<>]'),
+        "Password must contain a special character",
+      )
+      .min(8, "Password must be at least 8 characters"),
+      confirmPassword: Yup.string()
+      .required('Confirm your password')
+  });
+
+  return (
   <>
     {title ? (
       <Typography fontWeight="700" variant="h3" mb={1}>
@@ -45,27 +71,27 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
       </Typography>
     ) : null}
 
-    {/* <AuthSocialButtons title="Sign in with" /> */}
-    {/* <Box mt={3}>
-      <Divider>
-        <Typography
-          component="span"
-          color="textSecondary"
-          variant="h6"
-          fontWeight="400"
-          position="relative"
-          px={2}
-        >
-          or sign in with
-        </Typography>
-      </Divider>
-    </Box> */}
-
+     <Formik
+     initialValues={{ password: '', confirmPassword: '' }}
+     validationSchema={validationSchema}
+     onSubmit={(values) => {
+       console.log({values});
+       router.push('/dashboard')
+     }}
+     >
+      {({ values, handleChange, errors, touched, setFieldTouched }) => (
+        <Form>
     <Stack>
       <Box>
       <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
         <OutlinedInput
-      type={showPassword ? 'text' : 'password'}
+          type={showPassword ? 'text' : 'password'}
+          id="password"
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+          onBlur={() => setFieldTouched('password')}
+          error={!!errors.password && touched.password}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlined fontSize='small' />
@@ -83,14 +109,21 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
                 </IconButton>
               </InputAdornment>
             }
-            id="password"
             fullWidth
           />
+          <ErrorMessage name="password" component="span" className="error" /> 
       </Box>
+
       <Box>
       <CustomFormLabel htmlFor="confirmPassword">Confirm Password</CustomFormLabel>
         <OutlinedInput
          type={showPassword2 ? 'text' : 'password'}
+         id="confirmPassword"
+         name="confirmPassword"
+         value={values.confirmPassword}
+         onChange={handleChange}
+         onBlur={() => setFieldTouched('confirmPassword')}
+         error={!!errors.confirmPassword && touched.confirmPassword}
             startAdornment={
               <InputAdornment position="start">
                 <LockOutlined fontSize='small' />
@@ -108,26 +141,21 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
                 </IconButton>
               </InputAdornment>
             }
-            id="confirmPassword"
             fullWidth
           />
+           <ErrorMessage name="confirmPassword" component="span" className="error" /> 
       </Box>
-      <Stack
-        justifyContent="space-between"
-        direction="row"
-        alignItems="center"
-        my={2}
-      >
-      </Stack>
     </Stack>
     <Box>
     <Button
+        type='submit'
         variant="contained"
         size="large"
         sx={{
           color:'black',
           backgroundColor:"#FFCC03",
           fontWeight:700,
+          marginTop:'1.5rem',
           '&:hover':{
             opacity:0.8,
             transition: 'opacity 200ms ease-in',
@@ -136,12 +164,13 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
           }
         }}
         fullWidth
-        component={Link}
-        href="/dashboard"
       >
         Complete registration
       </Button>
-    </Box>
+      </Box>
+        </Form>
+      )}
+     </Formik>
     {subtitle}
   </>
   )
