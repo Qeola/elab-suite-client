@@ -7,6 +7,6 @@ describe("Home", () => {
   it("renders the component", () => {
     render(<Login />);
 
-    expect(screen.getByText("Your Admin Dashboard")).toBeInTheDocument(); // Replace 'Your Text Here' with actual text or elements to check
+    expect(screen.getByText("Welcome to eLab Suite")).toBeInTheDocument(); // Replace 'Your Text Here' with actual text or elements to check
   });
 });

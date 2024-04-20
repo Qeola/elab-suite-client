@@ -8,7 +8,6 @@ import PageContainer from "@/app/components/container/PageContainer";
 import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
 import AuthLogin from "../../authForms/AuthLogin";
 import Image from "next/image";
-import { Provider } from "react-redux";
 
 export default function Login() {
   return (
