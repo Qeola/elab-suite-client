@@ -11,7 +11,7 @@ export default function AuthForgotPassword(){
  return (
   <>
     <Box>
-      <Typography variant='h2' >Forgot your Password ?</Typography>
+      <Typography variant='h3' >Forgot your Password ?</Typography>
       <p>No worries.Please enter the email address associated with your account and we will email you a link to reset your password.</p>
     </Box>
     <Stack mt={4} spacing={2}>
@@ -33,7 +33,7 @@ export default function AuthForgotPassword(){
         sx={{
           color:'black',
           backgroundColor:"#FFCC03",
-          fontWeight:700,
+          fontWeight:600,
           '&:hover':{
             opacity:0.8,
             transition: 'opacity 200ms ease-in',
@@ -53,7 +53,7 @@ export default function AuthForgotPassword(){
         sx={{
           color:'black',
           backgroundColor:"#fff",
-          fontWeight:700,
+          fontWeight:600,
           '&:hover':{
             opacity:0.8,
             transition: 'opacity 200ms ease-in',

@@ -29,7 +29,7 @@ const Logo = () => {
           <Image
             src={"/images/logos/eLab-light.png"}
             alt="logo"
-            height={45}
+            height={43}
             // height={customizer.TopbarHeight}
             width={180}
             priority

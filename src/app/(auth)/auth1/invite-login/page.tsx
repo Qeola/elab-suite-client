@@ -14,7 +14,10 @@ export default function inviteLogin () {
   const name = 'Felix';
   return(
 <PageContainer title="Login Page" description="this is Sample page">
-    <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'100vh'}} >
+  <Box height={'100px'} alignItems={'center'} padding={'1rem'}>
+      <Logo/>
+    </Box>
+    <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px)'}} >
     <Grid
       container
       spacing={0}

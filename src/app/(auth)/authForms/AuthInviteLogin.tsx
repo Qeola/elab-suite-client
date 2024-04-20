@@ -66,7 +66,7 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
   return (
   <>
     {title ? (
-      <Typography fontWeight="700" variant="h3" mb={1}>
+      <Typography fontWeight="600" variant="h3" mb={1}>
         {title}
       </Typography>
     ) : null}
@@ -83,7 +83,7 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
         <Form>
     <Stack>
       <Box>
-      <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
+      <CustomFormLabel htmlFor="password">Create Password</CustomFormLabel>
         <OutlinedInput
           type={showPassword ? 'text' : 'password'}
           id="password"
@@ -154,7 +154,7 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
         sx={{
           color:'black',
           backgroundColor:"#FFCC03",
-          fontWeight:700,
+          fontWeight:600,
           marginTop:'1.5rem',
           '&:hover':{
             opacity:0.8,

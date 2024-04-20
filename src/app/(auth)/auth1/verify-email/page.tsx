@@ -8,8 +8,8 @@ import PageContainer from '@/app/components/container/PageContainer';
 import AuthLogin from '../../authForms/AuthLogin';
 import Image from 'next/image';
 import { Button, CircularProgress } from '@mui/material';
-import EmailTimer from '@/app/components/EmailTimer';
 import { useEffect, useState } from 'react';
+import Logo from '@/app/(DashboardLayout)/layout/shared/logo/Logo';
 
 export default function VerifyEmail () {
     const email = 'someone@gmail.com';
@@ -45,7 +45,10 @@ export default function VerifyEmail () {
 
   return(
     <PageContainer title="verify Email Page" description="this is Sample page">
-    <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'100vh'}} >
+       <Box height={'100px'} alignItems={'center'} padding={'1rem'}>
+      <Logo/>
+    </Box>
+    <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px'}} >
     <Grid
       container
       spacing={0}
@@ -93,9 +96,9 @@ export default function VerifyEmail () {
         alignItems="center"
       >
         <Box p={4} width={'100%'} >
-         <h1>Verify your email address</h1>
-         <h3>We have sent you an email</h3>
-         <p>Click on the email verification link sent to you on <span style={{textDecoration:'underline'}}>{email}</span></p>
+         <Typography variant='h1' fontWeight={600} gutterBottom >Verify your email address</Typography>
+         <Typography variant='h4' gutterBottom mb={2}>We have sent you an email!</Typography>
+         <Typography variant='body1'gutterBottom>Click on the email verification link sent to you on <span style={{textDecoration:'underline'}}>{email}</span></Typography>
          <Stack direction='row' spacing={1} alignItems={'center'} >
         <h3>Didn&apos;t receive any link ?</h3>
          <Button variant='text'

@@ -13,7 +13,10 @@ import Image from "next/image";
 export default function Register() {
   return (
   <PageContainer title="Register Page" description="this is Sample page">
-    <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'100vh'}} >
+     <Box height={'100px'} alignItems={'center'} padding={'1rem'}>
+    <Logo/>
+     </Box>
+    <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px)'}} >
     <Grid
       container
       spacing={0}
@@ -31,13 +34,13 @@ export default function Register() {
       >
         <Box style={{ height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} >
           <Box px={3}>
-            <Image src='/images/logos/eLab-black.png' width={200} height={200} alt='ennovatelab-logo' priority />
+            <Image src='/images/logos/eLab-black.png' width={150} height={150} alt='ennovatelab-logo' priority />
           </Box>
           <Box
           >
             
-            <h2 style={{textAlign:'center',lineHeight:'38px',maxWidth:'25ch'}} >Streamline your workflows,boost your efficiency!</h2>
-            <h4 style={{textAlign:'center',maxWidth:'40ch'}} >Run your business smarter, not harder.One platform,complete control!</h4>
+            <h3 style={{textAlign:'center',maxWidth:'30ch'}} >Streamline your workflows,boost your efficiency!</h3>
+            {/* <h4 style={{textAlign:'center',maxWidth:'40ch'}} >Run your business smarter, not harder.One platform,complete control!</h4> */}
           </Box>
         </Box>
       </Grid>

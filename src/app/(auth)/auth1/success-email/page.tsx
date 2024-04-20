@@ -11,12 +11,15 @@ import Link from 'next/link';
 export default function SuccessEmail() {
   return(
   <PageContainer title="Success email" description="this is Sample page">
-     <div style={{display:'flex',flexDirection:'column',flexWrap:'nowrap',alignItems:'center', justifyContent:'center',minHeight:'100vh'}} >
+      <Box height={'100px'} alignItems={'center'} padding={'1rem'}>
+      <Logo/>
+    </Box>
+     <div style={{display:'flex',flexDirection:'column',gap:'1.3rem',flexWrap:'nowrap',alignItems:'center', justifyContent:'center',minHeight:'calc(100vh - 100px)'}} >
        <Box>
         <Image src='/images/logos/success-email.png' width={150} height={150} alt='success-email' priority />
        </Box>
        <Box sx={{ textAlign:'center'}}>
-        <Typography variant='h3'>
+        <Typography variant='h3' gutterBottom>
           Email verified successfully!
         </Typography>
         <Typography sx={{maxWidth:'60ch'}} component={'p'} >

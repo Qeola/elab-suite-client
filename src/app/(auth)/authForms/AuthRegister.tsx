@@ -56,7 +56,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
   return (
   <>
     {title ? (
-      <Typography fontWeight="700" variant="h4" mb={1}>
+      <Typography fontWeight="600" variant="h4" mb={1}>
         {title}
       </Typography>
     ) : null}
@@ -148,7 +148,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         sx={{
           color:'black',
           backgroundColor:"#FFCC03",
-          fontWeight:700,
+          fontWeight:600,
           marginTop:'1rem',
           '&:hover':{
             opacity:0.8,
