@@ -24,15 +24,21 @@ jobs:
           cache: "npm"
       - name: Install Dependencies
         run: npm ci
-      - name: Create version PR or Github Release
-        id: changesets
-        uses: changesets/action@v1
-        with:
-          publish: npx changeset tag # creates a release
-        env:
-          GITHUB_TOKEN: ${{ secrets.CHANGESETS_TOKEN }}
-
-      - run: echo '${{ toJSON(steps.changesets.outputs) }}'
-      - name: Set Release Version
-        id: get-version
-        run: echo "::version=:${{ steps.changesets.outputs.publishedPackages[0] }}" >> $GITHUB_OUTPUT
+  run-tests:
+    needs: create-version-pr-or-release
+    uses: "./.github/workflows/test.yaml"
+    secrets: inherit
+  deploy-to-staging:
+    needs: run-tests
+    uses: "./.github/workflows/deploy.yaml"
+    secrets: inherit
+    with:
+      aws-env: ${{ vars.AWS_EB_STAGING_ENV }}
+      github-env: "staging"
+  deploy-to-production:
+    needs: run-tests
+    uses: "./.github/workflows/deploy.yaml"
+    secrets: inherit
+    with:
+      aws-env: ${{ vars.AWS_EB_PRODUCTION_ENV }}
+      github-env: "production"
