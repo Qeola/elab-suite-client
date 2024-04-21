@@ -1,0 +1,38 @@
+name: CD
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  create-version-pr-or-release:
+    runs-on: ubuntu-latest
+    outputs:
+      should-deploy: ${{ steps.changesets.outputs.hasChangesets == 'false' }} # if you'd like to deploy anytime code is pushed into main, without having a changesets
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 #
+          persist-credentials: false
+      - name: Setup Node Environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Create version PR or Github Release
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: npx changeset tag # creates a release
+        env:
+          GITHUB_TOKEN: ${{ secrets.CHANGESETS_TOKEN }}
+
+      - run: echo '${{ toJSON(steps.changesets.outputs) }}'
+      - name: Set Release Version
+        id: get-version
+        run: echo "::version=:${{ steps.changesets.outputs.publishedPackages[0] }}" >> $GITHUB_OUTPUT
