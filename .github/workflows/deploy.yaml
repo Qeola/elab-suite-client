@@ -69,6 +69,8 @@ jobs:
       - name: Get AWS ENV Status
         id: get-env-status
         run: echo "aws_env_status=$(aws elasticbeanstalk describe-environments --application-name ${{ vars.AWS_EB_APP_NAME }} --environment-names ${{ inputs.aws-env }} --query "Environments[0].Status" --output text)" >> $GITHUB_OUTPUT
+      - name: Remove Husky
+        run: npm pkg delete scripts.prepare
       - name: Initialize EB #(As we didn't pass our app name in the next step, we need to init it so it's accessible when we create our environment in the next step)
         run: eb init ${{ vars.AWS_EB_APP_NAME }} --platform "${{ vars.AWS_EB_PLATFORM }}" --region ${{ vars.AWS_REGION }}
       - name: Create a New Environment #(create a new environment. If the environment does not exist of is terminated, we create a new one)
