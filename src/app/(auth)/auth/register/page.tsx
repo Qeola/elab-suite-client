@@ -13,7 +13,7 @@ import Image from "next/image";
 export default function Register() {
 
   return (
-  <PageContainer title="Register Page" description="this is Sample page">
+  <PageContainer title="Register | Streamline your workflows,boost your efficiency! " description="">
      <Box height={'100px'} alignItems={'center'} padding={'1rem'}>
     <Logo/>
      </Box>

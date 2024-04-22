@@ -36,7 +36,7 @@ const BannerContent = () => {
           <Typography color={'secondary'}>
             <IconRocket size={'21'} />
           </Typography>{' '}
-          Kick start your project with
+          Kick start your business/organisation with
         </Typography>
 
         <Typography
@@ -53,9 +53,9 @@ const BannerContent = () => {
         >
           Most powerful &{' '}
           <Typography component={'span'} variant="inherit" color={'primary'}>
-            Developer friendly
+            User Intuitive
           </Typography>{' '}
-          NextJs dashboard
+          management app
         </Typography>
       </motion.div>
       <Box pt={4} pb={3}>
@@ -70,8 +70,8 @@ const BannerContent = () => {
           }}
         >
           <Typography variant="h5" fontWeight={300}>
-            Modernize comes with light & dark color skins, well designed dashboards, applications
-            and pages.
+          Run your entire business from one powerful app without tears.
+          Take the chaos out of business management.Manage accounting, clients, payroll, leave, and more - all in one place.
           </Typography>
         </motion.div>
       </Box>
@@ -86,12 +86,12 @@ const BannerContent = () => {
         }}
       >
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} mt={3}>
-          <StyledButton variant="contained" color="primary" href="/auth/auth1/login">
+          <StyledButton variant="contained" color="primary" href="/auth/login">
             Login
           </StyledButton>
 
-          <StyledButton variant="outlined" href="#demos">
-            Live Preview
+          <StyledButton variant="outlined" href="#">
+            Learn More
           </StyledButton>
         </Stack>
       </motion.div>
