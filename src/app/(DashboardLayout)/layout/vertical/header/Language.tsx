@@ -1,37 +1,37 @@
-import React from 'react';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import { useSelector, useDispatch } from '@/store/hooks';
-import { setLanguage } from '@/store/customizer/CustomizerSlice';
-import { Stack } from '@mui/system';
-import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
-import { AppState } from '@/store/store';
+import React from "react";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
+import { useSelector, useDispatch } from "@/store/hooks";
+import { setLanguage } from "@/store/customizer/CustomizerSlice";
+import { Stack } from "@mui/system";
+import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
+import { AppState } from "@/store/store";
 
 const Languages = [
   {
-    flagname: 'English (UK)',
+    flagname: "English (UK)",
     icon: "/images/flag/icon-flag-en.svg",
-    value: 'en',
+    value: "en",
   },
   {
-    flagname: '中国人 (Chinese)',
+    flagname: "中国人 (Chinese)",
     icon: "/images/flag/icon-flag-cn.svg",
-    value: 'ch',
+    value: "ch",
   },
   {
-    flagname: 'français (French)',
+    flagname: "français (French)",
     icon: "/images/flag/icon-flag-fr.svg",
-    value: 'fr',
+    value: "fr",
   },
 
   {
-    flagname: 'عربي (Arabic)',
+    flagname: "عربي (Arabic)",
     icon: "/images/flag/icon-flag-sa.svg",
-    value: 'ar',
+    value: "ar",
   },
 ];
 
@@ -41,7 +41,8 @@ const Language = () => {
   const open = Boolean(anchorEl);
   const customizer = useSelector((state: AppState) => state.customizer);
   const currentLang =
-    Languages.find((_lang) => _lang.value === customizer.isLanguage) || Languages[1];
+    Languages.find((_lang) => _lang.value === customizer.isLanguage) ||
+    Languages[1];
   const { i18n } = useTranslation();
   const handleClick = (event: any) => {
     setAnchorEl(event.currentTarget);
@@ -59,12 +60,16 @@ const Language = () => {
       <IconButton
         aria-label="more"
         id="long-button"
-        aria-controls={open ? 'long-menu' : undefined}
-        aria-expanded={open ? 'true' : undefined}
+        aria-controls={open ? "long-menu" : undefined}
+        aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <Avatar src={currentLang.icon} alt={currentLang.value} sx={{ width: 20, height: 20 }} />
+        <Avatar
+          src={currentLang.icon}
+          alt={currentLang.value}
+          sx={{ width: 20, height: 20 }}
+        />
       </IconButton>
       <Menu
         id="long-menu"
@@ -72,8 +77,8 @@ const Language = () => {
         open={open}
         onClose={handleClose}
         sx={{
-          '& .MuiMenu-paper': {
-            width: '200px',
+          "& .MuiMenu-paper": {
+            width: "200px",
           },
         }}
       >
@@ -84,7 +89,11 @@ const Language = () => {
             onClick={() => dispatch(setLanguage(option.value))}
           >
             <Stack direction="row" spacing={1} alignItems="center">
-              <Avatar src={option.icon} alt={option.icon} sx={{ width: 20, height: 20 }} />
+              <Avatar
+                src={option.icon}
+                alt={option.icon}
+                sx={{ width: 20, height: 20 }}
+              />
               <Typography> {option.flagname}</Typography>
             </Stack>
           </MenuItem>

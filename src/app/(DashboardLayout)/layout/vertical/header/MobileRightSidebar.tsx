@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   IconApps,
   IconCalendarEvent,
@@ -7,20 +7,20 @@ import {
   IconGridDots,
   IconMail,
   IconMessages,
-} from '@tabler/icons-react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
+} from "@tabler/icons-react";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
 
-import Link from 'next/link';
-import AppLinks from './AppLinks';
-import QuickLinks from './QuickLinks';
+import Link from "next/link";
+import AppLinks from "./AppLinks";
+import QuickLinks from "./QuickLinks";
 
 const MobileRightSidebar = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -38,7 +38,7 @@ const MobileRightSidebar = () => {
       {/* ------------------------------------------- */}
       <Box px={1}>
         <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
           component="nav"
           aria-labelledby="nested-list-subheader"
         >
@@ -109,7 +109,7 @@ const MobileRightSidebar = () => {
         onClick={() => setShowDrawer(true)}
         sx={{
           ...(showDrawer && {
-            color: 'primary.main',
+            color: "primary.main",
           }),
         }}
       >
@@ -122,7 +122,7 @@ const MobileRightSidebar = () => {
         anchor="right"
         open={showDrawer}
         onClose={() => setShowDrawer(false)}
-        PaperProps={{ sx: { width: '300px' } }}
+        PaperProps={{ sx: { width: "300px" } }}
       >
         <Box p={3} pb={0}>
           <Typography variant="h5" fontWeight={600}>

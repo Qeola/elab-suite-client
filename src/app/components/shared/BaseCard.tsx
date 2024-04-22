@@ -1,6 +1,6 @@
-import { Card, CardHeader, CardContent, Divider } from '@mui/material';
-import { useSelector } from '@/store/hooks';
-import { AppState } from '@/store/store';
+import { Card, CardHeader, CardContent, Divider } from "@mui/material";
+import { useSelector } from "@/store/hooks";
+import { AppState } from "@/store/store";
 
 type Props = {
   title: string;
@@ -14,7 +14,7 @@ const BaseCard = ({ title, children }: Props) => {
     <Card
       sx={{ padding: 0 }}
       elevation={customizer.isCardShadow ? 9 : 0}
-      variant={!customizer.isCardShadow ? 'outlined' : undefined}
+      variant={!customizer.isCardShadow ? "outlined" : undefined}
     >
       <CardHeader title={title} />
       <Divider />
