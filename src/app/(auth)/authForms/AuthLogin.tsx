@@ -41,7 +41,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
 
   <>
     {title ? (
-      <Typography fontWeight="700" variant="h3" mb={1}>
+      <Typography fontWeight="600" variant="h3" mb={1}>
         {title}
       </Typography>
     ) : null}
@@ -140,7 +140,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         sx={{
           color:'black',
           backgroundColor:"#FFCC03",
-          fontWeight:700,
+          fontWeight:600,
           '&:hover':{
             opacity:0.8,
             transition: 'opacity 200ms ease-in',

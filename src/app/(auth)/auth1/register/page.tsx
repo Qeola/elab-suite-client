@@ -11,6 +11,7 @@ import AuthRegister from "../../authForms/AuthRegister";
 import Image from "next/image";
 
 export default function Register() {
+
   return (
   <PageContainer title="Register Page" description="this is Sample page">
      <Box height={'100px'} alignItems={'center'} padding={'1rem'}>
@@ -32,15 +33,13 @@ export default function Register() {
         xl={4}
         sx={{ borderRight:'1px solid #060016',alignSelf:'stretch'}}
       >
-        <Box style={{ height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} >
+        <Box style={{ height:'100%',display:'flex',flexDirection:'column',gap:'1rem',alignItems:'center',justifyContent:'center'}} >
           <Box px={3}>
             <Image src='/images/logos/eLab-black.png' width={150} height={150} alt='ennovatelab-logo' priority />
           </Box>
           <Box
           >
-            
-            <h3 style={{textAlign:'center',maxWidth:'30ch'}} >Streamline your workflows,boost your efficiency!</h3>
-            {/* <h4 style={{textAlign:'center',maxWidth:'40ch'}} >Run your business smarter, not harder.One platform,complete control!</h4> */}
+            <Typography variant={'h4'} fontWeight={500} style={{textAlign:'center',maxWidth:'27ch'}} >Streamline your workflows,boost your efficiency!</Typography>
           </Box>
         </Box>
       </Grid>

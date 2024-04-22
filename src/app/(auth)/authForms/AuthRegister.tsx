@@ -10,18 +10,24 @@ import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLab
 import { Stack } from "@mui/system";
 import { registerType } from "@/app/(DashboardLayout)/types/auth/auth";
 import AuthSocialButtons from "./AuthSocialButtons";
-import { IconButton, InputAdornment, OutlinedInput } from '@mui/material';
+import { CircularProgress, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { Business, BusinessOutlined, Lock, LockOutlined, Mail, MailLockOutlined, MailOutline, PasswordOutlined } from '@mui/icons-material';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
 import { useState } from 'react';
 import { redirect, useRouter } from 'next/navigation';
 import PasswordStrengthBar from './PasswordStrengthBar';
+import { SignupValues } from '../authInterfaces';
+import { postRequest } from '@/utils/api/apiRequests';
+import CustomSnackbar from '@/app/components/Snackbar';
 
 
 
 const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
   const [isPasswordFocus, setIsPasswordFocus] = useState(false);
+  const [ isLoading, setIsLoading] = useState(false);
+  const [ response,setResponse ] = useState();
+  const [showSnackbar,setShowSnackbar] = useState(false);
   const [password,setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -53,6 +59,17 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
   const router = useRouter()
 
+  const initialValues = { name: '', email: '', password: '' };
+
+  const onSubmit=async(values:SignupValues)=>{
+    const result = await postRequest('/register',values)
+    console.log({result})
+    setResponse(result)
+    setShowSnackbar(true)
+    // setIsLoading(true)
+    router.push('/auth1/verify-email')
+  }
+
   return (
   <>
     {title ? (
@@ -63,13 +80,9 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
     <Box>
     <Formik
-          initialValues={{ name: '', email: '', password: '' }}
+          initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
-            console.log({values});
-            router.push('/auth1/login')
-          
-          }}
+          onSubmit={onSubmit}
         >
            {({ values, handleChange, errors, touched, setFieldTouched }) => (
         <Form>
@@ -160,7 +173,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         fullWidth
         type='submit'
       >
-        Sign Up
+      <Typography fontWeight={600} sx={{display:'flex',alignItems:'center',gap:'.3rem'}} > <span>Sign up</span> {isLoading && <CircularProgress size={12} sx={{color:'black'}} thickness={8}/>}</Typography>
       </Button>
             </Form>
            )}
@@ -168,6 +181,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
     
     </Box>
     {subtitle}
+    {showSnackbar &&<CustomSnackbar response={response} />}
   </>
   )
   };
