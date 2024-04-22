@@ -41,10 +41,8 @@ const PasswordStrengthBar: React.FC<PasswordStrengthBarProps> = ({ password }) =
 
   return (
     <div >
-         <div style={{display:'flex',gap:'.5rem',width:'100%',alignItems:'center'}} >
-        <p>Password Strength:</p>
-        <span>{strength}</span>
-        </div>
+         <div style={{display:'flex',gap:'.5rem',width:'100%', justifyContent:'space-between',alignItems:'center'}} >
+        {/* <p>Password Strength:</p> */}
       <div
         style={{
           height: '9px',
@@ -57,9 +55,11 @@ const PasswordStrengthBar: React.FC<PasswordStrengthBarProps> = ({ password }) =
       >
         <div style={{ height: '100%', ...getProgressStyle(), transition: 'width 0.5s ease-in-out' }}/>
       </div>
-        <p>
+      <span>{strength}</span>
+        </div>
+        {/* <p>
         * Password must contain at least 8 characters, which must include digits, special characters, lowercase and uppercase letters.
-        </p>
+        </p> */}
     </div>
   );
 };

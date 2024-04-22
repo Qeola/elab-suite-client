@@ -39,7 +39,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Organisation name is required'),
-    email: Yup.string().email('Invalid email format').required('Email is required'),
+    email: Yup.string().email('Invalid email format').required('Email address is required'),
     password: Yup.string()
       .required('Password is required')
       .matches(
