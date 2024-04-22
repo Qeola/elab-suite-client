@@ -11,7 +11,8 @@
     "format": "prettier . --check",
     "format:fix": "prettier . --write",
     "test": "jest --coverage",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "prepare": "husky"
   },
   "dependencies": {
     "@changesets/cli": "^2.27.1",
