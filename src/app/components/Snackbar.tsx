@@ -20,9 +20,9 @@ const CustomSnackbar = ({response}:any) =>{
     return (
         <>
             <MuiSnackbar open={open} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical : 'top', horizontal:'right' }} >
-                <SnackbarAlert onClose={handleClose} severity={response.status}>
-                   <Typography variant='body1' color='textPrimary' >
-                   {response.msg}</Typography> 
+                <SnackbarAlert onClose={handleClose} severity='success'>
+                   {/* <Typography variant='body1' color='textPrimary' >
+                   {response.msg}</Typography>  */}
                 </SnackbarAlert>
             </MuiSnackbar>
         </>

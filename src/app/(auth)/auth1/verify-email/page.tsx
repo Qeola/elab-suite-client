@@ -62,21 +62,10 @@ export default function VerifyEmail () {
         sm={6}
         lg={4}
         xl={4}
-        sx={{ borderRight:'1px solid #060016',alignSelf:'stretch'}}
-        // sx={{
-        //   position: "relative",
-        //   "&:before": {
-        //     content: '""',
-        //     // background: "radial-gradient(#d2f1df, #d3d7fa, #bad8f4)",
-        //     // backgroundSize: "400% 400%",
-        //     borderRight:'2px solid #060016',
-        //     animation: "gradient 15s ease infinite",
-        //     position: "absolute",
-        //     height: "100%",
-        //     width: "100%",
-        //     opacity: "0.3",
-        //   },
-        // }}
+        sx={{ borderRight:'1px solid #060016',alignSelf:'stretch','@media (max-width: 600px)': {
+          display: 'none',
+        }}}
+        
       >
         <Box style={{ height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} >
           <Box px={3}>

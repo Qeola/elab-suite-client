@@ -29,7 +29,9 @@ export default function Login () {
         sm={6}
         lg={4}
         xl={4}
-        sx={{ borderRight:'1px solid #060016',alignSelf:'stretch'}}
+        sx={{ borderRight:'1px solid #060016',alignSelf:'stretch','@media (max-width: 600px)': {
+          display: 'none',
+        }}}
       >
         <Box style={{ height:'100%',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}} >
           <Box px={3}>

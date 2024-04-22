@@ -19,15 +19,16 @@ import PasswordStrengthBar from './PasswordStrengthBar';
 import { SignupValues } from '../authInterfaces';
 import { postRequest } from '@/utils/api/apiRequests';
 import CustomSnackbar from '@/app/components/Snackbar';
+import { useAuthentication } from '../useAuthentication';
 
 
 
 const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
-
+  const { isLoading, response, showSnackbar, handleAuthentication } = useAuthentication();
   const [isPasswordFocus, setIsPasswordFocus] = useState(false);
-  const [ isLoading, setIsLoading] = useState(false);
-  const [ response,setResponse ] = useState();
-  const [showSnackbar,setShowSnackbar] = useState(false);
+  // const [ isLoading, setIsLoading] = useState(false);
+  // const [ response,setResponse ] = useState();
+  // const [showSnackbar,setShowSnackbar] = useState(false);
   const [password,setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -62,13 +63,12 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
   const initialValues = { name: '', email: '', password: '' };
 
   const onSubmit=async(values:SignupValues)=>{
-    setIsLoading(true)
-    const result = await postRequest('/register',values)
-    console.log({result})
-    setResponse(result.data)
-    setShowSnackbar(true)
-    router.push('/auth1/verify-email')
-    setIsLoading(false)
+    try {
+      await handleAuthentication('/register', values, '/auth1/verify-email');
+    } catch (error) {
+      // Handle authentication error, e.g., display error message
+      console.error('Authentication error:', error);
+    }
   }
 
   return (
