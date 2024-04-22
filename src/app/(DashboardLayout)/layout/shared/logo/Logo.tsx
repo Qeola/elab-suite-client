@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useSelector } from "@/store/hooks";
 import Link from "next/link";
-import { styled } from "@mui/material/styles";
+import { styled } from '@mui/material/styles'
 import { AppState } from "@/store/store";
 import Image from "next/image";
 
@@ -16,10 +16,10 @@ const Logo = () => {
 
   if (customizer.activeDir === "ltr") {
     return (
-      <LinkStyled href="/">
+      <LinkStyled href="/" style={{display:'flex',alignItems:'center'}} >
         {customizer.activeMode === "dark" ? (
           <Image
-            src="/images/logos/light-logo.svg"
+            src="/images/logos/eLab-light.png"
             alt="logo"
             height={customizer.TopbarHeight}
             width={174}
@@ -27,10 +27,11 @@ const Logo = () => {
           />
         ) : (
           <Image
-            src={"/images/logos/dark-logo.svg"}
+            src={"/images/logos/eLab-light.png"}
             alt="logo"
-            height={customizer.TopbarHeight}
-            width={174}
+            height={43}
+            // height={customizer.TopbarHeight}
+            width={180}
             priority
           />
         )}
