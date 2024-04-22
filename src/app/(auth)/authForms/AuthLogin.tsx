@@ -13,17 +13,19 @@ import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import AuthSocialButtons from "./AuthSocialButtons";
-import { IconButton, InputAdornment, OutlinedInput } from '@mui/material';
+import { CircularProgress, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { LockOutlined, MailLockOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { IconEyeOff } from '@tabler/icons-react';
 import { IconEye } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
+import { LoginValues } from '../authInterfaces';
+import { postRequest } from '@/utils/api/apiRequests';
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const [ isLoading,setIsLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,6 +38,16 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   });
 
   const router = useRouter();
+  const initialValues = { email: '', password: '' };
+  const onSubmit=async(values:LoginValues)=>{
+    setIsLoading(true)
+    console.log({values});
+    const result = await postRequest('/login',values)
+    console.log({result})
+    localStorage.setItem('token', result.data.token);
+    router.push('/dashboard')
+    setIsLoading(false)
+  }
 
   return (
 
@@ -47,12 +59,9 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
     ) : null}
 
     <Formik 
-     initialValues={{ email: '', password: '' }}
+     initialValues={initialValues}
      validationSchema={validationSchema}
-     onSubmit={(values) => {
-       console.log({values});
-       router.push('/dashboard')
-     }}
+     onSubmit={onSubmit}
     >
       {({ values, handleChange, errors, touched, setFieldTouched }) => (
         <Form>
@@ -150,7 +159,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         }}
         fullWidth
       >
-        Sign In
+        <Typography fontWeight={600} sx={{display:'flex',alignItems:'center',gap:'.3rem'}} > <span>Sign In</span> {isLoading && <CircularProgress size={12} sx={{color:'black'}} thickness={8}/>}</Typography>
       </Button>
     </Box> 
         </Form>

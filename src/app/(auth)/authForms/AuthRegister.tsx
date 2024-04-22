@@ -62,12 +62,13 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
   const initialValues = { name: '', email: '', password: '' };
 
   const onSubmit=async(values:SignupValues)=>{
+    setIsLoading(true)
     const result = await postRequest('/register',values)
     console.log({result})
-    setResponse(result)
+    setResponse(result.data)
     setShowSnackbar(true)
-    // setIsLoading(true)
     router.push('/auth1/verify-email')
+    setIsLoading(false)
   }
 
   return (
