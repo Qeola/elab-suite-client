@@ -1,8 +1,8 @@
 // useAuthentication.ts
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { postRequest } from '@/utils/api/apiRequests';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { postRequest } from "@/utils/api/apiRequests";
 
 export const useAuthentication = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,37 +18,40 @@ export const useAuthentication = () => {
       setResponse(result.data || result);
       setShowSnackbar(true);
       setIsLoading(false);
-      return result.data ;
-    } catch (error:any) {
-      console.error('Authentication failed:', error);
-      setResponse(error.errors)
+      return result.data;
+    } catch (error: any) {
+      console.error("Authentication failed:", error);
+      setResponse(error.errors);
       setIsLoading(false);
-        return error.errors;
+      return error.errors;
     }
   };
 
-  const handleAuthentication = async (endpoint: string, values: any, redirectPath: string) => {
+  const handleAuthentication = async (
+    endpoint: string,
+    values: any,
+    redirectPath: string,
+  ) => {
     try {
       const data = await authenticate(endpoint, values);
-      if(endpoint === '/auth/login'){
-          localStorage.setItem('token', data.token);
+      if (endpoint === "/auth/login") {
+        localStorage.setItem("token", data.token);
       }
-      if(data.status === 'success'){
-          router.push(redirectPath);
-      }else{
+      if (data.status === "success") {
+        router.push(redirectPath);
+      } else {
         return;
       }
     } catch (error) {
-      console.error('Authentication failed:', error);
+      console.error("Authentication failed:", error);
     }
   };
 
   const logout = () => {
     // Clear token from localStorage
-    localStorage.removeItem('token');
-    router.push('/auth/login');
+    localStorage.removeItem("token");
+    router.push("/auth/login");
   };
 
-
-  return { isLoading, response, showSnackbar, handleAuthentication, logout};
+  return { isLoading, response, showSnackbar, handleAuthentication, logout };
 };

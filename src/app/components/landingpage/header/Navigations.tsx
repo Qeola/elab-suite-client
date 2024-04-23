@@ -1,60 +1,58 @@
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
-import { IconChevronDown } from '@tabler/icons-react';
-import AppLinks from '@/app/(DashboardLayout)/layout/vertical/header/AppLinks';
-import QuickLinks from '@/app/(DashboardLayout)/layout/vertical/header/QuickLinks';
-import DemosDD from './DemosDD';
+import React, { useState } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
+import { IconChevronDown } from "@tabler/icons-react";
+import AppLinks from "@/app/(Dashboard)/layout/vertical/header/AppLinks";
+import QuickLinks from "@/app/(Dashboard)/layout/vertical/header/QuickLinks";
+import DemosDD from "./DemosDD";
 
 const Navigations = () => {
+  const StyledButton = styled(Button)(({ theme }) => ({
+    fontSize: "16px",
+    color: theme.palette.text.secondary,
+  }));
 
+  // demos
+  const [open, setOpen] = useState(false);
 
-    const StyledButton = styled(Button)(({ theme }) => ({
-        fontSize: '16px',
-        color: theme.palette.text.secondary
-    }));
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-    // demos
-    const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+  // pages
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const [open2, setOpen2] = useState(false);
 
-    // pages
+  const handleOpen2 = () => {
+    setOpen2(true);
+  };
 
-    const [open2, setOpen2] = useState(false);
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
 
-    const handleOpen2 = () => {
-        setOpen2(true);
-    };
+  // Password
+  const [showPassword, setShowPassword] = React.useState(false);
 
-    const handleClose2 = () => {
-        setOpen2(false);
-    };
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-    // Password
-    const [showPassword, setShowPassword] = React.useState(false);
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+  };
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-  
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
-    };
-
-
-
-    return (
-        <>
-            {/* <StyledButton
+  return (
+    <>
+      {/* <StyledButton
                 color="inherit"
                 variant="text"
                 aria-expanded={open ? 'true' : undefined}
@@ -82,7 +80,7 @@ const Navigations = () => {
                     <DemosDD />
                 </Paper>
             )} */}
-            {/* <Box>
+      {/* <Box>
                 <StyledButton
                     color="inherit"
                     variant="text"
@@ -123,17 +121,17 @@ const Navigations = () => {
                     </Paper>
                 )}
             </Box> */}
-            {/* <StyledButton color="inherit" variant="text" href="https://demos.adminmart.com/premium/nextjs/modernize-nextjs/docs/index.html">
+      {/* <StyledButton color="inherit" variant="text" href="https://demos.adminmart.com/premium/nextjs/modernize-nextjs/docs/index.html">
                 Documentation
             </StyledButton> */}
-            <StyledButton color="inherit" variant="text" href="/auth/login">
-                Log In
-            </StyledButton>
-            <Button color="primary" variant="contained" href="/auth/register">
-                Sign up
-            </Button>
-        </>
-    );
+      <StyledButton color="inherit" variant="text" href="/auth/login">
+        Log In
+      </StyledButton>
+      <Button color="primary" variant="contained" href="/auth/register">
+        Sign up
+      </Button>
+    </>
+  );
 };
 
 export default Navigations;
