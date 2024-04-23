@@ -17,12 +17,14 @@ const CustomSnackbar = ({response}:any) =>{
         setOpen(false)
     }
 
+    console.log('SnackResponse:', response)
+
     return (
         <>
             <MuiSnackbar open={open} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical : 'top', horizontal:'right' }} >
-                <SnackbarAlert onClose={handleClose} severity='success'>
-                   {/* <Typography variant='body1' color='textPrimary' >
-                   {response.msg}</Typography>  */}
+                <SnackbarAlert onClose={handleClose} severity={response.status || 'error'}>
+                   <Typography variant='body1' color='textPrimary' >
+                   {response.msg || response[0].message}</Typography> 
                 </SnackbarAlert>
             </MuiSnackbar>
         </>

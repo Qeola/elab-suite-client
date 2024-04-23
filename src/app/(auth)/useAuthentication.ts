@@ -6,7 +6,7 @@ import { postRequest } from '@/utils/api/apiRequests';
 
 export const useAuthentication = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [response, setResponse] = useState<any>(null);
+  const [response, setResponse] = useState();
   const [showSnackbar, setShowSnackbar] = useState(false);
   const router = useRouter();
 
@@ -15,15 +15,15 @@ export const useAuthentication = () => {
     try {
       const result = await postRequest(endpoint, values);
       console.log({ result });
-      setResponse(result.data);
+      setResponse(result.data || result);
       setShowSnackbar(true);
       setIsLoading(false);
-      return result.data;
+      return result.data ;
     } catch (error:any) {
       console.error('Authentication failed:', error);
       setResponse(error.errors)
       setIsLoading(false);
-    //   throw error;
+        return error.errors;
     }
   };
 
@@ -33,7 +33,11 @@ export const useAuthentication = () => {
       if(endpoint === '/auth/login'){
           localStorage.setItem('token', data.token);
       }
-      router.push(redirectPath);
+      if(data.status === 'success'){
+          router.push(redirectPath);
+      }else{
+        return;
+      }
     } catch (error) {
       console.error('Authentication failed:', error);
     }
