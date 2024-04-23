@@ -33,7 +33,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email format').required('Email is required'),
+    email: Yup.string().email('Invalid email format').required('Email address is required'),
     password: Yup.string().required('Password is required')
   });
 
