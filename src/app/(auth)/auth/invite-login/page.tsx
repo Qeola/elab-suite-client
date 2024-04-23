@@ -13,7 +13,7 @@ export default function inviteLogin () {
 
   const name = 'Felix';
   return(
-<PageContainer title="Login Page" description="this is Sample page">
+<PageContainer title="Sign in |" description="this is Sample page">
   <Box height={'100px'} alignItems={'center'} padding={'1rem'}>
       <Logo/>
     </Box>
