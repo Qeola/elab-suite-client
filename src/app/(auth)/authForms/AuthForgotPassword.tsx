@@ -4,10 +4,23 @@ import Link from "next/link";
 
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
-import { Box, InputAdornment, OutlinedInput, Typography } from '@mui/material';
+import { Box, CircularProgress, InputAdornment, OutlinedInput, Typography } from '@mui/material';
 import { MailLockOutlined } from '@mui/icons-material';
+import { useState } from 'react';
+import { postRequest } from '@/utils/api/apiRequests';
 
 export default function AuthForgotPassword(){
+  const [isLoading, setIsLoading] = useState(false);
+  const [ email,setEmail]= useState<string>('');
+
+  const handleForgotPassword=async()=>{
+      setIsLoading(true);
+      const result = await postRequest('/forgot-password',email)
+      console.log({result})
+      setIsLoading(false);
+  }
+
+  console.log({email})
  return (
   <>
     <Box>
@@ -18,6 +31,7 @@ export default function AuthForgotPassword(){
       <CustomFormLabel htmlFor="reset-email">Email Address</CustomFormLabel>
       <OutlinedInput
             type='email'
+            onChange={(e)=>setEmail(e.target.value)}
             startAdornment={
               <InputAdornment position="start">
                 <MailLockOutlined fontSize='small' />
@@ -28,6 +42,7 @@ export default function AuthForgotPassword(){
           />
 
       <Button
+        onClick={handleForgotPassword}
         variant="contained"
         size="large"
         sx={{
@@ -42,10 +57,8 @@ export default function AuthForgotPassword(){
           }
         }}
         fullWidth
-        component={Link}
-        href="/dashboard"
       >
-        Forgot password
+       <Typography fontWeight={600} sx={{display:'flex',alignItems:'center',gap:'.3rem'}} > <span>Forgot Password</span> {isLoading && <CircularProgress size={12} sx={{color:'black'}} thickness={8}/>}</Typography>
       </Button>
       <Button
         variant="contained"
@@ -53,7 +66,7 @@ export default function AuthForgotPassword(){
         sx={{
           color:'black',
           backgroundColor:"#fff",
-          fontWeight:600,
+          fontWeight:500,
           '&:hover':{
             opacity:0.8,
             transition: 'opacity 200ms ease-in',
@@ -64,7 +77,7 @@ export default function AuthForgotPassword(){
         }}
         fullWidth
         component={Link}
-        href="/auth1/login"
+        href="/auth/login"
       >
         Back to Login
       </Button>

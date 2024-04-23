@@ -11,8 +11,8 @@ import Image from "next/image";
 export default function ForgotPassword() {
   return (
     <PageContainer
-      title="Forgot Password Page"
-      description="this is Sample page"
+      title="Forgot Password "
+      description=""
     >
       <Grid
         container

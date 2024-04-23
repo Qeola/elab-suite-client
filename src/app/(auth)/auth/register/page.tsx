@@ -13,25 +13,22 @@ import Image from "next/image";
 export default function Register() {
 
   return (
-  <PageContainer title="Register Page" description="this is Sample page">
-     <Box height={'100px'} alignItems={'center'} padding={'1rem'}>
-    <Logo/>
-     </Box>
-    <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px)'}} >
+  <PageContainer title="Register | Streamline your workflows,boost your efficiency! " description="">
+    {/* <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px)'}} > */}
     <Grid
       container
       spacing={0}
       justifyContent="center"
       alignItems='center'
-      sx={{ overflowX: "hidden" }}
+      sx={{ overflowX: "hidden",height:'100vh' }}
     >
       <Grid
         item
         xs={0}
         sm={6}
-        lg={4}
-        xl={4}
-        sx={{ borderRight:'1px solid #060016',alignSelf:'stretch', '@media (max-width: 600px)': {
+        lg={6}
+        xl={6}
+        sx={{ alignSelf:'stretch',backgroundColor:'#FFCC03', '@media (max-width: 600px)': {
           display: 'none',
         },}}
       >
@@ -49,12 +46,19 @@ export default function Register() {
         item
         xs={12}
         sm={6}
-        lg={5}
-        xl={4}
+        lg={6}
+        xl={6}
         display="flex"
+        flexDirection={'column'}
         alignItems="center"
+        justifyContent='center'
       >
-        <Box p={4} width={'100%'} >
+         <Box alignItems={'center'} padding={'1rem'}>
+    <Logo/>
+     </Box>
+        <Box p={4} width={'80%'} sx={{'@media (max-width: 800px)': {
+          width:'100%',
+        },}} >
           <AuthRegister
             title="Signup with eLab suite"
             subtext={
@@ -69,7 +73,7 @@ export default function Register() {
                 </Typography>
                 <Typography
                   component={Link}
-                  href="/auth1/login"
+                  href="/auth/login"
                   fontWeight="500"
                   sx={{
                     textDecoration: "none",
@@ -84,7 +88,7 @@ export default function Register() {
         </Box>
       </Grid>
     </Grid>
-    </div>
+    {/* </div> */}
   </PageContainer>
 )};
 

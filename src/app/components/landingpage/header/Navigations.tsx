@@ -82,7 +82,7 @@ const Navigations = () => {
                     <DemosDD />
                 </Paper>
             )} */}
-            <Box>
+            {/* <Box>
                 <StyledButton
                     color="inherit"
                     variant="text"
@@ -122,14 +122,14 @@ const Navigations = () => {
                         </Grid>
                     </Paper>
                 )}
-            </Box>
+            </Box> */}
             {/* <StyledButton color="inherit" variant="text" href="https://demos.adminmart.com/premium/nextjs/modernize-nextjs/docs/index.html">
                 Documentation
             </StyledButton> */}
-            <StyledButton color="inherit" variant="text" href="https://adminmart.com/support">
-                Support
+            <StyledButton color="inherit" variant="text" href="/auth/login">
+                Log In
             </StyledButton>
-            <Button color="primary" variant="contained" href="/auth1/register">
+            <Button color="primary" variant="contained" href="/auth/register">
                 Sign up
             </Button>
         </>

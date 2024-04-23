@@ -16,16 +16,16 @@ import Testimonial from '@/app/components/landingpage/testimonial/Testimonial';
 
 export default function Landingpage () {
   return (
-    <PageContainer title="Landingpage" description="this is Landingpage">
+    <PageContainer title="eLab suite | Simplify your workflow and eliminate stress with our all-in-one solution.!" description="">
       <LpHeader />
       <Banner />
-      <DemoSlider />
+      {/* <DemoSlider />
       <Frameworks />
       <Testimonial />
       <Features />
       <C2a />
       <C2a2 />
-      <Footer />
+      <Footer />  */}
     </PageContainer>
   );
 };

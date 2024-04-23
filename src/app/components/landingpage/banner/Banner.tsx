@@ -9,6 +9,7 @@ import { styled } from '@mui/material/styles';
 import BannerContent from "./BannerContent";
 import bannerbgImg1 from "/public/images/landingpage/bannerimg1.svg";
 import bannerbgImg2 from "/public/images/landingpage/bannerimg2.svg";
+import eLabLogo from "/public/images/logos/eLab-black.png";
 import Image from "next/image";
 
 const Banner = () => {
@@ -24,7 +25,7 @@ const Banner = () => {
       },
     },
 
-    animation: "slideup 35s linear infinite",
+    animation: "slideup 10s linear infinite",
   }));
 
   const SliderBox2 = styled(Box)(() => ({
@@ -37,7 +38,7 @@ const Banner = () => {
       },
     },
 
-    animation: "slideDown 35s linear infinite",
+    animation: "slideDown 10s linear infinite",
   }));
 
   return (
@@ -61,19 +62,19 @@ const Banner = () => {
                 <Stack direction={"row"}>
                   <Box>
                     <SliderBox>
-                      <Image src={bannerbgImg1} alt="banner" priority />
+                      <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
                     </SliderBox>
-                    <SliderBox>
-                      <Image src={bannerbgImg1} alt="banner" priority />
-                    </SliderBox>
+                    {/* <SliderBox>
+                      <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
+                    </SliderBox> */}
                   </Box>
                   <Box>
                     <SliderBox2>
-                      <Image src={bannerbgImg2} alt="banner" priority />
+                      <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
                     </SliderBox2>
-                    <SliderBox2>
-                      <Image src={bannerbgImg2} alt="banner" priority />
-                    </SliderBox2>
+                    {/* <SliderBox2>
+                      <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
+                    </SliderBox2> */}
                   </Box>
                 </Stack>
               </Box>

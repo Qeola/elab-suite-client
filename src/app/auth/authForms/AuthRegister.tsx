@@ -7,7 +7,7 @@ import CustomTextField from "@/app/components/forms/theme-elements/CustomTextFie
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import { Stack } from "@mui/system";
 import { registerType } from "@/app/(DashboardLayout)/types/auth/auth";
-import AuthSocialButtons from "./AuthSocialButtons";
+
 
 const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
   <>
@@ -18,7 +18,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
     ) : null}
 
     {subtext}
-    <AuthSocialButtons title="Sign up with" />
+    {/* <AuthSocialButtons title="Sign up with" /> */}
 
     <Box mt={3}>
       <Divider>

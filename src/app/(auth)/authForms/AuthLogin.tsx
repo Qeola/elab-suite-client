@@ -12,7 +12,7 @@ import { loginType } from "@/app/(DashboardLayout)/types/auth/auth";
 import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox";
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
-import AuthSocialButtons from "./AuthSocialButtons";
+
 import { CircularProgress, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { LockOutlined, MailLockOutlined } from '@mui/icons-material';
 import { useState } from 'react';
@@ -33,7 +33,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email format').required('Email is required'),
+    email: Yup.string().email('Invalid email format').required('Email address is required'),
     password: Yup.string().required('Password is required')
   });
 
@@ -130,7 +130,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         </FormGroup>
         <Typography
           component={Link}
-          href="/auth1/forgot-password"
+          href="/auth/forgot-password"
           fontWeight="500"
           sx={{
             textDecoration: "none",

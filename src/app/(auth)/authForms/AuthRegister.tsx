@@ -9,7 +9,6 @@ import CustomTextField from "@/app/components/forms/theme-elements/CustomTextFie
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import { Stack } from "@mui/system";
 import { registerType } from "@/app/(DashboardLayout)/types/auth/auth";
-import AuthSocialButtons from "./AuthSocialButtons";
 import { CircularProgress, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { Business, BusinessOutlined, Lock, LockOutlined, Mail, MailLockOutlined, MailOutline, PasswordOutlined } from '@mui/icons-material';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
@@ -39,7 +38,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Organisation name is required'),
-    email: Yup.string().email('Invalid email format').required('Email is required'),
+    email: Yup.string().email('Invalid email format').required('Email address is required'),
     password: Yup.string()
       .required('Password is required')
       .matches(
@@ -64,7 +63,8 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
   const onSubmit=async(values:SignupValues)=>{
     try {
-      await handleAuthentication('/register', values, '/auth1/verify-email');
+      const response = await handleAuthentication('/register', values, '/auth/verify-email');
+      console.log('OnSubmitRes:', response)
     } catch (error) {
       // Handle authentication error, e.g., display error message
       console.error('Authentication error:', error);
