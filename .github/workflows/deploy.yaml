@@ -2,10 +2,10 @@ name: Deploy
 on:
   workflow_dispatch:
     inputs:
-      aws-env:
-        description: "AWS Elastic Beanstalk Environment"
+      render-env:
+        description: "Render Cloud Service"
         required: true
-        default: "elab-suite-client-staging-env"
+        default: "elab-suite-client-staging"
         type: string
       github-env:
         description: "Github Environment"
@@ -14,10 +14,10 @@ on:
         type: string
   workflow_call:
     inputs:
-      aws-env:
-        description: "AWS Elastic Beanstalk Environment"
+      render-env:
+        description: "Render Cloud Service"
         required: true
-        default: "elab-suite-client-staging-env"
+        default: "elab-suite-client-staging"
         type: string
       github-env:
         description: "Github Environment"
@@ -25,26 +25,19 @@ on:
         default: "staging"
         type: string
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.aws-env }}-${{ inputs.github-env }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.render-env }}-${{ inputs.github-env }}
   cancel-in-progress: true
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.github-env }}
-      url: "http://${{ steps.get-env-cname.outputs.aws_env_cname }}"
     steps:
       - name: Avoid deploying to production using a non production env # This is a security measure to avoid deploying to production using a non production environment
-        if: inputs.aws-env == vars.AWS_EB_PRODUCTION_ENV && inputs.github-env != 'production'
+        if: inputs.render-env == vars.RENDER_PRODUCTION_ENV && inputs.github-env != 'production'
         run: |
           echo "::error:: Cannot deploy to production using a non production environment"
           exit 1
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ vars.AWS_REGION }}
       - name: Checkout
         uses: actions/checkout@v3 #(to get the code in the repository)
       - name: Setup Node Environment
@@ -60,28 +53,9 @@ jobs:
         with:
           path: ~/.cache/php
           key: ${{ runner.os }}-pip
-      - name: Install EB ClI
-        id: install-eb-cli
-        run: pip install awsebcli
-      - name: Get AWS ENV Name #(get the name of the environment)
-        id: get-env-name #(to make reusable)
-        run: echo "aws_env=$(aws elasticbeanstalk describe-environments --application-name ${{ vars.AWS_EB_APP_NAME }} --environment-names ${{ inputs.aws-env }} --query "Environments[0].EnvironmentName" --output text)" >> $GITHUB_OUTPUT #(run a command e.g. $(command) that gets the data and then save it in the github output)
-      - name: Get AWS ENV Status
-        id: get-env-status
-        run: echo "aws_env_status=$(aws elasticbeanstalk describe-environments --application-name ${{ vars.AWS_EB_APP_NAME }} --environment-names ${{ inputs.aws-env }} --query "Environments[0].Status" --output text)" >> $GITHUB_OUTPUT
-      - name: Remove Husky
-        run: npm pkg delete scripts.prepare
-      - name: Initialize EB #(As we didn't pass our app name in the next step, we need to init it so it's accessible when we create our environment in the next step)
-        run: eb init ${{ vars.AWS_EB_APP_NAME }} --platform "${{ vars.AWS_EB_PLATFORM }}" --region ${{ vars.AWS_REGION }}
-      - name: Create a New Environment #(create a new environment. If the environment does not exist of is terminated, we create a new one)
-        if: steps.get-env-name.outputs.aws_env == 'None' || steps.get-env-status.outputs.aws_env_status == 'Terminated'
-        run: eb create ${{ inputs.aws-env }} --instance-types ${{ vars.AWS_EB_ENV_INSTANCE_TYPES }} --cname ${{ inputs.aws-env }}
-      - name: Deploy if Environment Exists #(deploy the app to the environment if an environment already exists and is not terminated)
-        if: steps.get-env-name.outputs.aws_env == inputs.aws-env && steps.get-env-status.outputs.aws_env_status != 'Terminated'
-        run: eb deploy ${{ inputs.aws-env }} #(deploy eb and, pass the existing environment data, if it already exists)
-      - name: Get AWS ENV CNAME #(get the url of the environment and append it to the environment -at the top, with the name- so it's seen in the deployment page )
-        id: get-env-cname
-        run: echo "aws_env_cname=$(aws elasticbeanstalk describe-environments --application-name ${{ vars.AWS_EB_APP_NAME }} --environment-names ${{ inputs.aws-env }} --query "Environments[0].CNAME" --output text )" >> $GITHUB_OUTPUT
-      - name: Abort if cancelled #(what happens when we cancel our workflow) (if condition - # (to ensure this only happens after we've installed our EB CLI))
-        if: cancelled() && steps.install-eb-cli.conclusion == 'success'
-        run: eb abort ${{ inputs.aws-env }}
+      - name: Deploy to Render
+        uses: JorgeLNJunior/render-deploy@v1.4.4
+        with:
+          service_id: ${{ secrets.RENDER_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+          wait_deploy: true

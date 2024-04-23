@@ -26,8 +26,8 @@ jobs:
           name: build
           path: .next/
           if-no-files-found: error
-      # - name: Run unit tests #run the unit tests
-      #   run: npm run test
+      - name: Run unit tests #run the unit tests
+        run: npm run test
       - name: Upload test results #upload the test results
         uses: actions/upload-artifact@v3
         if: always()

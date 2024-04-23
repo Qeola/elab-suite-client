@@ -9,8 +9,6 @@ concurrency:
 jobs:
   create-version-pr-or-release:
     runs-on: ubuntu-latest
-    outputs:
-      should-deploy: ${{ steps.changesets.outputs.hasChangesets == 'false' }} # if you'd like to deploy anytime code is pushed into main, without having a changesets
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,12 +31,12 @@ jobs:
     uses: "./.github/workflows/deploy.yaml"
     secrets: inherit
     with:
-      aws-env: ${{ vars.AWS_EB_STAGING_ENV }}
+      render-env: ${{ vars.RENDER_STAGING_ENV }}
       github-env: "staging"
   deploy-to-production:
     needs: run-tests
     uses: "./.github/workflows/deploy.yaml"
     secrets: inherit
     with:
-      aws-env: ${{ vars.AWS_EB_PRODUCTION_ENV }}
+      render-env: ${{ vars.RENDER_PRODUCTION_ENV }}
       github-env: "production"
