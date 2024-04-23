@@ -12,7 +12,7 @@ import { loginType } from "@/app/(DashboardLayout)/types/auth/auth";
 import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox";
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
-import AuthSocialButtons from "./AuthSocialButtons";
+
 import { CircularProgress, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { LockOutlined, MailLockOutlined } from '@mui/icons-material';
 import { useState } from 'react';

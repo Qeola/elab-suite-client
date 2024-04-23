@@ -10,7 +10,6 @@ import { loginType } from "@/app/(DashboardLayout)/types/auth/auth";
 import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox";
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
-import AuthSocialButtons from "./AuthSocialButtons";
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
   <>
@@ -22,7 +21,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
 
     {subtext}
 
-    <AuthSocialButtons title="Sign in with" />
     <Box mt={3}>
       <Divider>
         <Typography

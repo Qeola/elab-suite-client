@@ -9,7 +9,6 @@ import CustomTextField from "@/app/components/forms/theme-elements/CustomTextFie
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import { Stack } from "@mui/system";
 import { registerType } from "@/app/(DashboardLayout)/types/auth/auth";
-import AuthSocialButtons from "./AuthSocialButtons";
 import { CircularProgress, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import { Business, BusinessOutlined, Lock, LockOutlined, Mail, MailLockOutlined, MailOutline, PasswordOutlined } from '@mui/icons-material';
 import { IconEye, IconEyeOff } from '@tabler/icons-react';
