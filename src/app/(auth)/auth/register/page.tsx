@@ -14,9 +14,6 @@ export default function Register() {
 
   return (
   <PageContainer title="Register | Streamline your workflows,boost your efficiency! " description="">
-     <Box position={'absolute'} height={'100px'} alignItems={'center'} padding={'1rem'}>
-    <Logo/>
-     </Box>
     {/* <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px)'}} > */}
     <Grid
       container
@@ -52,9 +49,13 @@ export default function Register() {
         lg={6}
         xl={6}
         display="flex"
+        flexDirection={'column'}
         alignItems="center"
         justifyContent='center'
       >
+         <Box alignItems={'center'} padding={'1rem'}>
+    <Logo/>
+     </Box>
         <Box p={4} width={'80%'} sx={{'@media (max-width: 800px)': {
           width:'100%',
         },}} >
