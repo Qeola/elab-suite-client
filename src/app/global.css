@@ -3,7 +3,13 @@
   font-size: 12px;
 }
 
-/* .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedStart.MuiOutlinedInput-adornedStart.MuiOutlinedInput-input:-webkit-autofill, .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedStart.MuiOutlinedInput-adornedStart.MuiOutlinedInput-input:-webkit-autofill:hover,.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedStart.MuiOutlinedInput-adornedStart.MuiOutlinedInput-input:-webkit-autofill:focus{
-  -webkit-box-shadow: 0 0 0 1000px white inset !important; 
-  -webkit-text-fill-color: inherit;
-} */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition:
+    background-color 3000000s 0s,
+    color 6000000s 0s;
+}
+
+input[data-autocompleted] {
+  background-color: transparent;
+}
