@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
-import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
+import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
 import PageContainer from "@/app/components/container/PageContainer";
 import AuthRegister from "../../authForms/AuthRegister";
 

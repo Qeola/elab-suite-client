@@ -6,7 +6,7 @@ import Link from "next/link";
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import { Stack } from "@mui/system";
-import { registerType } from "@/app/(DashboardLayout)/types/auth/auth";
+import { registerType } from "@/app/(Dashboard)/types/auth/auth";
 
 const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
   <>

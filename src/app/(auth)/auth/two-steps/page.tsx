@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import PageContainer from "@/app/components/container/PageContainer";
-import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
+import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
 import AuthTwoSteps from "../../authForms/AuthTwoSteps";
 import Image from "next/image";
 

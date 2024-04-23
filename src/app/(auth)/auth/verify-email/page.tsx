@@ -9,7 +9,7 @@ import AuthLogin from "../../authForms/AuthLogin";
 import Image from "next/image";
 import { Button, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
-import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
+import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
 
 export default function VerifyEmail() {
   const email = "someone@gmail.com";

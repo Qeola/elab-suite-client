@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 // components
-import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
+import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
 import PageContainer from "@/app/components/container/PageContainer";
 import AuthLogin from "../../authForms/AuthLogin";
 
