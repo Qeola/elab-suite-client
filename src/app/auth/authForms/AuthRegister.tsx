@@ -8,7 +8,6 @@ import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLab
 import { Stack } from "@mui/system";
 import { registerType } from "@/app/(DashboardLayout)/types/auth/auth";
 
-
 const AuthRegister = ({ title, subtitle, subtext }: registerType) => (
   <>
     {title ? (

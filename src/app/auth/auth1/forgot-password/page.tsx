@@ -10,10 +10,7 @@ import Image from "next/image";
 
 export default function ForgotPassword() {
   return (
-    <PageContainer
-      title="Forgot Password "
-      description=""
-    >
+    <PageContainer title="Forgot Password " description="">
       <Grid
         container
         justifyContent="center"

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useSelector } from "@/store/hooks";
 import Link from "next/link";
-import { styled } from '@mui/material/styles'
+import { styled } from "@mui/material/styles";
 import { AppState } from "@/store/store";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ const Logo = () => {
 
   if (customizer.activeDir === "ltr") {
     return (
-      <LinkStyled href="/" style={{display:'flex',alignItems:'center'}} >
+      <LinkStyled href="/" style={{ display: "flex", alignItems: "center" }}>
         {customizer.activeMode === "dark" ? (
           <Image
             src="/images/logos/eLab-light.png"

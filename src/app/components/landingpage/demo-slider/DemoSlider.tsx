@@ -1,10 +1,10 @@
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Chip from '@mui/material/Chip';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { styled } from "@mui/material/styles";
 // images
 import mainDemo from "/public/images/landingpage/demos/demo-main.jpg";
 import darkDemo from "/public/images/landingpage/demos/demo-dark.jpg";
@@ -152,7 +152,8 @@ const StyledBox = styled(Box)(() => ({
 
 const DemoSlider = () => {
   return (
-    <Box id="demos"
+    <Box
+      id="demos"
       pb="140px"
       overflow="hidden"
       sx={{

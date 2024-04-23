@@ -1,11 +1,11 @@
 import React from "react";
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import { Theme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { styled } from '@mui/material/styles';
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import { Theme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { styled } from "@mui/material/styles";
 import BannerContent from "./BannerContent";
 import bannerbgImg1 from "/public/images/landingpage/bannerimg1.svg";
 import bannerbgImg2 from "/public/images/landingpage/bannerimg2.svg";
@@ -62,7 +62,13 @@ const Banner = () => {
                 <Stack direction={"row"}>
                   <Box>
                     <SliderBox>
-                      <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
+                      <Image
+                        src={eLabLogo}
+                        height={300}
+                        width={300}
+                        alt="banner"
+                        priority
+                      />
                     </SliderBox>
                     {/* <SliderBox>
                       <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
@@ -70,7 +76,13 @@ const Banner = () => {
                   </Box>
                   <Box>
                     <SliderBox2>
-                      <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
+                      <Image
+                        src={eLabLogo}
+                        height={300}
+                        width={300}
+                        alt="banner"
+                        priority
+                      />
                     </SliderBox2>
                     {/* <SliderBox2>
                       <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
