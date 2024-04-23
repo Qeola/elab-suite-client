@@ -64,7 +64,7 @@ export default function AuthForgotPassword(){
         }}
         fullWidth
         component={Link}
-        href="/auth1/login"
+        href="/auth/login"
       >
         Back to Login
       </Button>

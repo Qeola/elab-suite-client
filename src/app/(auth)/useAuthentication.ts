@@ -30,7 +30,7 @@ export const useAuthentication = () => {
   const handleAuthentication = async (endpoint: string, values: any, redirectPath: string) => {
     try {
       const data = await authenticate(endpoint, values);
-      if(endpoint === '/auth1/login'){
+      if(endpoint === '/auth/login'){
           localStorage.setItem('token', data.token);
       }
       router.push(redirectPath);
@@ -42,7 +42,7 @@ export const useAuthentication = () => {
   const logout = () => {
     // Clear token from localStorage
     localStorage.removeItem('token');
-    router.push('/auth1/login');
+    router.push('/auth/login');
   };
 
 

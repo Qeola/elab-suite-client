@@ -99,7 +99,7 @@ export default function VerifyEmail () {
                 {formatTime(countdown)}
             </Box>
             <Box sx={{ color:'black',textDecoration:'underline'}} marginTop={'1rem'} >
-            <Link href='/auth1/register' style={{color:'black'}} >Back to Signup</Link>
+            <Link href='/auth/register' style={{color:'black'}} >Back to Signup</Link>
             </Box>
         </Box>
       </Grid>

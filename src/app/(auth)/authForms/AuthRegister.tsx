@@ -64,7 +64,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
   const onSubmit=async(values:SignupValues)=>{
     try {
-      await handleAuthentication('/register', values, '/auth1/verify-email');
+      await handleAuthentication('/register', values, '/auth/verify-email');
     } catch (error) {
       // Handle authentication error, e.g., display error message
       console.error('Authentication error:', error);
