@@ -14,74 +14,87 @@ export default function ForgotPassword() {
       title="Forgot Password Page"
       description="this is Sample page"
     >
-      <Box height={"100px"} alignItems={"center"} padding={"1rem"}>
-        <Logo />
-      </Box>
-      <div
+      {/* <div
         style={{
           display: "flex",
           flexWrap: "nowrap",
           alignItems: "center",
           minHeight: "calc(100vh - 100px)",
         }}
+      > */}
+      <Grid
+        container
+        spacing={0}
+        justifyContent="center"
+        // alignItems="center"
+        sx={{ overflowX: "hidden", height: "100vh" }}
       >
         <Grid
-          container
-          spacing={0}
-          justifyContent="center"
-          alignItems="center"
-          sx={{ overflowX: "hidden" }}
+          item
+          xs={12}
+          sm={6}
+          lg={6}
+          xl={6}
+          sx={{
+            backgroundColor: "#FFCC03",
+            alignSelf: "stretch",
+            "@media (max-width: 600px)": {
+              display: "none",
+            },
+          }}
         >
-          <Grid
-            item
-            xs={0}
-            sm={6}
-            lg={4}
-            xl={4}
+          <Box
+            style={{
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Box px={3}>
+              <Image
+                src="/images/logos/forgot-password.png"
+                width={120}
+                height={120}
+                alt="forgot-password-icon"
+                priority
+              />
+            </Box>
+            <Box></Box>
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          lg={6}
+          xl={6}
+          display="flex"
+          flexDirection={"column"}
+          alignItems="center"
+        >
+          <Box height={"100px"} alignItems={"center"} padding={"1rem"}>
+            <Logo />
+          </Box>
+          <Box
+            p={4}
+            height={"100%"}
+            width={"65%"}
             sx={{
-              borderRight: "0.5px solid #060016",
-              alignSelf: "stretch",
-              "@media (max-width: 600px)": {
-                display: "none",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              "@media (max-width: 800px)": {
+                width: "100%",
               },
             }}
           >
-            <Box
-              style={{
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Box px={3}>
-                <Image
-                  src="/images/logos/forgot-password.png"
-                  width={120}
-                  height={120}
-                  alt="forgot-password-icon"
-                  priority
-                />
-              </Box>
-              <Box></Box>
-            </Box>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            lg={5}
-            xl={4}
-            display="flex"
-            alignItems="center"
-          >
-            <Box p={4} width={"100%"}>
-              <AuthForgotPassword />
-            </Box>
-          </Grid>
+            <AuthForgotPassword />
+          </Box>
         </Grid>
-      </div>
+      </Grid>
+      {/* </div> */}
     </PageContainer>
   );
 }

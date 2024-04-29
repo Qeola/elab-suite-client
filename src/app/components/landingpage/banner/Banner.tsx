@@ -9,7 +9,7 @@ import { styled } from "@mui/material/styles";
 import BannerContent from "./BannerContent";
 import bannerbgImg1 from "/public/images/landingpage/bannerimg1.svg";
 import bannerbgImg2 from "/public/images/landingpage/bannerimg2.svg";
-import eLabLogo from "/public/images/logos/eLab-black.png";
+import eLabLogo from "/public/images/logos/elab-logo-black.png";
 import Image from "next/image";
 
 const Banner = () => {

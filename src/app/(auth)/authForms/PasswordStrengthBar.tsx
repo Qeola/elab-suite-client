@@ -7,7 +7,7 @@ const PasswordStrengthBar: React.FC<PasswordStrengthBarProps> = ({
 }) => {
   const getPasswordStrength = (
     password: string,
-  ): "weak" | "fair" | "good" | "strong" => {
+  ): "Weak" | "Fair" | "Good" | "Strong" => {
     const length = password.length >= 8;
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
@@ -17,16 +17,16 @@ const PasswordStrengthBar: React.FC<PasswordStrengthBarProps> = ({
     );
 
     if (length && hasUppercase && hasLowercase && hasDigit && hasSpecialChar) {
-      return "strong";
+      return "Strong";
     } else if (
       length &&
       ((hasUppercase && hasLowercase) || hasDigit || hasSpecialChar)
     ) {
-      return "good";
+      return "Good";
     } else if ((length && hasLowercase) || hasUppercase) {
-      return "fair";
+      return "Fair";
     } else {
-      return "weak";
+      return "Weak";
     }
   };
 
@@ -34,13 +34,13 @@ const PasswordStrengthBar: React.FC<PasswordStrengthBarProps> = ({
 
   const getProgressStyle = () => {
     switch (strength) {
-      case "weak":
+      case "Weak":
         return { backgroundColor: "red", width: "8%" };
-      case "fair":
+      case "Fair":
         return { backgroundColor: "orange", width: "33%" };
-      case "good":
+      case "Good":
         return { backgroundColor: "yellow", width: "66%" };
-      case "strong":
+      case "Strong":
         return { backgroundColor: "green", width: "100%" };
       default:
         return {};

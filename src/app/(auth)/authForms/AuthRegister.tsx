@@ -52,7 +52,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Organisation name is required"),
+    name: Yup.string().required("Name of organisation is required"),
     email: Yup.string()
       .email("Invalid email format")
       .required("Email address is required"),
@@ -83,7 +83,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
       const response = await handleAuthentication(
         "/register",
         values,
-        "/auth/verify-email",
+        `/auth/verify-email/${values.email}`,
       );
       console.log("OnSubmitRes:", response);
     } catch (error) {
@@ -209,7 +209,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
                   sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
                 >
                   {" "}
-                  <span>Sign up</span>{" "}
+                  <span>Sign Up</span>{" "}
                   {isLoading && (
                     <CircularProgress
                       size={12}

@@ -139,7 +139,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
               >
                 <FormGroup>
                   <FormControlLabel
-                    control={<CustomCheckbox defaultChecked />}
+                    control={<CustomCheckbox />}
                     label="Remember this Device"
                   />
                 </FormGroup>
@@ -149,7 +149,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                   fontWeight="500"
                   sx={{
                     textDecoration: "none",
-                    color: "primary.main",
+                    color: "#0965D3",
                   }}
                 >
                   Forgot Password ?
