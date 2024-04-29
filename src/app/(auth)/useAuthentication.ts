@@ -16,7 +16,7 @@ export const useAuthentication = () => {
       const result = await postRequest(endpoint, values);
       console.log({ result });
       setResponse(result.data || result);
-      setShowSnackbar(true);
+      // setShowSnackbar(true);
       setIsLoading(false);
       return result.data;
     } catch (error: any) {
@@ -34,7 +34,7 @@ export const useAuthentication = () => {
   ) => {
     try {
       const data = await authenticate(endpoint, values);
-      if (endpoint === "/auth/login") {
+      if (endpoint === "/auth/signin") {
         localStorage.setItem("token", data.token);
       }
       if (data.status === "success") {
@@ -50,7 +50,7 @@ export const useAuthentication = () => {
   const logout = () => {
     // Clear token from localStorage
     localStorage.removeItem("token");
-    router.push("/auth/login");
+    router.push("/auth/signin");
   };
 
   return { isLoading, response, showSnackbar, handleAuthentication, logout };

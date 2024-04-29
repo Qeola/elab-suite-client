@@ -19,7 +19,7 @@ const Logo = () => {
       <LinkStyled href="/" style={{ display: "flex", alignItems: "center" }}>
         {customizer.activeMode === "dark" ? (
           <Image
-            src="/images/logos/eLab-light.png"
+            src="/images/logos/elab-logo-light.png"
             alt="logo"
             height={customizer.TopbarHeight}
             width={174}
@@ -27,7 +27,7 @@ const Logo = () => {
           />
         ) : (
           <Image
-            src={"/images/logos/eLab-light.png"}
+            src="/images/logos/elab-logo-light.png"
             alt="logo"
             height={43}
             // height={customizer.TopbarHeight}

@@ -13,7 +13,7 @@ import Image from "next/image";
 export default function Register() {
   return (
     <PageContainer
-      title="Register | Streamline your workflows,boost your efficiency! "
+      title="Register | Streamline your workflows, boost your efficiency! "
       description=""
     >
       {/* <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px)'}} > */}
@@ -50,7 +50,7 @@ export default function Register() {
           >
             <Box px={3}>
               <Image
-                src="/images/logos/eLab-black.png"
+                src="/images/logos/elab-logo-black.png"
                 width={150}
                 height={150}
                 alt="ennovatelab-logo"
@@ -63,7 +63,7 @@ export default function Register() {
                 fontWeight={500}
                 style={{ textAlign: "center", maxWidth: "27ch" }}
               >
-                Streamline your workflows,boost your efficiency!
+                Streamline your workflows, boost your efficiency!
               </Typography>
             </Box>
           </Box>
@@ -84,7 +84,7 @@ export default function Register() {
           </Box>
           <Box
             p={4}
-            width={"80%"}
+            width={"65%"}
             sx={{
               "@media (max-width: 800px)": {
                 width: "100%",
@@ -92,7 +92,7 @@ export default function Register() {
             }}
           >
             <AuthRegister
-              title="Signup with eLab suite"
+              title="Sign Up with eLab suite"
               subtext={
                 <Typography variant="subtitle1" color="textSecondary" mb={1}>
                   Your Admin Dashboard
@@ -104,17 +104,19 @@ export default function Register() {
                     color="textSecondary"
                     variant="h6"
                     fontWeight="400"
+                    fontSize=".9rem"
                   >
                     Already have an Account?
                   </Typography>
                   <Typography
                     component={Link}
-                    href="/auth/login"
+                    href="/auth/signin"
                     fontWeight="500"
                     sx={{
                       textDecoration: "none",
-                      color: "primary.main",
+                      color: "#0965D3",
                     }}
+                    fontSize=".9rem"
                   >
                     Sign In
                   </Typography>

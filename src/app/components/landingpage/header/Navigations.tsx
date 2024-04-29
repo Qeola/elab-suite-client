@@ -124,10 +124,10 @@ const Navigations = () => {
       {/* <StyledButton color="inherit" variant="text" href="https://demos.adminmart.com/premium/nextjs/modernize-nextjs/docs/index.html">
                 Documentation
             </StyledButton> */}
-      <StyledButton color="inherit" variant="text" href="/auth/login">
+      <StyledButton color="inherit" variant="text" href="/auth/signin">
         Log In
       </StyledButton>
-      <Button color="primary" variant="contained" href="/auth/register">
+      <Button color="primary" variant="contained" href="/auth/signup">
         Sign up
       </Button>
     </>
