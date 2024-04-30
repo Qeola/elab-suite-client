@@ -8,19 +8,40 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import Typography from "@mui/material/Typography";
 import * as dropdownData from "./data";
-
+import { useSelector } from "@/store/hooks";
+import { AppState } from "@/store/store";
 import { IconMail } from "@tabler/icons-react";
 import { Stack } from "@mui/system";
 import Image from "next/image";
+import { postRequest } from "@/utils/api/apiRequests";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
+  const router = useRouter();
   const [anchorEl2, setAnchorEl2] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const authenticationState = useSelector(
+    (state: AppState) => state.authentication,
+  );
+  const [userData, setUserData] = useState(authenticationState.userData.user);
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    const result = await postRequest("/logout");
+    console.log({ result });
+    // dispatch(loginSuccess({ token: result.data.token, userData: result.data.data }));
+    localStorage.remove("token");
+    router.push("/signin");
+    setIsLoading(false);
+  };
+
+  console.log(userData);
 
   return (
     <Box>
@@ -38,7 +59,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={"/images/profile/user-1.jpg"}
+          src={userData.avatar}
           alt={"ProfileImg"}
           sx={{
             width: 35,
@@ -67,7 +88,7 @@ const Profile = () => {
         <Typography variant="h5">User Profile</Typography>
         <Stack direction="row" py={3} spacing={2} alignItems="center">
           <Avatar
-            src={"/images/profile/user-1.jpg"}
+            src={userData.avatar}
             alt={"ProfileImg"}
             sx={{ width: 95, height: 95 }}
           />
@@ -77,10 +98,10 @@ const Profile = () => {
               color="textPrimary"
               fontWeight={600}
             >
-              Mathew Anderson
+              {userData.name}
             </Typography>
             <Typography variant="subtitle2" color="textSecondary">
-              Designer
+              {userData.role}
             </Typography>
             <Typography
               variant="subtitle2"
@@ -90,7 +111,7 @@ const Profile = () => {
               gap={1}
             >
               <IconMail width={15} height={15} />
-              info@modernize.com
+              {userData.email}
             </Typography>
           </Box>
         </Stack>
@@ -149,34 +170,9 @@ const Profile = () => {
           </Box>
         ))}
         <Box mt={2}>
-          <Box
-            bgcolor="primary.light"
-            p={3}
-            mb={3}
-            overflow="hidden"
-            position="relative"
-          >
-            <Box display="flex" justifyContent="space-between">
-              <Box>
-                <Typography variant="h5" mb={2}>
-                  Unlimited <br />
-                  Access
-                </Typography>
-                <Button variant="contained" color="primary">
-                  Upgrade
-                </Button>
-              </Box>
-              <Image
-                src={"/images/backgrounds/unlimited-bg.png"}
-                width={150}
-                height={183}
-                alt="unlimited"
-                className="signup-bg"
-              />
-            </Box>
-          </Box>
           <Button
-            href="/auth/auth1/login"
+            onClick={handleLogout}
+            href="/auth/signin"
             variant="outlined"
             color="primary"
             component={Link}

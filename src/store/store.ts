@@ -3,23 +3,23 @@ import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import CustomizerReducer from "./customizer/CustomizerSlice";
+import AuthenticationReducer from "./authentication/AuthenticationSlice";
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
+const rootReducer = combineReducers({
+  customizer: persistReducer<any>(persistConfig, CustomizerReducer),
+  authentication: persistReducer<any>(persistConfig, AuthenticationReducer),
+});
+
 export const store = configureStore({
-  reducer: {
-    customizer: persistReducer<any>(persistConfig, CustomizerReducer),
-  },
+  reducer: rootReducer,
   devTools: process.env.NODE_ENV !== "production",
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false, immutableCheck: false }),
-});
-
-const rootReducer = combineReducers({
-  customizer: CustomizerReducer,
 });
 
 export const persistor = persistStore(store);

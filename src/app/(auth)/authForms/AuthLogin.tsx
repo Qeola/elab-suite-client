@@ -26,8 +26,11 @@ import { IconEye } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { LoginValues } from "../authInterfaces";
 import { postRequest } from "@/utils/api/apiRequests";
+import { loginSuccess } from "@/store/authentication/AuthenticationSlice";
+import { useDispatch } from "react-redux";
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -52,6 +55,9 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
     console.log({ values });
     const result = await postRequest("/login", values);
     console.log({ result });
+    dispatch(
+      loginSuccess({ token: result.data.token, userData: result.data.data }),
+    );
     localStorage.setItem("token", result.data.token);
     router.push("/dashboard");
     setIsLoading(false);
