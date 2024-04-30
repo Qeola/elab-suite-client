@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
 
 export default function VerifyEmail({ params }: any) {
-  const email = params.email;
+  const email = decodeURIComponent(params.email);
   const [countdown, setCountdown] = useState(300);
   const [resendEnabled, setResendEnabled] = useState(false);
 
@@ -137,8 +137,8 @@ export default function VerifyEmail({ params }: any) {
             </Typography>
             <Typography variant="body1" mb={2} maxWidth={"58ch"}>
               Click on the email verification link sent to you on{" "}
-              <span style={{ textDecoration: "underline" }}>{email} </span> Mail
-              may take up to 5 minutes to arrive. Check your spam folder as well
+              <span style={{ fontWeight: "500" }}>{email}. </span> Mail may take
+              up to 5 minutes to arrive. Check your spam folder as well
             </Typography>
 
             <Box
@@ -162,8 +162,7 @@ export default function VerifyEmail({ params }: any) {
                 onClick={handleResendClick}
                 style={{
                   cursor: resendEnabled ? "pointer" : "not-allowed",
-                  textDecoration: "underline",
-                  color: resendEnabled ? "#0965D3" : "#888",
+                  color: "#0965D3",
                   pointerEvents: resendEnabled ? "auto" : "none",
                 }}
               >
@@ -174,7 +173,7 @@ export default function VerifyEmail({ params }: any) {
               sx={{ color: "black", textDecoration: "underline" }}
               marginTop={"1rem"}
             >
-              <Link href="/auth/register" style={{ color: "black" }}>
+              <Link href="/auth/signup" style={{ color: "#060016" }}>
                 Back to Signup
               </Link>
             </Box>
