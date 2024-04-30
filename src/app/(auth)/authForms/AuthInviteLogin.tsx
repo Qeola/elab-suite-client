@@ -12,7 +12,6 @@ import { loginType } from "@/app/(Dashboard)/types/auth/auth";
 import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox";
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
-import AuthSocialButtons from "./AuthSocialButtons";
 import { IconButton, InputAdornment, OutlinedInput } from "@mui/material";
 import { LockOutlined } from "@mui/icons-material";
 import { useState } from "react";
