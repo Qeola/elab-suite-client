@@ -13,7 +13,7 @@ import Image from "next/image";
 export default function Register() {
   return (
     <PageContainer
-      title="Register | Streamline your workflows, boost your efficiency! "
+      title="Sign up | Streamline your workflows, boost your efficiency! "
       description=""
     >
       {/* <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px)'}} > */}
@@ -92,12 +92,7 @@ export default function Register() {
             }}
           >
             <AuthRegister
-              title="Sign Up with eLab suite"
-              subtext={
-                <Typography variant="subtitle1" color="textSecondary" mb={1}>
-                  Your Admin Dashboard
-                </Typography>
-              }
+              title="Sign up with your credentials"
               subtitle={
                 <Stack direction="row" spacing={1} mt={3}>
                   <Typography
@@ -106,7 +101,7 @@ export default function Register() {
                     fontWeight="400"
                     fontSize=".9rem"
                   >
-                    Already have an Account?
+                    Already have an account?
                   </Typography>
                   <Typography
                     component={Link}

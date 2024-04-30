@@ -97,7 +97,7 @@ export default function Login() {
             }}
           >
             <AuthLogin
-              title="Sign In with your credentials"
+              title="Sign in with your credentials"
               subtitle={
                 <Stack direction="row" spacing={1} mt={3}>
                   <Typography
@@ -110,7 +110,7 @@ export default function Login() {
                   </Typography>
                   <Typography
                     component={Link}
-                    href="/auth/register"
+                    href="/auth/signup"
                     fontWeight="500"
                     sx={{
                       textDecoration: "none",

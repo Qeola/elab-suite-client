@@ -85,7 +85,7 @@ const BannerContent = () => {
         }}
       >
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} mt={3}>
-          <StyledButton variant="contained" color="primary" href="/auth/login">
+          <StyledButton variant="contained" color="primary" href="/auth/signin">
             Login
           </StyledButton>
 
