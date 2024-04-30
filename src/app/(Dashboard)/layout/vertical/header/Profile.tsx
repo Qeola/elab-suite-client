@@ -15,9 +15,12 @@ import { Stack } from "@mui/system";
 import Image from "next/image";
 import { postRequest } from "@/utils/api/apiRequests";
 import { useRouter } from "next/navigation";
+import { logoutSuccess } from "@/store/authentication/AuthenticationSlice";
+import { useDispatch } from "react-redux";
 
 const Profile = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [anchorEl2, setAnchorEl2] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const authenticationState = useSelector(
@@ -34,10 +37,9 @@ const Profile = () => {
   const handleLogout = async () => {
     setIsLoading(true);
     const result = await postRequest("/logout");
-    console.log({ result });
-    // dispatch(loginSuccess({ token: result.data.token, userData: result.data.data }));
-    localStorage.remove("token");
-    router.push("/signin");
+    dispatch(logoutSuccess());
+    localStorage.removeItem("token");
+    router.push("/auth/signin");
     setIsLoading(false);
   };
 

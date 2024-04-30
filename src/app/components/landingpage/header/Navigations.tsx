@@ -127,11 +127,7 @@ const Navigations = () => {
       <StyledButton color="inherit" variant="text" href="/auth/signin">
         Log In
       </StyledButton>
-      <Button
-        sx={{ backgroundColor: "#FFCC03", color: "black", fontWeight: "500" }}
-        variant="contained"
-        href="/auth/signup"
-      >
+      <Button color="primary" variant="contained" href="/auth/signup">
         Sign up
       </Button>
     </>

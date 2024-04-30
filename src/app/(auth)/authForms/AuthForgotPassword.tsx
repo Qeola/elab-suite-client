@@ -14,8 +14,10 @@ import {
 import { MailLockOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { postRequest } from "@/utils/api/apiRequests";
+import { useRouter } from "next/navigation";
 
 export default function AuthForgotPassword() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState<string>("");
 
@@ -23,6 +25,7 @@ export default function AuthForgotPassword() {
     setIsLoading(true);
     const result = await postRequest("/forgot-password", email);
     console.log({ result });
+    router.push(`/auth/verify-email/${email}`);
     setIsLoading(false);
   };
 
@@ -30,26 +33,27 @@ export default function AuthForgotPassword() {
   return (
     <>
       <Box>
-        <Typography variant="h3">Forgot your Password ?</Typography>
+        <Typography variant="h3">Forgot your password ?</Typography>
         <p>
-          No worries.Please enter the email address associated with your account
-          and we will email you a link to reset your password.
+          No worries. Enter your email address below, and we&apos;ll send you a
+          link to reset it.
         </p>
       </Box>
-      <Stack mt={4} spacing={2}>
-        <CustomFormLabel htmlFor="reset-email">Email Address</CustomFormLabel>
-        <OutlinedInput
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          startAdornment={
-            <InputAdornment position="start">
-              <MailLockOutlined fontSize="small" />
-            </InputAdornment>
-          }
-          id="mail"
-          fullWidth
-        />
-
+      <Stack mt={1} spacing={2}>
+        <Box>
+          <CustomFormLabel htmlFor="reset-email">Email Address</CustomFormLabel>
+          <OutlinedInput
+            type="email"
+            onChange={(e) => setEmail(e.target.value)}
+            startAdornment={
+              <InputAdornment position="start">
+                <MailLockOutlined fontSize="small" />
+              </InputAdornment>
+            }
+            id="mail"
+            fullWidth
+          />
+        </Box>
         <Button
           onClick={handleForgotPassword}
           variant="contained"
@@ -72,7 +76,7 @@ export default function AuthForgotPassword() {
             sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
           >
             {" "}
-            <span>Forgot Password</span>{" "}
+            <span>Submit</span>{" "}
             {isLoading && (
               <CircularProgress
                 size={12}
@@ -101,7 +105,7 @@ export default function AuthForgotPassword() {
           component={Link}
           href="/auth/signin"
         >
-          Back to Login
+          Back to sign in
         </Button>
       </Stack>
     </>

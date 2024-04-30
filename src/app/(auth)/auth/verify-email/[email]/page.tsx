@@ -60,7 +60,7 @@ export default function VerifyEmail({ params }: any) {
         container
         spacing={0}
         justifyContent="center"
-        // alignItems="center"
+        alignItems="center"
         sx={{ overflowX: "hidden", height: "100vh" }}
       >
         <Grid
@@ -114,7 +114,9 @@ export default function VerifyEmail({ params }: any) {
           display="flex"
           flexDirection={"column"}
           alignItems="center"
-          // justifyContent="center"
+          // border='1px solid red'
+          justifyContent="center"
+          height={"80%"}
         >
           <Box alignItems={"center"} padding={"1rem"}>
             <Logo />
@@ -136,9 +138,10 @@ export default function VerifyEmail({ params }: any) {
               Verify your email address
             </Typography>
             <Typography variant="body1" mb={2} maxWidth={"58ch"}>
-              Click on the email verification link sent to you on{" "}
+              Please click on the email verification link sent to you on{" "}
               <span style={{ fontWeight: "500" }}>{email}. </span> Mail may take
-              up to 5 minutes to arrive. Check your spam folder as well
+              up to 5 minutes to arrive. Don&apos;t forget to also check your
+              spam folder!
             </Typography>
 
             <Box
@@ -174,7 +177,7 @@ export default function VerifyEmail({ params }: any) {
               marginTop={"1rem"}
             >
               <Link href="/auth/signup" style={{ color: "#060016" }}>
-                Back to Signup
+                Back to sign up
               </Link>
             </Box>
           </Box>

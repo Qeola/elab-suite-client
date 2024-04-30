@@ -48,50 +48,6 @@ const Banner = () => {
           <Grid item xs={12} lg={6} sm={8}>
             <BannerContent />
           </Grid>
-          {lgUp ? (
-            <Grid item xs={12} lg={6}>
-              <Box
-                p={3.2}
-                sx={{
-                  backgroundColor: (theme) => theme.palette.primary.light,
-                  minWidth: "2000px",
-                  height: "calc(100vh - 100px)",
-                  maxHeight: "790px",
-                }}
-              >
-                <Stack direction={"row"}>
-                  <Box>
-                    <SliderBox>
-                      <Image
-                        src={eLabLogo}
-                        height={300}
-                        width={300}
-                        alt="banner"
-                        priority
-                      />
-                    </SliderBox>
-                    {/* <SliderBox>
-                      <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
-                    </SliderBox> */}
-                  </Box>
-                  <Box>
-                    <SliderBox2>
-                      <Image
-                        src={eLabLogo}
-                        height={300}
-                        width={300}
-                        alt="banner"
-                        priority
-                      />
-                    </SliderBox2>
-                    {/* <SliderBox2>
-                      <Image src={eLabLogo} height={300} width={300} alt="banner" priority />
-                    </SliderBox2> */}
-                  </Box>
-                </Stack>
-              </Box>
-            </Grid>
-          ) : null}
         </Grid>
       </Container>
     </Box>

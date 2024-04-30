@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import PageContainer from "@/app/components/container/PageContainer";
 import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
-import AuthTwoSteps from "../../authForms/AuthTwoSteps";
+// import AuthTwoSteps from "../../authForms/AuthTwoSteps";
 import Image from "next/image";
 
 export default function TwoSteps() {
@@ -87,7 +87,7 @@ export default function TwoSteps() {
             <Typography variant="subtitle1" fontWeight="700" mb={1}>
               ******1234
             </Typography>
-            <AuthTwoSteps />
+            {/* <AuthTwoSteps /> */}
           </Box>
         </Grid>
       </Grid>
