@@ -139,9 +139,9 @@ export default function VerifyEmail({ params }: any) {
             </Typography>
             <Typography variant="body1" mb={2} maxWidth={"58ch"}>
               Please click on the email verification link sent to you on{" "}
-              <span style={{ fontWeight: "500" }}>[{email}]. </span> Mail may
-              take up to 5 minutes to arrive. Don&apos;t forget to also check
-              your spam folder!
+              <span style={{ fontWeight: "500" }}>{email}. </span> Mail may take
+              up to 5 minutes to arrive. Don&apos;t forget to also check your
+              spam folder!
             </Typography>
 
             <Box
