@@ -85,9 +85,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         values,
         `/auth/verify-email/${values.email}`,
       );
-      console.log("OnSubmitRes:", response);
     } catch (error) {
-      // Handle authentication error, e.g., display error message
       console.error("Authentication error:", error);
     }
   };

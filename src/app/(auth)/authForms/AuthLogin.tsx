@@ -28,11 +28,15 @@ import { LoginValues } from "../authInterfaces";
 import { postRequest } from "@/utils/api/apiRequests";
 import { loginSuccess } from "@/store/authentication/AuthenticationSlice";
 import { useDispatch } from "react-redux";
+import { useAuthentication } from "../useAuthentication";
+import CustomSnackbar from "@/app/components/Snackbar";
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   const dispatch = useDispatch();
+  const { isLoading, response, showSnackbar, handleAuthentication } =
+    useAuthentication();
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
@@ -51,16 +55,29 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   const router = useRouter();
   const initialValues = { email: "", password: "" };
   const onSubmit = async (values: LoginValues) => {
-    setIsLoading(true);
-    console.log({ values });
-    const result = await postRequest("/login", values);
-    console.log({ result });
-    dispatch(
-      loginSuccess({ token: result.data.token, userData: result.data.data }),
-    );
-    localStorage.setItem("token", result.data.token);
-    router.push("/dashboard");
-    setIsLoading(false);
+    // setIsLoading(true);
+    // console.log({ values });
+    // const result = await postRequest("/login", values);
+    // console.log({ result });
+
+    // );
+    // router.push("/dashboard");
+    // setIsLoading(false);
+    try {
+      const response = await handleAuthentication(
+        "/login",
+        values,
+        `/dashboard`,
+      );
+      dispatch(
+        loginSuccess({ token: response.token, userData: response.data }),
+      );
+      localStorage.setItem("token", response.token);
+
+      // console.log({response})
+    } catch (error) {
+      console.error("Authentication error:", error);
+    }
   };
 
   return (
@@ -200,6 +217,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
         )}
       </Formik>
       {subtitle}
+      {showSnackbar && <CustomSnackbar response={response} />}
     </>
   );
 };

@@ -41,7 +41,7 @@ const CustomSnackbar = ({ response }: any) => {
           severity={response.status || "error"}
         >
           <Typography variant="body1" color="textPrimary">
-            {response.msg || response[0].message}
+            {response?.msg || response[0]?.message}
           </Typography>
         </SnackbarAlert>
       </MuiSnackbar>

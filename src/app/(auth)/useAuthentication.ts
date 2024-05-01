@@ -1,5 +1,3 @@
-// useAuthentication.ts
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { postRequest } from "@/utils/api/apiRequests";
@@ -16,12 +14,13 @@ export const useAuthentication = () => {
       const result = await postRequest(endpoint, values);
       console.log({ result });
       setResponse(result.data || result);
-      // setShowSnackbar(true);
+      setShowSnackbar(true);
       setIsLoading(false);
       return result.data;
     } catch (error: any) {
       console.error("Authentication failed:", error);
       setResponse(error.errors);
+      setShowSnackbar(true);
       setIsLoading(false);
       return error.errors;
     }
@@ -42,6 +41,7 @@ export const useAuthentication = () => {
       } else {
         return;
       }
+      return data;
     } catch (error) {
       console.error("Authentication failed:", error);
     }
