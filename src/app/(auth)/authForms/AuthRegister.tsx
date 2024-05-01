@@ -85,9 +85,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
         values,
         `/auth/verify-email/${values.email}`,
       );
-      console.log("OnSubmitRes:", response);
     } catch (error) {
-      // Handle authentication error, e.g., display error message
       console.error("Authentication error:", error);
     }
   };
@@ -95,7 +93,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
   return (
     <>
       {title ? (
-        <Typography fontWeight="600" variant="h4" mb={1}>
+        <Typography textAlign={"center"} fontWeight="600" variant="h4" mb={1}>
           {title}
         </Typography>
       ) : null}

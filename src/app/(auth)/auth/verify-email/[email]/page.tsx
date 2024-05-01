@@ -71,7 +71,7 @@ export default function VerifyEmail({ params }: any) {
           xl={6}
           sx={{
             alignSelf: "stretch",
-            backgroundColor: "#FFCC03",
+            backgroundColor: "whitesmoke",
             "@media (max-width: 600px)": {
               display: "none",
             },
@@ -89,15 +89,15 @@ export default function VerifyEmail({ params }: any) {
           >
             <Box px={3}>
               <Image
-                src="/images/logos/email.png"
-                width={120}
-                height={120}
+                src="/images/email.png"
+                width={100}
+                height={100}
                 alt="email-logo"
                 priority
               />
             </Box>
             <Typography
-              variant={"h4"}
+              variant={"h5"}
               fontWeight={500}
               style={{ textAlign: "center", maxWidth: "27ch" }}
             >
@@ -134,7 +134,7 @@ export default function VerifyEmail({ params }: any) {
               },
             }}
           >
-            <Typography variant="h1" fontWeight={600} mb={2}>
+            <Typography variant="h3" fontWeight={600} mb={2}>
               Verify your email address
             </Typography>
             <Typography variant="body1" mb={2} maxWidth={"58ch"}>
