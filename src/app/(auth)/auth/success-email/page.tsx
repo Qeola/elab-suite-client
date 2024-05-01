@@ -7,6 +7,7 @@ import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
 import PageContainer from "@/app/components/container/PageContainer";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@mui/material";
 
 export default function SuccessEmail() {
   return (
@@ -39,26 +40,30 @@ export default function SuccessEmail() {
             Email verified successfully!
           </Typography>
           <Typography sx={{ maxWidth: "60ch" }} component={"p"}>
-            Welcome aboard!. Your account has now been verified successfully.
-            You would be automatically redirected shortly. If not redirected,
-            click the button below.
+            Your account has now been verified successfully. You would be
+            automatically redirected shortly. If not redirected, click the
+            button below.
           </Typography>
         </Box>
-        <Typography
+        <Button
           component={Link}
           href="/dashboard"
+          variant="contained"
+          size="large"
           sx={{
             color: "black",
             backgroundColor: "#FFCC03",
             fontWeight: 600,
-            paddingBlock: ".7rem",
-            paddingInline: "3rem",
-            borderRadius: "3px",
-            marginTop: "1rem",
+            "&:hover": {
+              opacity: 0.8,
+              transition: "opacity 200ms ease-in",
+              backgroundColor: "#FFCC03",
+              boxShadow: "none",
+            },
           }}
         >
           Continue to Dashboard
-        </Typography>
+        </Button>
       </div>
     </PageContainer>
   );

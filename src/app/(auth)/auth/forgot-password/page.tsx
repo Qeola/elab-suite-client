@@ -10,10 +10,7 @@ import Image from "next/image";
 
 export default function ForgotPassword() {
   return (
-    <PageContainer
-      title="Forgot Password Page"
-      description="this is Sample page"
-    >
+    <PageContainer title="Forgot Password Page" description="">
       {/* <div
         style={{
           display: "flex",
@@ -26,7 +23,7 @@ export default function ForgotPassword() {
         container
         spacing={0}
         justifyContent="center"
-        // alignItems="center"
+        alignItems="center"
         sx={{ overflowX: "hidden", height: "100vh" }}
       >
         <Grid
@@ -36,7 +33,7 @@ export default function ForgotPassword() {
           lg={6}
           xl={6}
           sx={{
-            backgroundColor: "#FFCC03",
+            backgroundColor: "whitesmoke",
             alignSelf: "stretch",
             "@media (max-width: 600px)": {
               display: "none",
@@ -50,18 +47,27 @@ export default function ForgotPassword() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              gap: "1rem",
             }}
           >
             <Box px={3}>
               <Image
-                src="/images/logos/forgot-password.png"
-                width={120}
-                height={120}
+                src="/images/forgot-password.png"
+                width={110}
+                height={110}
                 alt="forgot-password-icon"
                 priority
               />
             </Box>
-            <Box></Box>
+            <Box>
+              <Typography
+                variant={"h5"}
+                fontWeight={500}
+                style={{ textAlign: "center", maxWidth: "27ch" }}
+              >
+                Password Recovery
+              </Typography>
+            </Box>
           </Box>
         </Grid>
         <Grid
@@ -73,6 +79,7 @@ export default function ForgotPassword() {
           display="flex"
           flexDirection={"column"}
           alignItems="center"
+          height={"80%"}
         >
           <Box height={"100px"} alignItems={"center"} padding={"1rem"}>
             <Logo />

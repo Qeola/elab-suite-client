@@ -32,7 +32,9 @@ export default function Register() {
           xl={6}
           sx={{
             alignSelf: "stretch",
-            backgroundColor: "#FFCC03",
+            backgroundImage: 'url("/images/pexels-fauxels.jpg")',
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
             "@media (max-width: 600px)": {
               display: "none",
             },
@@ -48,7 +50,7 @@ export default function Register() {
               justifyContent: "center",
             }}
           >
-            <Box px={3}>
+            {/* <Box px={3}>
               <Image
                 src="/images/logos/elab-logo-black.png"
                 width={150}
@@ -56,15 +58,15 @@ export default function Register() {
                 alt="ennovatelab-logo"
                 priority
               />
-            </Box>
+            </Box> */}
             <Box>
-              <Typography
+              {/* <Typography
                 variant={"h4"}
                 fontWeight={500}
                 style={{ textAlign: "center", maxWidth: "27ch" }}
               >
                 Streamline your workflows, boost your efficiency!
-              </Typography>
+              </Typography> */}
             </Box>
           </Box>
         </Grid>
@@ -92,7 +94,7 @@ export default function Register() {
             }}
           >
             <AuthRegister
-              title="Sign up with your credentials"
+              title="Create an account"
               subtitle={
                 <Stack direction="row" spacing={1} mt={3}>
                   <Typography

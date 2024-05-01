@@ -66,7 +66,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   return (
     <>
       {title ? (
-        <Typography fontWeight="600" variant="h3" mb={1}>
+        <Typography textAlign={"center"} fontWeight="600" variant="h3" mb={1}>
           {title}
         </Typography>
       ) : null}
@@ -146,7 +146,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                 <FormGroup>
                   <FormControlLabel
                     control={<CustomCheckbox />}
-                    label="Remember this Device"
+                    label="Remember this device"
                   />
                 </FormGroup>
                 <Typography

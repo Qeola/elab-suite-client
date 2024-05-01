@@ -25,7 +25,7 @@ export default function AuthForgotPassword() {
     setIsLoading(true);
     const result = await postRequest("/forgot-password", email);
     console.log({ result });
-    router.push(`/auth/verify-email/${email}`);
+    router.push(`/auth/recover-password/${email}`);
     setIsLoading(false);
   };
 
@@ -33,7 +33,9 @@ export default function AuthForgotPassword() {
   return (
     <>
       <Box>
-        <Typography variant="h3">Forgot your password ?</Typography>
+        <Typography variant="h3" fontWeight={600}>
+          Forgot your password ?
+        </Typography>
         <p>
           No worries. Enter your email address below, and we&apos;ll send you a
           link to reset it.

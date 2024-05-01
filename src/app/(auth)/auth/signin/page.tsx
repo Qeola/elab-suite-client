@@ -11,7 +11,7 @@ import Image from "next/image";
 
 export default function Login() {
   return (
-    <PageContainer title="Login Page" description="this is Sample page">
+    <PageContainer title="SignIn Page | Sign into your account" description="">
       {/* <Box height={"100px"} alignItems={"center"} padding={"1rem"}>
         <Logo />
       </Box> */}
@@ -38,7 +38,7 @@ export default function Login() {
           xl={6}
           sx={{
             alignSelf: "stretch",
-            backgroundColor: "#FFCC03",
+            backgroundColor: "whitesmoke",
             "@media (max-width: 600px)": {
               display: "none",
             },
@@ -51,6 +51,7 @@ export default function Login() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              gap: "1rem",
             }}
           >
             <Box px={3}>
@@ -64,7 +65,7 @@ export default function Login() {
             </Box>
             <Box>
               <Typography
-                variant={"h4"}
+                variant={"h5"}
                 fontWeight={500}
                 style={{ textAlign: "center", maxWidth: "27ch" }}
               >
@@ -97,7 +98,7 @@ export default function Login() {
             }}
           >
             <AuthLogin
-              title="Sign in with your credentials"
+              title="Sign in to your account"
               subtitle={
                 <Stack direction="row" spacing={1} mt={3}>
                   <Typography
