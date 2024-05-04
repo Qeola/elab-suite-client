@@ -14,7 +14,7 @@ import { postRequest } from "@/utils/api/apiRequests";
 
 export default function ConfirmEmail({ params }: any) {
   const email = decodeURIComponent(params.email);
-  const [countdown, setCountdown] = useState(60);
+  const [countdown, setCountdown] = useState(180);
   const [resendEnabled, setResendEnabled] = useState(false);
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,7 @@ export default function ConfirmEmail({ params }: any) {
 
   const handleResendClick = async () => {
     setIsLoading(true);
-    setCountdown(60);
+    setCountdown(180);
     const response = await postRequest("/resend-verification-email", { email });
     if (response?.data?.status === "success") {
       setResendEnabled(false);

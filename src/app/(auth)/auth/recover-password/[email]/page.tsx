@@ -13,7 +13,7 @@ import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
 
 export default function RecoverPassword({ params }: any) {
   const email = decodeURIComponent(params.email);
-  const [countdown, setCountdown] = useState(60);
+  const [countdown, setCountdown] = useState(180);
   const [resendEnabled, setResendEnabled] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function RecoverPassword({ params }: any) {
 
   const handleResendClick = () => {
     setResendEnabled(false);
-    setCountdown(60);
+    setCountdown(180);
   };
 
   const formatTime = (time: number) => {
