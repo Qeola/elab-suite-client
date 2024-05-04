@@ -11,9 +11,9 @@ import { Button, CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import Logo from "@/app/(Dashboard)/layout/shared/logo/Logo";
 
-export default function VerifyEmail({ params }: any) {
+export default function RecoverPassword({ params }: any) {
   const email = decodeURIComponent(params.email);
-  const [countdown, setCountdown] = useState(300);
+  const [countdown, setCountdown] = useState(60);
   const [resendEnabled, setResendEnabled] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function VerifyEmail({ params }: any) {
 
   const handleResendClick = () => {
     setResendEnabled(false);
-    setCountdown(300);
+    setCountdown(60);
   };
 
   const formatTime = (time: number) => {
@@ -44,7 +44,7 @@ export default function VerifyEmail({ params }: any) {
   };
 
   return (
-    <PageContainer title="Recover Password Page" description="">
+    <PageContainer title="Recover-Password Page" description="">
       {/* <Box height={"100px"} alignItems={"center"} padding={"1rem"}>
         <Logo />
       </Box> */}
@@ -72,7 +72,7 @@ export default function VerifyEmail({ params }: any) {
           sx={{
             alignSelf: "stretch",
             backgroundColor: "whitesmoke",
-            "@media (max-width: 600px)": {
+            "@media (max-width: 1120px)": {
               display: "none",
             },
           }}
@@ -116,62 +116,91 @@ export default function VerifyEmail({ params }: any) {
           alignItems="center"
           // border='1px solid red'
           justifyContent="center"
-          height={"80%"}
         >
           <Box alignItems={"center"} padding={"1rem"}>
             <Logo />
           </Box>
           <Box
             p={4}
-            height={"100%"}
-            width={"85%"}
+            width={"600px"}
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              "@media (max-width: 800px)": {
+              "@media (max-width: 600px)": {
                 width: "100%",
               },
             }}
           >
             <Typography variant="h3" fontWeight={600} mb={2}>
-              Recovery email sent
+              Recover Password
             </Typography>
-            <Typography variant="body1" mb={2} maxWidth={"58ch"}>
-              An email with instructions on how to reset your password has been
-              sent to <span style={{ fontWeight: "500" }}>{email}. </span> Mail
-              may take up to 5 minutes to arrive. Don&apos;t forget to also
-              check your spam folder!
+            <Typography fontWeight={500} mb={2} maxWidth={"58ch"}>
+              Mail confirmation link has been sent to{" "}
+              <span style={{ fontWeight: "500" }}>{email}. </span>
             </Typography>
-
-            <Box
+            {resendEnabled ? (
+              <Typography>Didn&apos;t get email ?</Typography>
+            ) : (
+              <Box>
+                <Typography>
+                  If you don&apos;t see an email from us within 3 minutes, one
+                  of these could have happened.
+                </Typography>
+                <ul
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                    maxWidth: "55ch",
+                  }}
+                >
+                  <li>
+                    The email might be in your spam folder. (if you use Gmail,
+                    please check your Promotions folder as well.)
+                  </li>
+                  <li>The email address you entered has a typo.</li>
+                  <li>
+                    You accidentally entered another email address. (Usually
+                    happens with auto-complete.)
+                  </li>
+                  <li>
+                    We can&apos;t deliver the email to the address (Usually
+                    because of corporate firewalls or filtering.)
+                  </li>
+                </ul>
+              </Box>
+            )}
+            <Button
+              onClick={resendEnabled ? handleResendClick : () => {}}
+              variant="contained"
+              size="large"
               sx={{
-                display: "flex",
-                justifyContent: "center",
+                color: "black",
                 backgroundColor: "#FFCC03",
-                fontWeight: 500,
-                fontSize: "1rem",
-                width: "100px",
-                padding: ".3rem",
-                marginBlock: ".8rem",
+                fontWeight: 600,
+                width: "250px",
+                marginTop: "1rem",
+                pointerEvents: resendEnabled ? "auto" : "none",
+                "&:hover": {
+                  opacity: 0.8,
+                  transition: "opacity 200ms ease-in",
+                  backgroundColor: "#FFCC03",
+                  boxShadow: "none",
+                },
               }}
             >
-              {formatTime(countdown)}
-            </Box>
-            <Stack direction="row" spacing={1} alignItems={"center"}>
-              <Typography>Didn&apos;t get email ?</Typography>
               <Typography
-                component="div"
-                onClick={handleResendClick}
-                style={{
-                  cursor: resendEnabled ? "pointer" : "not-allowed",
-                  color: "#0965D3",
-                  pointerEvents: resendEnabled ? "auto" : "none",
-                }}
+                fontWeight={600}
+                sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
               >
-                Resend email
+                {resendEnabled ? (
+                  <span>Click to resend</span>
+                ) : (
+                  formatTime(countdown)
+                )}
               </Typography>
-            </Stack>
+            </Button>
             <Box
               sx={{ color: "black", textDecoration: "underline" }}
               marginTop={"1rem"}

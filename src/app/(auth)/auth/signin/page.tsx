@@ -39,7 +39,7 @@ export default function Login() {
           sx={{
             alignSelf: "stretch",
             backgroundColor: "whitesmoke",
-            "@media (max-width: 600px)": {
+            "@media (max-width: 900px)": {
               display: "none",
             },
           }}
@@ -90,9 +90,9 @@ export default function Login() {
           </Box>
           <Box
             p={4}
-            width={"65%"}
+            width={"450px"}
             sx={{
-              "@media (max-width: 800px)": {
+              "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}

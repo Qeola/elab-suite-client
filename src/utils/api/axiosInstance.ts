@@ -1,9 +1,27 @@
 import axios from "axios";
-import { toast } from "react-toastify"; // Assuming you're using react-toastify
+import { toast } from "react-toastify";
 
-const axiosInstance = axios.create();
+const baseURL = "https://elab-suite-api.onrender.com/api/v1/auth";
 
-// interceptor for http
+const getToken = () => {
+  const token = localStorage.getItem("token");
+  return token ? token : null;
+};
+
+const getAuthorizationHeader = () => {
+  const token = getToken();
+  return token ? `Bearer ${token}` : null;
+};
+
+const axiosInstance = axios.create({
+  baseURL,
+  headers: {
+    Authorization: getAuthorizationHeader(),
+    Accept: "application/json",
+  },
+});
+
+// Interceptor for http
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {

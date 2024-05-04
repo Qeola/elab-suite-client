@@ -25,7 +25,7 @@ import {
   MailOutline,
   PasswordOutlined,
 } from "@mui/icons-material";
-import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import { IconEye, IconEyeOff, IconUser } from "@tabler/icons-react";
 import { useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import PasswordStrengthBar from "./PasswordStrengthBar";
@@ -52,10 +52,10 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Name of organisation is required"),
+    name: Yup.string().required("Full Name is required"),
     email: Yup.string()
       .email("Invalid email format")
-      .required("Email address is required"),
+      .required("Email Address is required"),
     password: Yup.string()
       .required("Password is required")
       .matches(
@@ -74,26 +74,21 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
       .min(8, "Password must be at least 8 characters"),
   });
 
-  const router = useRouter();
-
   const initialValues = { name: "", email: "", password: "" };
 
-  const onSubmit = async (values: SignupValues) => {
-    try {
-      const response = await handleAuthentication(
-        "/register",
-        values,
-        `/auth/verify-email/${values.email}`,
-      );
-    } catch (error) {
-      console.error("Authentication error:", error);
-    }
+  const onSubmit = async (values: SignupValues, { setErrors }: any) => {
+    const response = await handleAuthentication(
+      "/register",
+      values,
+      `/auth/confirm-email/${values.email}`,
+    );
+    setErrors({ email: response[0].message });
   };
 
   return (
     <>
       {title ? (
-        <Typography textAlign={"center"} fontWeight="600" variant="h4" mb={1}>
+        <Typography fontWeight="600" variant="h4" mb={1}>
           {title}
         </Typography>
       ) : null}
@@ -107,10 +102,8 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
           {({ values, handleChange, errors, touched, setFieldTouched }) => (
             <Form>
               <Stack mb={1}>
-                <CustomFormLabel htmlFor="name">
-                  Name of Organisation
-                </CustomFormLabel>
-                <OutlinedInput
+                <CustomFormLabel htmlFor="name">Full Name</CustomFormLabel>
+                <CustomTextField
                   id="name"
                   name="name"
                   value={values.name}
@@ -118,15 +111,17 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
                   onBlur={() => setFieldTouched("name")}
                   error={!!errors.name && touched.name}
                   fullWidth
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <BusinessOutlined fontSize="small" />
-                    </InputAdornment>
-                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <IconUser fontSize="small" />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
                 <ErrorMessage name="name" component="span" className="error" />
                 <CustomFormLabel htmlFor="email">Email Address</CustomFormLabel>
-                <OutlinedInput
+                <CustomTextField
                   id="email"
                   name="email"
                   value={values.email}
@@ -134,19 +129,21 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
                   onBlur={() => setFieldTouched("email")}
                   error={!!errors.email && touched.email}
                   fullWidth
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <MailLockOutlined fontSize="small" />
-                    </InputAdornment>
-                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MailLockOutlined fontSize="small" />
+                      </InputAdornment>
+                    ),
+                  }}
                 />
                 <ErrorMessage name="email" component="span" className="error" />
                 <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-                <OutlinedInput
+                <CustomTextField
                   id="password"
                   name="password"
                   value={values.password}
-                  onChange={(event) => {
+                  onChange={(event: any) => {
                     handleChange(event);
                     setPassword(event.target.value);
                   }}
@@ -155,27 +152,29 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
                   error={!!errors.password && touched.password}
                   fullWidth
                   type={showPassword ? "text" : "password"}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LockOutlined fontSize="small" />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <IconEyeOff size="20" />
-                        ) : (
-                          <IconEye size="20" />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockOutlined fontSize="small" />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <IconEyeOff size="20" />
+                          ) : (
+                            <IconEye size="20" />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
                 <ErrorMessage
                   name="password"
@@ -189,6 +188,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
                 size="large"
                 sx={{
                   color: "black",
+                  pointerEvents: isLoading ? "none" : "auto",
                   backgroundColor: "#FFCC03",
                   fontWeight: 600,
                   marginTop: "1rem",
@@ -206,13 +206,13 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
                   fontWeight={600}
                   sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
                 >
-                  {" "}
-                  <span>Sign Up</span>{" "}
-                  {isLoading && (
+                  {!isLoading ? (
+                    <span>Sign Up</span>
+                  ) : (
                     <CircularProgress
-                      size={12}
-                      sx={{ color: "black" }}
-                      thickness={8}
+                      size={18}
+                      sx={{ color: "#060016", marginBlock: ".1rem" }}
+                      thickness={5}
                     />
                   )}
                 </Typography>
