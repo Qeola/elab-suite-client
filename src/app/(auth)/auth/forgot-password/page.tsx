@@ -1,5 +1,6 @@
 "use client";
-
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -35,7 +36,7 @@ export default function ForgotPassword() {
           sx={{
             backgroundColor: "whitesmoke",
             alignSelf: "stretch",
-            "@media (max-width: 600px)": {
+            "@media (max-width: 900px)": {
               display: "none",
             },
           }}
@@ -79,20 +80,19 @@ export default function ForgotPassword() {
           display="flex"
           flexDirection={"column"}
           alignItems="center"
-          height={"80%"}
+          // height={"80%"}
         >
           <Box height={"100px"} alignItems={"center"} padding={"1rem"}>
             <Logo />
           </Box>
           <Box
             p={4}
-            height={"100%"}
-            width={"65%"}
+            width={"450px"}
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              "@media (max-width: 800px)": {
+              "@media (max-width: 450px)": {
                 width: "100%",
               },
             }}

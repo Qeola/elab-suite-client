@@ -32,11 +32,9 @@ import { useAuthentication } from "../useAuthentication";
 import CustomSnackbar from "@/app/components/Snackbar";
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
-  const dispatch = useDispatch();
   const { isLoading, response, showSnackbar, handleAuthentication } =
     useAuthentication();
   const [showPassword, setShowPassword] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
@@ -48,13 +46,13 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email format")
-      .required("Email address is required"),
+      .required("Email Address is required"),
     password: Yup.string().required("Password is required"),
   });
 
   const router = useRouter();
   const initialValues = { email: "", password: "" };
-  const onSubmit = async (values: LoginValues) => {
+  const onSubmit = async (values: LoginValues, { setErrors }: any) => {
     // setIsLoading(true);
     // console.log({ values });
     // const result = await postRequest("/login", values);
@@ -63,27 +61,14 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
     // );
     // router.push("/dashboard");
     // setIsLoading(false);
-    try {
-      const response = await handleAuthentication(
-        "/login",
-        values,
-        `/dashboard`,
-      );
-      dispatch(
-        loginSuccess({ token: response.token, userData: response.data }),
-      );
-      localStorage.setItem("token", response.token);
-
-      // console.log({response})
-    } catch (error) {
-      console.error("Authentication error:", error);
-    }
+    const response = await handleAuthentication("/login", values, `/dashboard`);
+    setErrors({ email: response[0].message });
   };
 
   return (
     <>
       {title ? (
-        <Typography textAlign={"center"} fontWeight="600" variant="h3" mb={1}>
+        <Typography fontWeight="600" variant="h3" mb={1}>
           {title}
         </Typography>
       ) : null}
@@ -98,7 +83,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
             <Stack>
               <Box>
                 <CustomFormLabel htmlFor="email">Email Address</CustomFormLabel>
-                <OutlinedInput
+                <CustomTextField
                   type="email"
                   id="email"
                   name="email"
@@ -106,18 +91,20 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                   onChange={handleChange}
                   onBlur={() => setFieldTouched("email")}
                   error={!!errors.email && touched.email}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <MailLockOutlined fontSize="small" />
-                    </InputAdornment>
-                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MailLockOutlined fontSize="small" />
+                      </InputAdornment>
+                    ),
+                  }}
                   fullWidth
                 />
                 <ErrorMessage name="email" component="span" className="error" />
               </Box>
               <Box>
                 <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-                <OutlinedInput
+                <CustomTextField
                   type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
@@ -125,27 +112,29 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                   onChange={handleChange}
                   onBlur={() => setFieldTouched("password")}
                   error={!!errors.password && touched.password}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LockOutlined fontSize="small" />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <IconEyeOff size="20" />
-                        ) : (
-                          <IconEye size="20" />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockOutlined fontSize="small" />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <IconEyeOff size="20" />
+                          ) : (
+                            <IconEye size="20" />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   fullWidth
                 />
                 <ErrorMessage
@@ -160,12 +149,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                 alignItems="center"
                 my={2}
               >
-                <FormGroup>
-                  <FormControlLabel
-                    control={<CustomCheckbox />}
-                    label="Remember this device"
-                  />
-                </FormGroup>
                 <Typography
                   component={Link}
                   href="/auth/forgot-password"
@@ -175,7 +158,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                     color: "#0965D3",
                   }}
                 >
-                  Forgot Password ?
+                  Forgot Password?
                 </Typography>
               </Stack>
             </Stack>
@@ -186,6 +169,8 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                 size="large"
                 sx={{
                   color: "black",
+                  pointerEvents: isLoading ? "none" : "auto",
+                  marginTop: "1.2rem",
                   backgroundColor: "#FFCC03",
                   fontWeight: 600,
                   "&:hover": {
@@ -201,13 +186,13 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
                   fontWeight={600}
                   sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
                 >
-                  {" "}
-                  <span>Sign In</span>{" "}
-                  {isLoading && (
+                  {!isLoading ? (
+                    <span>Sign In</span>
+                  ) : (
                     <CircularProgress
-                      size={12}
-                      sx={{ color: "black" }}
-                      thickness={8}
+                      size={18}
+                      sx={{ color: "#060016", marginBlock: ".1rem" }}
+                      thickness={5}
                     />
                   )}
                 </Typography>

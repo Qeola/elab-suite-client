@@ -62,7 +62,7 @@ const PasswordStrengthBar: React.FC<PasswordStrengthBarProps> = ({
         <div
           style={{
             height: "9px",
-            width: "300px",
+            width: "100%",
             backgroundColor: "#eee",
             borderRadius: "10px",
             overflow: "hidden",

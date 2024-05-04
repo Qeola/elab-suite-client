@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { postRequest } from "@/utils/api/apiRequests";
+import { loginSuccess } from "@/store/authentication/AuthenticationSlice";
+import { useDispatch } from "react-redux";
 
 export const useAuthentication = () => {
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState();
   const [showSnackbar, setShowSnackbar] = useState(false);
@@ -14,13 +17,14 @@ export const useAuthentication = () => {
       const result = await postRequest(endpoint, values);
       console.log({ result });
       setResponse(result.data || result);
-      setShowSnackbar(true);
+      // setShowSnackbar(true);
       setIsLoading(false);
-      return result.data;
+      setTimeout(() => setShowSnackbar(false), 6000);
+      return result.data || result;
     } catch (error: any) {
       console.error("Authentication failed:", error);
       setResponse(error.errors);
-      setShowSnackbar(true);
+      // setShowSnackbar(true);
       setIsLoading(false);
       return error.errors;
     }
@@ -33,13 +37,12 @@ export const useAuthentication = () => {
   ) => {
     try {
       const data = await authenticate(endpoint, values);
-      if (endpoint === "/auth/signin") {
-        localStorage.setItem("token", data.token);
-      }
       if (data.status === "success") {
         router.push(redirectPath);
-      } else {
-        return;
+      }
+      if (endpoint === "/login" && data.status === "success") {
+        dispatch(loginSuccess({ token: data.token, userData: data.data }));
+        localStorage.setItem("token", data.token);
       }
       return data;
     } catch (error) {
@@ -48,7 +51,6 @@ export const useAuthentication = () => {
   };
 
   const logout = () => {
-    // Clear token from localStorage
     localStorage.removeItem("token");
     router.push("/auth/signin");
   };

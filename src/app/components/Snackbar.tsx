@@ -38,7 +38,7 @@ const CustomSnackbar = ({ response }: any) => {
       >
         <SnackbarAlert
           onClose={handleClose}
-          severity={response.status || "error"}
+          severity={response?.status || "error"}
         >
           <Typography variant="body1" color="textPrimary">
             {response?.msg || response[0]?.message}

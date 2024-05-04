@@ -119,7 +119,7 @@ const Profile = () => {
         </Stack>
         <Divider />
         <Box>
-          <Link href="/profile-settings">Settings</Link>
+          <Link href="/profile-settings">Account Settings</Link>
         </Box>
         <Box mt={2}>
           <Button

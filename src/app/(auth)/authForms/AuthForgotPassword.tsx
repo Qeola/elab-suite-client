@@ -1,7 +1,8 @@
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Link from "next/link";
-
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import {
@@ -15,21 +16,28 @@ import { MailLockOutlined } from "@mui/icons-material";
 import { useState } from "react";
 import { postRequest } from "@/utils/api/apiRequests";
 import { useRouter } from "next/navigation";
+import { ForgotPasswordValue } from "../authInterfaces";
+import { useAuthentication } from "../useAuthentication";
 
 export default function AuthForgotPassword() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState<string>("");
+  const { isLoading, response, showSnackbar, handleAuthentication } =
+    useAuthentication();
 
-  const handleForgotPassword = async () => {
-    setIsLoading(true);
-    const result = await postRequest("/forgot-password", email);
-    console.log({ result });
-    router.push(`/auth/recover-password/${email}`);
-    setIsLoading(false);
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email Address is required"),
+  });
+
+  const onSubmit = async (values: ForgotPasswordValue, { setErrors }: any) => {
+    const response = await handleAuthentication(
+      "/forgot-password",
+      values,
+      `/auth/recover-password/${values.email}`,
+    );
+    setErrors({ email: response[0].message });
   };
-
-  console.log({ email });
   return (
     <>
       <Box>
@@ -37,78 +45,100 @@ export default function AuthForgotPassword() {
           Forgot your password ?
         </Typography>
         <p>
-          No worries. Enter your email address below, and we&apos;ll send you a
-          link to reset it.
+          Enter your email address below, and we&apos;ll send you a link to
+          reset it.
         </p>
       </Box>
       <Stack mt={1} spacing={2}>
-        <Box>
-          <CustomFormLabel htmlFor="reset-email">Email Address</CustomFormLabel>
-          <OutlinedInput
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            startAdornment={
-              <InputAdornment position="start">
-                <MailLockOutlined fontSize="small" />
-              </InputAdornment>
-            }
-            id="mail"
-            fullWidth
-          />
-        </Box>
-        <Button
-          onClick={handleForgotPassword}
-          variant="contained"
-          size="large"
-          sx={{
-            color: "black",
-            backgroundColor: "#FFCC03",
-            fontWeight: 600,
-            "&:hover": {
-              opacity: 0.8,
-              transition: "opacity 200ms ease-in",
-              backgroundColor: "#FFCC03",
-              boxShadow: "none",
-            },
-          }}
-          fullWidth
+        <Formik
+          initialValues={{ email: "" }}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
         >
+          {({ values, handleChange, errors, touched, setFieldTouched }) => (
+            <Form>
+              <Box>
+                <CustomFormLabel htmlFor="reset-email">
+                  Email Address
+                </CustomFormLabel>
+                <CustomTextField
+                  id="reset-email"
+                  name="email"
+                  type="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={() => setFieldTouched("email")}
+                  error={!!errors.email && touched.email}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <MailLockOutlined fontSize="small" />
+                      </InputAdornment>
+                    ),
+                  }}
+                  fullWidth
+                />
+                <ErrorMessage name="email" component="span" className="error" />
+              </Box>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                sx={{
+                  color: "black",
+                  pointerEvents: isLoading ? "none" : "auto",
+                  backgroundColor: "#FFCC03",
+                  fontWeight: 600,
+                  marginTop: "1rem",
+                  "&:hover": {
+                    opacity: 0.8,
+                    transition: "opacity 200ms ease-in",
+                    backgroundColor: "#FFCC03",
+                    boxShadow: "none",
+                  },
+                }}
+                fullWidth
+              >
+                <Typography
+                  fontWeight={600}
+                  sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
+                >
+                  {!isLoading ? (
+                    <span>Next</span>
+                  ) : (
+                    <CircularProgress
+                      size={18}
+                      sx={{ color: "#060016", marginBlock: ".1rem" }}
+                      thickness={5}
+                    />
+                  )}
+                </Typography>
+              </Button>
+            </Form>
+          )}
+        </Formik>
+        <Stack direction="row" spacing={1} mt={3}>
           <Typography
-            fontWeight={600}
-            sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
+            color="textSecondary"
+            variant="h6"
+            fontWeight="400"
+            fontSize=".9rem"
           >
-            {" "}
-            <span>Submit</span>{" "}
-            {isLoading && (
-              <CircularProgress
-                size={12}
-                sx={{ color: "black" }}
-                thickness={8}
-              />
-            )}
+            Remember your password?
           </Typography>
-        </Button>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{
-            color: "black",
-            backgroundColor: "#fff",
-            fontWeight: 500,
-            "&:hover": {
-              opacity: 0.8,
-              transition: "opacity 200ms ease-in",
-              backgroundColor: "#fff",
-              boxShadow: "none",
-              textDecoration: "underline",
-            },
-          }}
-          fullWidth
-          component={Link}
-          href="/auth/signin"
-        >
-          Back to sign in
-        </Button>
+          <Typography
+            component={Link}
+            href="/auth/signin"
+            fontWeight="500"
+            sx={{
+              textDecoration: "none",
+              color: "#0965D3",
+            }}
+            fontSize=".9rem"
+          >
+            Sign In
+          </Typography>
+        </Stack>
       </Stack>
     </>
   );
