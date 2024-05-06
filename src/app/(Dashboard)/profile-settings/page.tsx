@@ -1,11 +1,13 @@
 import ProfileBanner from "@/app/components/profile/ProfileBanner";
+import { Typography } from "@mui/material";
 import React from "react";
 
 const ProfileSettings = () => {
   return (
-    <div>
-      <ProfileBanner />
-    </div>
+    <main>
+      <Typography>Settings</Typography>
+      {/* <ProfileBanner /> */}
+    </main>
   );
 };
 

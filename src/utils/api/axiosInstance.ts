@@ -4,8 +4,11 @@ import { toast } from "react-toastify";
 const baseURL = "https://elab-suite-api.onrender.com/api/v1/auth";
 
 const getToken = () => {
-  const token = localStorage.getItem("token");
-  return token ? token : null;
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    return token ? token : null;
+  }
+  return null;
 };
 
 const getAuthorizationHeader = () => {
