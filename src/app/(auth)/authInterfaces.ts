@@ -1,3 +1,5 @@
+import { string } from "yup/lib/locale";
+
 export interface SignupValues {
   name: string;
   email: string;
@@ -11,4 +13,10 @@ export interface LoginValues {
 
 export interface ForgotPasswordValue {
   email: string;
+}
+
+export interface ChangePasswordValues {
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
 }

@@ -175,7 +175,7 @@ export default function ConfirmEmail({ params }: any) {
                     happens with auto-complete.)
                   </li>
                   <li>
-                    We can&apos;t deliver the email to the address (Usually
+                    We can&apos;t deliver the email to the address. (Usually
                     because of corporate firewalls or filtering.)
                   </li>
                 </ul>
@@ -222,13 +222,18 @@ export default function ConfirmEmail({ params }: any) {
               </Typography>
             </Button>
             {message && <span className="success">{message}</span>}
-            <Box
-              sx={{ color: "black", textDecoration: "underline" }}
-              marginTop={"1rem"}
-            >
-              <Link href="/auth/signup" style={{ color: "#060016" }}>
+            <Box marginTop={"1rem"}>
+              <Typography
+                component={Link}
+                href="/auth/signup"
+                fontWeight="500"
+                sx={{
+                  textDecoration: "none",
+                  color: "#0965D3",
+                }}
+              >
                 Back to sign up
-              </Link>
+              </Typography>
             </Box>
           </Box>
         </Grid>
