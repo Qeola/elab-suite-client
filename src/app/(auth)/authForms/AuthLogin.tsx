@@ -61,7 +61,11 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
     // );
     // router.push("/dashboard");
     // setIsLoading(false);
-    const response = await handleAuthentication("/login", values, `/dashboard`);
+    const response = await handleAuthentication(
+      "/auth/login",
+      values,
+      `/dashboard`,
+    );
     setErrors({ email: response[0].message });
   };
 

@@ -27,6 +27,31 @@ export const putRequest = async (url: string, data?: any): Promise<any> => {
   }
 };
 
+export const patchRequestAvatar = async (
+  url: string,
+  data?: any,
+): Promise<any> => {
+  try {
+    const result = await axiosInstance.patch(url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return result;
+  } catch (error: any) {
+    return error.errors;
+  }
+};
+
+export const patchRequest = async (url: string, data?: any): Promise<any> => {
+  try {
+    const result = await axiosInstance.patch(url, data);
+    return result;
+  } catch (error: any) {
+    return error.errors;
+  }
+};
+
 export const deleteRequest = async (url: string): Promise<any> => {
   try {
     const result = await axiosInstance.delete(url);
