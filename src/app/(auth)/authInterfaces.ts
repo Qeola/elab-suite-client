@@ -16,7 +16,7 @@ export interface ForgotPasswordValue {
 }
 
 export interface ChangePasswordValues {
-  cpassword: string;
-  newPassword1: string;
-  newPassword2: string;
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
 }

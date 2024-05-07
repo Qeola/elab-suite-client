@@ -78,11 +78,15 @@ const AccountTab = () => {
   };
 
   // formik
-  const initialValues = { cpassword: "", newPassword1: "", newPassword2: "" };
+  const initialValues = {
+    currentPassword: "",
+    password: "",
+    confirmPassword: "",
+  };
 
   const validationSchema = Yup.object().shape({
-    cpassword: Yup.string().required(" Current Password is required"),
-    newPassword1: Yup.string()
+    currentPassword: Yup.string().required(" Current Password is required"),
+    password: Yup.string()
       .required("New Password is required")
       .matches(
         RegExp("(.*[a-z].*)"),
@@ -98,13 +102,12 @@ const AccountTab = () => {
         "Password must contain a special character",
       )
       .min(8, "Password must be at least 8 characters"),
-    newPassword2: Yup.string().required(" Confirm Password is required"),
+    confirmPassword: Yup.string().required(" Confirm Password is required"),
   });
 
   const onSubmit = async (values: ChangePasswordValues, { setErrors }: any) => {
-    // const response = await postRequest('/change-password')
-    // setErrors({ newPassword1: response[0].message });
-    console.log({ values });
+    const response = await postRequest("/change-password", values);
+    setErrors({ [response[0].field || "password"]: response[0].message });
   };
 
   // password1
@@ -212,11 +215,13 @@ const AccountTab = () => {
                     </CustomFormLabel>
                     <CustomTextField
                       id="text-cpwd"
-                      name="cpassword"
-                      value={values.cpassword}
+                      name="currentPassword"
+                      value={values.currentPassword}
                       onChange={handleChange}
-                      onBlur={() => setFieldTouched("cpassword")}
-                      error={!!errors.cpassword && touched.cpassword}
+                      onBlur={() => setFieldTouched("currentPassword")}
+                      error={
+                        !!errors.currentPassword && touched.currentPassword
+                      }
                       type={showPassword1 ? "text" : "password"}
                       InputProps={{
                         startAdornment: (
@@ -245,7 +250,7 @@ const AccountTab = () => {
                       fullWidth
                     />
                     <ErrorMessage
-                      name="cpassword"
+                      name="currentPassword"
                       component="span"
                       className="error"
                     />
@@ -255,11 +260,11 @@ const AccountTab = () => {
                     </CustomFormLabel>
                     <CustomTextField
                       id="text-npwd"
-                      name="newPassword1"
-                      value={values.newPassword1}
+                      name="password"
+                      value={values.password}
                       onChange={handleChange}
-                      onBlur={() => setFieldTouched("newPassword1")}
-                      error={!!errors.newPassword1 && touched.newPassword1}
+                      onBlur={() => setFieldTouched("password")}
+                      error={!!errors.password && touched.password}
                       type={showPassword2 ? "text" : "password"}
                       InputProps={{
                         startAdornment: (
@@ -288,7 +293,7 @@ const AccountTab = () => {
                       fullWidth
                     />
                     <ErrorMessage
-                      name="newPassword1"
+                      name="password"
                       component="span"
                       className="error"
                     />
@@ -298,11 +303,13 @@ const AccountTab = () => {
                     </CustomFormLabel>
                     <CustomTextField
                       id="text-conpwd"
-                      name="newPassword2"
-                      value={values.newPassword2}
+                      name="confirmPassword"
+                      value={values.confirmPassword}
                       onChange={handleChange}
-                      onBlur={() => setFieldTouched("newPassword2")}
-                      error={!!errors.newPassword2 && touched.newPassword2}
+                      onBlur={() => setFieldTouched("confirmPassword")}
+                      error={
+                        !!errors.confirmPassword && touched.confirmPassword
+                      }
                       type={showPassword3 ? "text" : "password"}
                       InputProps={{
                         startAdornment: (
@@ -331,7 +338,7 @@ const AccountTab = () => {
                       fullWidth
                     />
                     <ErrorMessage
-                      name="newPassword2"
+                      name="confirmPassword"
                       component="span"
                       className="error"
                     />

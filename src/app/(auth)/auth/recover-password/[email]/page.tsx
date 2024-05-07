@@ -136,7 +136,7 @@ export default function RecoverPassword({ params }: any) {
               Recover Password
             </Typography>
             <Typography fontWeight={500} mb={2} maxWidth={"58ch"}>
-              Mail confirmation link has been sent to{" "}
+              Reset link has been sent to{" "}
               <span style={{ fontWeight: "500" }}>{email}. </span>
             </Typography>
             {resendEnabled ? (
@@ -165,7 +165,7 @@ export default function RecoverPassword({ params }: any) {
                     happens with auto-complete.)
                   </li>
                   <li>
-                    We can&apos;t deliver the email to the address (Usually
+                    We can&apos;t deliver the email to the address. (Usually
                     because of corporate firewalls or filtering.)
                   </li>
                 </ul>
@@ -201,13 +201,18 @@ export default function RecoverPassword({ params }: any) {
                 )}
               </Typography>
             </Button>
-            <Box
-              sx={{ color: "black", textDecoration: "underline" }}
-              marginTop={"1rem"}
-            >
-              <Link href="/auth/signin" style={{ color: "#060016" }}>
+            <Box marginTop={"1rem"}>
+              <Typography
+                component={Link}
+                href="/auth/signin"
+                fontWeight="500"
+                sx={{
+                  textDecoration: "none",
+                  color: "#0965D3",
+                }}
+              >
                 Back to sign in
-              </Link>
+              </Typography>
             </Box>
           </Box>
         </Grid>
