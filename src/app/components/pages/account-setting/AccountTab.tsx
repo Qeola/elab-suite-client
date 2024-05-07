@@ -8,74 +8,39 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-
+import { useSelector } from "@/store/hooks";
+import { AppState } from "@/store/store";
 // components
 import BlankCard from "../../shared/BlankCard";
 import CustomTextField from "../../forms/theme-elements/CustomTextField";
 import CustomFormLabel from "../../forms/theme-elements/CustomFormLabel";
 import CustomSelect from "../../forms/theme-elements/CustomSelect";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import dayjs, { Dayjs } from "dayjs";
 
 // images
 import { Stack } from "@mui/system";
-import { IconButton, InputAdornment } from "@mui/material";
+import { CircularProgress, IconButton, InputAdornment } from "@mui/material";
 import { LockOutlined } from "@mui/icons-material";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import { ChangePasswordValues } from "@/app/(auth)/authInterfaces";
 import { postRequest } from "@/utils/api/apiRequests";
-
-// locations
-const locations = [
-  {
-    value: "us",
-    label: "United States",
-  },
-  {
-    value: "uk",
-    label: "United Kingdom",
-  },
-  {
-    value: "india",
-    label: "India",
-  },
-  {
-    value: "russia",
-    label: "Russia",
-  },
-];
-
-// currency
-const currencies = [
-  {
-    value: "us",
-    label: "US Dollar ($)",
-  },
-  {
-    value: "uk",
-    label: "United Kingdom (Pound)",
-  },
-  {
-    value: "india",
-    label: "India (INR)",
-  },
-  {
-    value: "russia",
-    label: "Russia (Ruble)",
-  },
-];
+import ChildCard from "../../shared/ChildCard";
+import CustomSnackbar from "../../Snackbar";
 
 const AccountTab = () => {
-  const [location, setLocation] = React.useState("india");
+  const authenticationState = useSelector(
+    (state: AppState) => state.authentication,
+  );
+  const [userData, setUserData] = useState(authenticationState.userData.user);
+  const [dateValue, setDateValue] = React.useState<Dayjs | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [response, setResponse] = useState({});
 
-  const handleChange1 = (event: any) => {
-    setLocation(event.target.value);
-  };
-
-  //   currency
-  const [currency, setCurrency] = React.useState("india");
-
-  const handleChange2 = (event: any) => {
-    setCurrency(event.target.value);
-  };
+  console.log({ userData });
 
   // formik
   const initialValues = {
@@ -106,7 +71,14 @@ const AccountTab = () => {
   });
 
   const onSubmit = async (values: ChangePasswordValues, { setErrors }: any) => {
+    setIsLoading(true);
     const response = await postRequest("/change-password", values);
+    if (response.status == 200) {
+      setShowSnackbar(true);
+      setResponse({ msg: "Password changed successfully!", status: "success" });
+      setTimeout(() => setShowSnackbar(false), 6000);
+    }
+    setIsLoading(false);
     setErrors({ [response[0].field || "password"]: response[0].message });
   };
 
@@ -155,7 +127,7 @@ const AccountTab = () => {
             <Box textAlign="center" display="flex" justifyContent="center">
               <Box>
                 <Avatar
-                  src={"/images/profile/user-1.jpg"}
+                  src={userData.avatar}
                   alt={"user1"}
                   sx={{ width: 120, height: 120, margin: "0 auto" }}
                 />
@@ -349,7 +321,11 @@ const AccountTab = () => {
                         sx={{ marginTop: "1rem" }}
                         color="primary"
                       >
-                        Change Password
+                        {isLoading ? (
+                          <CircularProgress size={18} sx={{ color: "white" }} />
+                        ) : (
+                          "Change Password"
+                        )}
                       </Button>
                     </Box>
                   </Form>
@@ -378,11 +354,11 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-name"
                   >
-                    Your Name
+                    Full Name
                   </CustomFormLabel>
                   <CustomTextField
                     id="text-name"
-                    value="Mathew Anderson"
+                    value={userData.name}
                     variant="outlined"
                     fullWidth
                   />
@@ -393,64 +369,17 @@ const AccountTab = () => {
                     sx={{
                       mt: 0,
                     }}
-                    htmlFor="text-store-name"
+                    htmlFor="email"
                   >
-                    Store Name
+                    Email Address
                   </CustomFormLabel>
                   <CustomTextField
-                    id="text-store-name"
-                    value="Maxima Studio"
+                    disabled
+                    id="email"
+                    value={userData.email}
                     variant="outlined"
                     fullWidth
                   />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  {/* 3 */}
-                  <CustomFormLabel
-                    sx={{
-                      mt: 0,
-                    }}
-                    htmlFor="text-location"
-                  >
-                    Location
-                  </CustomFormLabel>
-                  <CustomSelect
-                    fullWidth
-                    id="text-location"
-                    variant="outlined"
-                    value={location}
-                    onChange={handleChange1}
-                  >
-                    {locations.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </CustomSelect>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  {/* 4 */}
-                  <CustomFormLabel
-                    sx={{
-                      mt: 0,
-                    }}
-                    htmlFor="text-currency"
-                  >
-                    Currency
-                  </CustomFormLabel>
-                  <CustomSelect
-                    fullWidth
-                    id="text-currency"
-                    variant="outlined"
-                    value={currency}
-                    onChange={handleChange2}
-                  >
-                    {currencies.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </CustomSelect>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   {/* 5 */}
@@ -458,16 +387,26 @@ const AccountTab = () => {
                     sx={{
                       mt: 0,
                     }}
-                    htmlFor="text-email"
+                    htmlFor="date-of-birth"
                   >
-                    Email
+                    Date of birth
                   </CustomFormLabel>
-                  <CustomTextField
-                    id="text-email"
-                    value="info@modernize.com"
-                    variant="outlined"
-                    fullWidth
-                  />
+                  <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DatePicker
+                      onChange={(newValue) => {
+                        setDateValue(newValue);
+                      }}
+                      renderInput={(inputProps) => (
+                        <CustomTextField
+                          fullWidth
+                          variant="outlined"
+                          inputProps={{ "aria-label": "date picker" }}
+                          {...inputProps}
+                        />
+                      )}
+                      value={dateValue}
+                    />
+                  </LocalizationProvider>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   {/* 6 */}
@@ -477,7 +416,7 @@ const AccountTab = () => {
                     }}
                     htmlFor="text-phone"
                   >
-                    Phone
+                    Phone Number
                   </CustomFormLabel>
                   <CustomTextField
                     id="text-phone"
@@ -521,6 +460,7 @@ const AccountTab = () => {
           </Button>
         </Stack>
       </Grid>
+      {showSnackbar && <CustomSnackbar response={response} />}
     </Grid>
   );
 };
