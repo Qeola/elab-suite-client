@@ -32,7 +32,7 @@ export default function AuthForgotPassword() {
 
   const onSubmit = async (values: ForgotPasswordValue, { setErrors }: any) => {
     const response = await handleAuthentication(
-      "/forgot-password",
+      "/auth/forgot-password",
       values,
       `/auth/recover-password/${values.email}`,
     );

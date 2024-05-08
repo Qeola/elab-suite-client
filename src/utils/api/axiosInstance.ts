@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const baseURL = "https://elab-suite-api.onrender.com/api/v1/auth";
+const baseURL = "https://elab-suite-api.onrender.com/api/v1";
 
 const getToken = () => {
   if (typeof window !== "undefined") {

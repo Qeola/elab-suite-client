@@ -78,7 +78,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
 
   const onSubmit = async (values: SignupValues, { setErrors }: any) => {
     const response = await handleAuthentication(
-      "/register",
+      "/auth/register",
       values,
       `/auth/confirm-email/${values.email}`,
     );

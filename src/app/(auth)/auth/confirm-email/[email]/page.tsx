@@ -38,7 +38,9 @@ export default function ConfirmEmail({ params }: any) {
   const handleResendClick = async () => {
     setIsLoading(true);
     setCountdown(180);
-    const response = await postRequest("/resend-verification-email", { email });
+    const response = await postRequest("/auth/resend-verification-email", {
+      email,
+    });
     if (response?.data?.status === "success") {
       setResendEnabled(false);
       setIsLoading(false);
