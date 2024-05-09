@@ -35,8 +35,11 @@ import {
 import ChildCard from "../../shared/ChildCard";
 import CustomSnackbar from "../../Snackbar";
 import { format } from "date-fns";
+import { useDispatch } from "react-redux";
+import { updateUserData } from "@/store/authentication/AuthenticationSlice";
 
 const AccountTab = () => {
+  const dispatch = useDispatch();
   const authenticationState = useSelector(
     (state: AppState) => state.authentication,
   );
@@ -59,10 +62,8 @@ const AccountTab = () => {
 
   const handleUpload = async () => {
     if (!file) return;
-
     const formData = new FormData();
     formData.append("image", file, file?.name);
-
     const response = await patchRequestAvatar("/users/update-avatar", formData);
     console.log({ response });
   };
@@ -111,8 +112,8 @@ const AccountTab = () => {
     name: userData.name,
     email: userData.email,
     dob: "",
-    phone: "",
-    address: "",
+    phone: userData.phone,
+    address: userData.address,
   };
 
   const validationSchema1 = Yup.object().shape({
@@ -127,6 +128,8 @@ const AccountTab = () => {
     if (response.status == 200) {
       setShowSnackbar(true);
       setResponse({ msg: "Profile updated successfully!", status: "success" });
+      const userData = { user: { ...response.data.data } };
+      dispatch(updateUserData({ userData }));
       setTimeout(() => setShowSnackbar(false), 6000);
     }
     setIsLoading(false);
