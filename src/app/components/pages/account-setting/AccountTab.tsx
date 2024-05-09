@@ -36,7 +36,10 @@ import ChildCard from "../../shared/ChildCard";
 import CustomSnackbar from "../../Snackbar";
 import { format } from "date-fns";
 import { useDispatch } from "react-redux";
-import { updateUserData } from "@/store/authentication/AuthenticationSlice";
+import {
+  updateUserAvatar,
+  updateUserData,
+} from "@/store/authentication/AuthenticationSlice";
 
 const AccountTab = () => {
   const dispatch = useDispatch();
@@ -46,6 +49,8 @@ const AccountTab = () => {
   const [userData, setUserData] = useState(authenticationState.userData.user);
   const [dateValue, setDateValue] = React.useState<Dayjs | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isAvatarLoading, setIsAvatarLoading] = useState(false);
+  const [isInfoLoading, setIsInfoLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [response, setResponse] = useState({});
 
@@ -62,9 +67,15 @@ const AccountTab = () => {
 
   const handleUpload = async () => {
     if (!file) return;
+    setIsAvatarLoading(true);
     const formData = new FormData();
     formData.append("image", file, file?.name);
     const response = await patchRequestAvatar("/users/update-avatar", formData);
+    dispatch(updateUserAvatar(response.data.data.avatar));
+    setIsAvatarLoading(false);
+    setShowSnackbar(true);
+    setResponse({ msg: "Avatar uploaded successfully!", status: "success" });
+    setTimeout(() => setShowSnackbar(false), 6000);
     console.log({ response });
   };
 
@@ -111,7 +122,7 @@ const AccountTab = () => {
   const initialValues1 = {
     name: userData.name,
     email: userData.email,
-    dob: "",
+    dob: userData.dob,
     phone: userData.phone,
     address: userData.address,
   };
@@ -122,17 +133,18 @@ const AccountTab = () => {
 
   const onSubmit1 = async (values: any, { setErrors }: any) => {
     console.log(values);
-    setIsLoading(true);
+    setIsInfoLoading(true);
     const response = await patchRequest(`/users/${userData.username}`, values);
     console.log({ response });
     if (response.status == 200) {
       setShowSnackbar(true);
       setResponse({ msg: "Profile updated successfully!", status: "success" });
+      setIsInfoLoading(false);
       const userData = { user: { ...response.data.data } };
       dispatch(updateUserData({ userData }));
       setTimeout(() => setShowSnackbar(false), 6000);
     }
-    setIsLoading(false);
+    setIsInfoLoading(false);
     // setErrors({ [response[0].field || "password"]: response[0].message });
   };
 
@@ -180,15 +192,29 @@ const AccountTab = () => {
             </Typography>
             <Box textAlign="center" display="flex" justifyContent="center">
               <Box>
-                <Box component="label">
+                <Box sx={{ width: "100%", position: "relative" }}>
                   <Avatar
                     src={userData.avatar}
+                    // src={'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D'}
                     alt={"user1"}
-                    sx={{ width: 120, height: 120, margin: "0 auto" }}
+                    sx={{
+                      width: 120,
+                      height: 120,
+                      margin: "0 auto",
+                      position: "relative",
+                    }}
                   />
                   <IconButton
+                    disableFocusRipple
+                    disableRipple
                     component="label"
-                    sx={{ position: "absolute", bottom: 0 }}
+                    sx={{
+                      position: "absolute",
+                      inset: 0,
+                      display: "flex",
+                      alignItems: "center",
+                      zIndex: 1,
+                    }}
                   >
                     <PhotoCamera />
                     <input
@@ -208,9 +234,14 @@ const AccountTab = () => {
                   <Button
                     variant="contained"
                     color="primary"
+                    sx={{ fontWeight: 600 }}
                     onClick={handleUpload}
                   >
-                    Upload Photo
+                    {isAvatarLoading ? (
+                      <CircularProgress size={18} sx={{ color: "black" }} />
+                    ) : (
+                      "Upload Photo"
+                    )}
                   </Button>
                   {/* <Button variant="outlined" color="error">
                     Reset
@@ -374,11 +405,11 @@ const AccountTab = () => {
                       <Button
                         type="submit"
                         variant="contained"
-                        sx={{ marginTop: "1rem" }}
+                        sx={{ marginTop: "1rem", fontWeight: 600 }}
                         color="primary"
                       >
                         {isLoading ? (
-                          <CircularProgress size={18} sx={{ color: "white" }} />
+                          <CircularProgress size={18} sx={{ color: "#000" }} />
                         ) : (
                           "Change Password"
                         )}
@@ -548,19 +579,24 @@ const AccountTab = () => {
               <Stack
                 direction="row"
                 spacing={2}
-                sx={{ justifyContent: "end" }}
+                sx={{ justifyContent: "start" }}
                 mt={3}
               >
                 <Button
                   type="submit"
                   size="large"
+                  sx={{ fontWeight: 600 }}
                   variant="contained"
                   color="primary"
                 >
-                  Save
+                  {isInfoLoading ? (
+                    <CircularProgress size={18} sx={{ color: "black" }} />
+                  ) : (
+                    "Save Changes"
+                  )}
                 </Button>
                 <Button size="large" variant="text" color="error">
-                  Cancel
+                  Discard
                 </Button>
               </Stack>
             </Form>

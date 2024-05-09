@@ -60,22 +60,22 @@ interface ProfileType {
 }
 const profile: ProfileType[] = [
   {
-    href: "/",
+    href: "/add-organisation",
+    title: "Add Organisation",
+    subtitle: "Create new organisation",
+    icon: "/images/svgs/icon-tasks.svg",
+  },
+  {
+    href: "/profile-settings",
     title: "My Profile",
     subtitle: "Account Settings",
     icon: "/images/svgs/icon-account.svg",
   },
   {
     href: "/",
-    title: "My Inbox",
-    subtitle: "Messages & Emails",
-    icon: "/images/svgs/icon-inbox.svg",
-  },
-  {
-    href: "/",
     title: "My Tasks",
     subtitle: "To-do and Daily Tasks",
-    icon: "/images/svgs/icon-tasks.svg",
+    icon: "/images/svgs/icon-dd-message-box.svg",
   },
 ];
 

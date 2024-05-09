@@ -30,10 +30,13 @@ const authenticationSlice = createSlice({
     updateUserData(state: AuthState, action) {
       state.userData = action.payload.userData;
     },
+    updateUserAvatar(state: AuthState, action) {
+      state.userData.user.avatar = action.payload;
+    },
   },
 });
 
-export const { loginSuccess, logoutSuccess, updateUserData } =
+export const { loginSuccess, logoutSuccess, updateUserData, updateUserAvatar } =
   authenticationSlice.actions;
 
 export default authenticationSlice.reducer;
