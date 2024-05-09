@@ -40,7 +40,7 @@ export const useAuthentication = () => {
       if (data.status === "success") {
         router.push(redirectPath);
       }
-      if (endpoint === "/login" && data.status === "success") {
+      if (endpoint === "/auth/login" && data.status === "success") {
         dispatch(loginSuccess({ token: data.token, userData: data.data }));
         localStorage.setItem("token", data.token);
       }
