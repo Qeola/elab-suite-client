@@ -4,9 +4,9 @@ const LightThemeColors = [
     palette: {
       primary: {
         main: "#FFCC03",
-        light: "#ECF2FF",
-        dark: "#4570EA",
-        contrastText: "#ffffff",
+        // light: "#ECF2FF",
+        // dark: "#4570EA",
+        // contrastText: "#ffffff",
       },
       secondary: {
         main: "#49BEFF",

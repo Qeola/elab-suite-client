@@ -149,21 +149,21 @@ const components: any = (theme: Theme) => {
         textPrimary: {
           backgroundColor: theme.palette.primary.light,
           "&:hover": {
-            backgroundColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.light,
             color: "white",
           },
         },
         textSecondary: {
           backgroundColor: theme.palette.secondary.light,
           "&:hover": {
-            backgroundColor: theme.palette.secondary.main,
+            backgroundColor: theme.palette.secondary.light,
             color: "white",
           },
         },
         textSuccess: {
           backgroundColor: theme.palette.success.light,
           "&:hover": {
-            backgroundColor: theme.palette.success.main,
+            backgroundColor: theme.palette.success.light,
             color: "white",
           },
         },
