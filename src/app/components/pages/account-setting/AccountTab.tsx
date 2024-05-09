@@ -122,7 +122,7 @@ const AccountTab = () => {
   const onSubmit1 = async (values: any, { setErrors }: any) => {
     console.log(values);
     setIsLoading(true);
-    const response = await patchRequest("/users/", values);
+    const response = await patchRequest(`/users/${userData.username}`, values);
     console.log({ response });
     if (response.status == 200) {
       setShowSnackbar(true);

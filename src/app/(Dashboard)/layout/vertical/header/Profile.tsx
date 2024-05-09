@@ -27,6 +27,7 @@ const Profile = () => {
     (state: AppState) => state.authentication,
   );
   const [userData, setUserData] = useState(authenticationState.userData.user);
+  console.log({ authenticationState });
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
@@ -36,20 +37,19 @@ const Profile = () => {
 
   const handleLogout = async () => {
     setIsLoading(true);
-    const result = await postRequest("/logout");
+    const result = await postRequest("/auth/logout");
     dispatch(logoutSuccess());
     localStorage.removeItem("token");
     router.push("/auth/signin");
     setIsLoading(false);
   };
 
-  console.log(userData);
+  // console.log(userData);
 
   return (
     <Box>
       <IconButton
         size="large"
-        aria-label="show 11 new notifications"
         color="inherit"
         aria-controls="msgs-menu"
         aria-haspopup="true"
@@ -119,6 +119,7 @@ const Profile = () => {
         </Stack>
         <Divider />
         <Box>
+          <Link href="/add-organisation">Add an organisation</Link>
           <Link href="/profile-settings">Account Settings</Link>
         </Box>
         <Box mt={2}>
