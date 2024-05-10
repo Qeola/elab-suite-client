@@ -31,38 +31,45 @@ const BCrumb = [
 const AddOrganisation = () => {
   interface Country {
     name: string;
+    iso3: string;
+    iso2: string;
+    states: State[];
   }
 
   interface State {
+    id: number;
     name: string;
+    state_code: string;
+  }
+
+  interface CountryWithStates {
+    country: Country;
   }
 
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
 
-  const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+  const handleChangeCountry = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.SyntheticEvent<Element, Event>,
     newCountry: any,
   ) => {
     setSelectedCountry(newCountry);
+    setSelectedState(newCountry?.states || []);
   };
 
   const handleChangeState = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.SyntheticEvent<Element, Event>,
     newState: any,
   ) => {
     setSelectedState(newState);
   };
 
-  const states = selectedCountry
-    ? countries.find((country) => country.name === selectedCountry)?.states ||
-      []
-    : [];
-
-  // useEffect(() => {
-  //   console.log({ states });
-  // }, [selectedCountry]);
-  // const typedStates: ({ id: number; name: string; state_code: string; latitude: string; longitude: string; })[] = states;
+  console.log({ selectedCountry });
+  console.log({ selectedState });
 
   const initialValues1 = {
     name: "",
@@ -74,6 +81,7 @@ const AddOrganisation = () => {
 
   const validationSchema1 = Yup.object().shape({
     name: Yup.string().required("Full Name should not be omitted"),
+    dob: Yup.date().max(new Date(), "Date of Birth cannot be in the future"),
   });
 
   const onSubmit1 = async (values: any, { setErrors }: any) => {
@@ -172,33 +180,16 @@ const AddOrganisation = () => {
                     >
                       Select country
                     </CustomFormLabel>
-                    <Grid item xs={12} lg sm={6}>
-                      <Autocomplete
-                        disablePortal
-                        id="country"
-                        options={countries}
-                        fullWidth
-                        getOptionLabel={(option) => option.name}
-                        value={selectedCountry}
-                        onChange={handleChange}
-                        renderInput={(params) => (
-                          <CustomTextField {...params} />
-                        )}
-                      />
-                      <Autocomplete
-                        disablePortal
-                        id="state"
-                        options={states}
-                        fullWidth
-                        getOptionLabel={(option) => option.name}
-                        value={selectedState}
-                        // onChange={handleChangeState}
-                        renderInput={(params) => (
-                          <CustomTextField {...params} />
-                        )}
-                        // disabled={!selectedCountry} // Disable state selection when no country is chosen
-                      />
-                    </Grid>
+                    <Autocomplete
+                      disablePortal
+                      id="country"
+                      options={countries}
+                      fullWidth
+                      getOptionLabel={(option) => option.name}
+                      value={selectedCountry}
+                      onChange={handleChangeCountry}
+                      renderInput={(params) => <CustomTextField {...params} />}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     {/* 6 */}
@@ -210,17 +201,18 @@ const AddOrganisation = () => {
                     >
                       Select state
                     </CustomFormLabel>
-                    <CustomTextField
-                      id="text-phone"
-                      // value="+91 12345 65478"
-                      name="phone"
-                      value={values.phone}
-                      onChange={handleChange}
-                      onBlur={() => setFieldTouched("phone")}
-                      error={!!errors.phone && touched.phone}
-                      variant="outlined"
+                    {/* <Autocomplete
+                      disablePortal
+                      id="state"
+                      options={selectedState || []} 
                       fullWidth
-                    />
+                      getOptionLabel={(option) => option.name}
+                      value={selectedState}
+                      onChange={handleChangeState}
+                      renderInput={(params) => (
+                        <CustomTextField {...params} />
+                      )}
+                    /> */}
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     {/* 5 */}
