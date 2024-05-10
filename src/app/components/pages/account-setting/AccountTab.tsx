@@ -53,30 +53,64 @@ const AccountTab = () => {
   const [isInfoLoading, setIsInfoLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [response, setResponse] = useState({});
+  const [error, setError] = useState<string | null>(null);
 
   const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<string | null>(userData.avatar);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setError(null);
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
       setFile(selectedFile);
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onloadend = () => {
+        if (reader.result) {
+          setImage(reader.result as string);
+        } else {
+          console.error("Error reading file"); // Handle potential errors
+        }
+      };
     }
   };
 
   console.log({ file });
 
   const handleUpload = async () => {
-    if (!file) return;
-    setIsAvatarLoading(true);
-    const formData = new FormData();
-    formData.append("image", file, file?.name);
-    const response = await patchRequestAvatar("/users/update-avatar", formData);
-    dispatch(updateUserAvatar(response.data.data.avatar));
-    setIsAvatarLoading(false);
-    setShowSnackbar(true);
-    setResponse({ msg: "Avatar uploaded successfully!", status: "success" });
-    setTimeout(() => setShowSnackbar(false), 6000);
-    console.log({ response });
+    if (!file) {
+      setError("Please upload an image");
+      return;
+    }
+
+    const allowedTypes = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
+    const maxSize = 800 * 1024;
+    if (!allowedTypes.includes(file.type)) {
+      setError("Only JPG, PNG, and GIF files are allowed.");
+    } else if (file.size > maxSize) {
+      setError("File size exceeds the limit of 800KB.");
+    } else {
+      setError(null);
+      setIsAvatarLoading(true);
+      const formData = new FormData();
+      formData.append("image", file, file?.name);
+      const response = await patchRequestAvatar(
+        "/users/update-avatar",
+        formData,
+      );
+      if (response.data.status === "success") {
+        setIsAvatarLoading(false);
+        dispatch(updateUserAvatar(response.data.data.avatar));
+        setShowSnackbar(true);
+        setResponse({
+          msg: "Avatar uploaded successfully!",
+          status: "success",
+        });
+        setTimeout(() => setShowSnackbar(false), 6000);
+      }
+      setIsAvatarLoading(false);
+      console.log({ response });
+    }
   };
 
   // formik
@@ -194,8 +228,7 @@ const AccountTab = () => {
               <Box>
                 <Box sx={{ width: "100%", position: "relative" }}>
                   <Avatar
-                    src={userData.avatar}
-                    // src={'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D'}
+                    src={image}
                     alt={"user1"}
                     sx={{
                       width: 120,
@@ -219,7 +252,7 @@ const AccountTab = () => {
                     <PhotoCamera />
                     <input
                       hidden
-                      accept="image/*"
+                      accept=".jpg,.jpeg,.png,.gif"
                       onChange={handleFileChange}
                       type="file"
                     />
@@ -243,12 +276,10 @@ const AccountTab = () => {
                       "Upload Photo"
                     )}
                   </Button>
-                  {/* <Button variant="outlined" color="error">
-                    Reset
-                  </Button> */}
                 </Stack>
                 <Typography variant="subtitle1" color="textSecondary" mb={4}>
                   Allowed JPG, GIF or PNG. Max size of 800K
+                  <Typography className="error">{error}</Typography>
                 </Typography>
               </Box>
             </Box>
@@ -508,7 +539,7 @@ const AccountTab = () => {
                               {...field}
                               value={values.dob}
                               onChange={(newValue: Date | null) => {
-                                if (newValue) {
+                                if (newValue && newValue < new Date()) {
                                   const formattedDate = format(
                                     newValue,
                                     "yyyy-MM-dd",
@@ -516,6 +547,7 @@ const AccountTab = () => {
                                   setFieldValue("dob", formattedDate);
                                 }
                               }}
+                              maxDate={new Date()}
                               renderInput={(inputProps) => (
                                 <CustomTextField
                                   fullWidth
