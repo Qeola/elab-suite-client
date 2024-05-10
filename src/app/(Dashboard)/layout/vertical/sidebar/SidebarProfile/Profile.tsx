@@ -8,9 +8,18 @@ import { useSelector } from "@/store/hooks";
 import { IconPower } from "@tabler/icons-react";
 import { AppState } from "@/store/store";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export const Profile = () => {
   const customizer = useSelector((state: AppState) => state.customizer);
+  const authenticationState = useSelector(
+    (state: AppState) => state.authentication,
+  );
+  const [userData, setUserData] = useState(authenticationState.userData.user);
+
+  useEffect(() => {
+    console.log("UseEffect");
+  }, [userData]);
   const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up("lg"));
   const hideMenu = lgUp
     ? customizer.isCollapse && !customizer.isSidebarHover
@@ -27,12 +36,12 @@ export const Profile = () => {
         <>
           <Avatar
             alt="Remy Sharp"
-            src={"/images/profile/user-1.jpg"}
+            src={userData.avatar}
             sx={{ height: 40, width: 40 }}
           />
 
           <Box>
-            <Typography variant="h6">Mathew</Typography>
+            <Typography variant="h6">{userData.name.split(" ")[0]}</Typography>
             <Typography variant="caption">Designer</Typography>
           </Box>
           <Box sx={{ ml: "auto" }}>
@@ -40,7 +49,7 @@ export const Profile = () => {
               <IconButton
                 color="primary"
                 component={Link}
-                href="/auth/auth1/login"
+                href="/auth/signin"
                 aria-label="logout"
                 size="small"
               >
