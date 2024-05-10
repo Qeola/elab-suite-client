@@ -228,7 +228,7 @@ const AccountTab = () => {
               <Box>
                 <Box sx={{ width: "100%", position: "relative" }}>
                   <Avatar
-                    src={image}
+                    src={image ? image : undefined}
                     alt={"user1"}
                     sx={{
                       width: 120,
