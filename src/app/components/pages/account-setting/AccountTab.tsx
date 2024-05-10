@@ -229,7 +229,6 @@ const AccountTab = () => {
                 <Box sx={{ width: "100%", position: "relative" }}>
                   <Avatar
                     src={image}
-                    // src={'https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D'}
                     alt={"user1"}
                     sx={{
                       width: 120,
@@ -277,9 +276,6 @@ const AccountTab = () => {
                       "Upload Photo"
                     )}
                   </Button>
-                  {/* <Button variant="outlined" color="error">
-                    Reset
-                  </Button> */}
                 </Stack>
                 <Typography variant="subtitle1" color="textSecondary" mb={4}>
                   Allowed JPG, GIF or PNG. Max size of 800K
@@ -543,7 +539,7 @@ const AccountTab = () => {
                               {...field}
                               value={values.dob}
                               onChange={(newValue: Date | null) => {
-                                if (newValue) {
+                                if (newValue && newValue < new Date()) {
                                   const formattedDate = format(
                                     newValue,
                                     "yyyy-MM-dd",
@@ -551,6 +547,7 @@ const AccountTab = () => {
                                   setFieldValue("dob", formattedDate);
                                 }
                               }}
+                              maxDate={new Date()}
                               renderInput={(inputProps) => (
                                 <CustomTextField
                                   fullWidth
