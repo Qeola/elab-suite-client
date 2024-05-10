@@ -204,7 +204,7 @@ const AddOrganisation = () => {
                     {/* <Autocomplete
                       disablePortal
                       id="state"
-                      options={selectedState || []} 
+                      options={selectedState} 
                       fullWidth
                       getOptionLabel={(option) => option.name}
                       value={selectedState}
