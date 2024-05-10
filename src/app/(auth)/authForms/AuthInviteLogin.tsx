@@ -70,7 +70,7 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
   return (
     <>
       {title ? (
-        <Typography fontWeight="600" variant="h3" mb={1}>
+        <Typography fontWeight="600" variant="h4" mb={1}>
           {title}
         </Typography>
       ) : null}
@@ -90,39 +90,41 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
                 <CustomFormLabel htmlFor="password">
                   Create Password
                 </CustomFormLabel>
-                <OutlinedInput
+                <CustomTextField
                   type={showPassword ? "text" : "password"}
                   id="password"
                   name="password"
                   value={values.password}
                   onFocus={() => setIsPasswordFocus(true)}
-                  onChange={(event) => {
+                  onChange={(event: any) => {
                     handleChange(event);
                     setPassword(event.target.value);
                   }}
                   onBlur={() => setFieldTouched("password")}
                   error={!!errors.password && touched.password}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LockOutlined fontSize="small" />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {showPassword ? (
-                          <IconEyeOff size="20" />
-                        ) : (
-                          <IconEye size="20" />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockOutlined fontSize="small" />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <IconEyeOff size="20" />
+                          ) : (
+                            <IconEye size="20" />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   fullWidth
                 />
                 <ErrorMessage
@@ -136,7 +138,7 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
                 <CustomFormLabel htmlFor="confirmPassword">
                   Confirm Password
                 </CustomFormLabel>
-                <OutlinedInput
+                <CustomTextField
                   type={showPassword2 ? "text" : "password"}
                   id="confirmPassword"
                   name="confirmPassword"
@@ -144,27 +146,29 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
                   onChange={handleChange}
                   onBlur={() => setFieldTouched("confirmPassword")}
                   error={!!errors.confirmPassword && touched.confirmPassword}
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <LockOutlined fontSize="small" />
-                    </InputAdornment>
-                  }
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword2}
-                        onMouseDown={handleMouseDownPassword2}
-                        edge="end"
-                      >
-                        {showPassword2 ? (
-                          <IconEyeOff size="20" />
-                        ) : (
-                          <IconEye size="20" />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LockOutlined fontSize="small" />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword2}
+                          onMouseDown={handleMouseDownPassword2}
+                          edge="end"
+                        >
+                          {showPassword2 ? (
+                            <IconEyeOff size="20" />
+                          ) : (
+                            <IconEye size="20" />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                   fullWidth
                 />
                 <ErrorMessage

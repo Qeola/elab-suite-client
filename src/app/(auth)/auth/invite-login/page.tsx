@@ -91,9 +91,9 @@ export default function InviteLogin() {
           </Box>
           <Box
             p={4}
-            width={"65%"}
+            width={"470px"}
             sx={{
-              "@media (max-width: 800px)": {
+              "@media (max-width: 470px)": {
                 width: "100%",
               },
             }}

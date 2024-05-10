@@ -59,7 +59,7 @@ export default function Register() {
             </Box>
             <Box>
               <Typography
-                variant={"h4"}
+                variant={"h5"}
                 fontWeight={500}
                 style={{ textAlign: "center", maxWidth: "27ch" }}
               >
@@ -84,9 +84,9 @@ export default function Register() {
           </Box>
           <Box
             p={4}
-            width={"450px"}
+            width={"470px"}
             sx={{
-              "@media (max-width: 450px)": {
+              "@media (max-width: 470px)": {
                 width: "100%",
               },
             }}

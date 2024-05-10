@@ -54,8 +54,8 @@ export default function ForgotPassword() {
             <Box px={3}>
               <Image
                 src="/images/forgot-password.png"
-                width={110}
-                height={110}
+                width={100}
+                height={100}
                 alt="forgot-password-icon"
                 priority
               />
@@ -80,19 +80,18 @@ export default function ForgotPassword() {
           display="flex"
           flexDirection={"column"}
           alignItems="center"
-          // height={"80%"}
         >
           <Box height={"100px"} alignItems={"center"} padding={"1rem"}>
             <Logo />
           </Box>
           <Box
             p={4}
-            width={"450px"}
+            width={"470px"}
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              "@media (max-width: 450px)": {
+              "@media (max-width: 470px)": {
                 width: "100%",
               },
             }}

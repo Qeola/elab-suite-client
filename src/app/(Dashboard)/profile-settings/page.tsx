@@ -75,57 +75,55 @@ const AccountSetting = () => {
 
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <BlankCard>
-            <Box sx={{ maxWidth: { xs: 320, sm: 480, lg: 768 } }}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                scrollButtons="auto"
-                aria-label="settings tabs"
-              >
-                <Tab
-                  iconPosition="start"
-                  icon={<IconUserCircle size="22" />}
-                  label="Personal Settings"
-                  {...a11yProps(0)}
-                />
+          <Box sx={{ maxWidth: { xs: 320, sm: 480, lg: 768 } }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              scrollButtons="auto"
+              aria-label="settings tabs"
+            >
+              <Tab
+                iconPosition="start"
+                icon={<IconUserCircle size="22" />}
+                label="Personal Settings"
+                {...a11yProps(0)}
+              />
 
-                {/* <Tab
+              {/* <Tab
                   iconPosition="start"
                   icon={<IconBell size="22" />}
                   label="Notifications"
                   {...a11yProps(1)}
                 /> */}
-                <Tab
-                  iconPosition="start"
-                  icon={<IconArticle size="22" />}
-                  label="Company Information"
-                  {...a11yProps(2)}
-                />
-                {/* <Tab
+              <Tab
+                iconPosition="start"
+                icon={<IconArticle size="22" />}
+                label="Company Information"
+                {...a11yProps(2)}
+              />
+              {/* <Tab
                   iconPosition="start"
                   icon={<IconLock size="22" />}
                   label="Security"
                   {...a11yProps(3)}
                 /> */}
-              </Tabs>
-            </Box>
-            <Divider />
-            <CardContent>
-              <TabPanel value={value} index={0}>
-                <AccountTab />
-              </TabPanel>
-              {/* <TabPanel value={value} index={1}>
+            </Tabs>
+          </Box>
+          <Divider />
+          <CardContent>
+            <TabPanel value={value} index={0}>
+              <AccountTab />
+            </TabPanel>
+            {/* <TabPanel value={value} index={1}>
                 <NotificationTab />
               </TabPanel> */}
-              <TabPanel value={value} index={2}>
-                <BillsTab />
-              </TabPanel>
-              {/* <TabPanel value={value} index={3}>
+            <TabPanel value={value} index={2}>
+              <BillsTab />
+            </TabPanel>
+            {/* <TabPanel value={value} index={3}>
                 <SecurityTab />
               </TabPanel> */}
-            </CardContent>
-          </BlankCard>
+          </CardContent>
         </Grid>
       </Grid>
     </PageContainer>

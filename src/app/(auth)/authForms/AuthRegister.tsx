@@ -88,7 +88,7 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
   return (
     <>
       {title ? (
-        <Typography fontWeight="600" variant="h4" mb={1}>
+        <Typography fontWeight="600" variant="h3" mb={1}>
           {title}
         </Typography>
       ) : null}

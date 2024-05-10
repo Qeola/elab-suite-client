@@ -69,7 +69,7 @@ const AccountTab = () => {
         if (reader.result) {
           setImage(reader.result as string);
         } else {
-          console.error("Error reading file"); // Handle potential errors
+          console.error("Error reading file");
         }
       };
     }
@@ -215,7 +215,7 @@ const AccountTab = () => {
   return (
     <Grid container spacing={3}>
       {/* Change Profile */}
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={6} sx={{ paddingLeft: "0 !important" }}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
@@ -454,7 +454,7 @@ const AccountTab = () => {
         </BlankCard>
       </Grid>
       {/* Edit Details */}
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ paddingLeft: "0 !important" }}>
         <Formik
           initialValues={initialValues1}
           validationSchema={validationSchema1}
