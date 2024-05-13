@@ -42,12 +42,8 @@ const AddOrganisation = () => {
     state_code: string;
   }
 
-  interface CountryWithStates {
-    country: Country;
-  }
-
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [selectedState, setSelectedState] = useState<State | null>(null);
 
   const handleChangeCountry = (
     event:
@@ -56,7 +52,9 @@ const AddOrganisation = () => {
     newCountry: any,
   ) => {
     setSelectedCountry(newCountry);
-    setSelectedState(newCountry?.states || []);
+    setSelectedState(
+      newCountry && newCountry.states?.length > 0 ? newCountry.states[0] : null,
+    );
   };
 
   const handleChangeState = (
@@ -71,21 +69,27 @@ const AddOrganisation = () => {
   console.log({ selectedCountry });
   console.log({ selectedState });
 
-  const initialValues1 = {
+  const initialValues = {
     name: "",
     email: "",
-    dob: "",
-    phone: "",
+    country: "",
+    state: "",
+    regNo: "",
+    zipcode: "",
     address: "",
   };
 
-  const validationSchema1 = Yup.object().shape({
-    name: Yup.string().required("Full Name should not be omitted"),
-    dob: Yup.date().max(new Date(), "Date of Birth cannot be in the future"),
+  const validationSchema = Yup.object().shape({
+    // name: Yup.string().required("Name of organisation is required"),
+    // email: Yup.string().required("Email address is required"),
+    // country: Yup.string().required("Please select a country"),
+    // state: Yup.string().required("Please select a state"),
+    // address: Yup.string().required("Please enter a valid address"),
   });
 
-  const onSubmit1 = async (values: any, { setErrors }: any) => {
-    // console.log(values);
+  const onSubmit = (values: any, { setErrors }: any) => {
+    console.log({ values });
+    console.log("Working!!");
     // setIsLoading(true);
     // const response = await patchRequest("/users/", values);
     // console.log({ response });
@@ -113,9 +117,9 @@ const AddOrganisation = () => {
         </Typography>
         <Grid item sx={{ width: "100%", maxWidth: "800px" }}>
           <Formik
-            initialValues={initialValues1}
-            validationSchema={validationSchema1}
-            onSubmit={onSubmit1}
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
           >
             {({
               values,
@@ -143,7 +147,6 @@ const AddOrganisation = () => {
                       onChange={handleChange}
                       onBlur={() => setFieldTouched("name")}
                       error={!!errors.name && touched.name}
-                      // value={userData.name}
                       variant="outlined"
                       fullWidth
                     />
@@ -165,7 +168,6 @@ const AddOrganisation = () => {
                       onChange={handleChange}
                       onBlur={() => setFieldTouched("email")}
                       error={!!errors.email && touched.email}
-                      // value={userData.email}
                       variant="outlined"
                       fullWidth
                     />
@@ -176,7 +178,7 @@ const AddOrganisation = () => {
                       sx={{
                         mt: 0,
                       }}
-                      htmlFor="date-of-birth"
+                      htmlFor="country"
                     >
                       Select country
                     </CustomFormLabel>
@@ -197,22 +199,22 @@ const AddOrganisation = () => {
                       sx={{
                         mt: 0,
                       }}
-                      htmlFor="text-phone"
+                      htmlFor="state"
                     >
                       Select state
                     </CustomFormLabel>
-                    {/* <Autocomplete
+                    <Autocomplete
                       disablePortal
                       id="state"
-                      options={selectedState} 
+                      options={
+                        selectedCountry?.states || ([] as readonly State[])
+                      }
                       fullWidth
                       getOptionLabel={(option) => option.name}
                       value={selectedState}
                       onChange={handleChangeState}
-                      renderInput={(params) => (
-                        <CustomTextField {...params} />
-                      )}
-                    /> */}
+                      renderInput={(params) => <CustomTextField {...params} />}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     {/* 5 */}
@@ -226,12 +228,11 @@ const AddOrganisation = () => {
                     </CustomFormLabel>
                     <CustomTextField
                       id="reg.No"
-                      // value="+91 12345 65478"
-                      name="phone"
-                      value={values.phone}
+                      name="regNo"
+                      value={values.regNo}
                       onChange={handleChange}
-                      onBlur={() => setFieldTouched("phone")}
-                      error={!!errors.phone && touched.phone}
+                      onBlur={() => setFieldTouched("regNo")}
+                      error={!!errors.regNo && touched.regNo}
                       variant="outlined"
                       fullWidth
                     />
@@ -242,18 +243,17 @@ const AddOrganisation = () => {
                       sx={{
                         mt: 0,
                       }}
-                      htmlFor="zip-code"
+                      htmlFor="zipcode"
                     >
                       Zip Code(optional)
                     </CustomFormLabel>
                     <CustomTextField
-                      id="text-phone"
-                      // value="+91 12345 65478"
-                      name="phone"
-                      value={values.phone}
+                      id="zipcode"
+                      name="zipcode"
+                      value={values.zipcode}
                       onChange={handleChange}
-                      onBlur={() => setFieldTouched("phone")}
-                      error={!!errors.phone && touched.phone}
+                      onBlur={() => setFieldTouched("zipcode")}
+                      error={!!errors.zipcode && touched.zipcode}
                       variant="outlined"
                       fullWidth
                     />
@@ -275,7 +275,6 @@ const AddOrganisation = () => {
                       onChange={handleChange}
                       onBlur={() => setFieldTouched("address")}
                       error={!!errors.address && touched.address}
-                      // value="814 Howard Street, 120065, India"
                       variant="outlined"
                       fullWidth
                     />
@@ -284,18 +283,19 @@ const AddOrganisation = () => {
                 <Stack
                   direction="row"
                   spacing={2}
-                  sx={{ justifyContent: "end" }}
+                  sx={{ justifyContent: "start" }}
                   mt={3}
                 >
                   <Button
                     type="submit"
                     size="large"
-                    variant="contained"
+                    // variant="contained"
+                    sx={{ fontWeight: 600 }}
                     color="primary"
                   >
-                    Save
+                    Add Organisation
                   </Button>
-                  <Button size="large" variant="text" color="error">
+                  <Button size="large" color="error">
                     Cancel
                   </Button>
                 </Stack>
