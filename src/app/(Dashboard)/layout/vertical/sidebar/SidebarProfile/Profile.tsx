@@ -40,9 +40,13 @@ export const Profile = () => {
             sx={{ height: 40, width: 40 }}
           />
 
-          <Box>
-            <Typography variant="h6">{userData.name.split(" ")[0]}</Typography>
-            <Typography variant="caption">Designer</Typography>
+          <Box component={Link} href={"/profile-settings"}>
+            <Typography color={"textSecondary"} variant="h6">
+              {userData.name.split(" ")[0]}
+            </Typography>
+            <Typography color={"textSecondary"} variant="caption">
+              Designer
+            </Typography>
           </Box>
           <Box sx={{ ml: "auto" }}>
             <Tooltip title="Logout" placement="top">
@@ -53,7 +57,7 @@ export const Profile = () => {
                 aria-label="logout"
                 size="small"
               >
-                <IconPower size="20" />
+                <IconPower size="20" color="#f08080" />
               </IconButton>
             </Tooltip>
           </Box>

@@ -61,7 +61,7 @@ export default function NavItem({
 
   const ListItemStyled = styled(ListItemButton)(() => ({
     whiteSpace: "nowrap",
-    marginBottom: "2px",
+    marginBottom: "5px",
     padding: "8px 10px",
     borderRadius: `${customizer.borderRadius}px`,
     backgroundColor: level > 1 ? "transparent !important" : "inherit",

@@ -156,7 +156,7 @@ const AccountTab = () => {
   const initialValues1 = {
     name: userData.name,
     email: userData.email,
-    dob: userData.dob,
+    dob: userData.dob || "",
     phone: userData.phone,
     address: userData.address,
   };
@@ -265,7 +265,6 @@ const AccountTab = () => {
                   my={3}
                 >
                   <Button
-                    variant="contained"
                     color="primary"
                     sx={{ fontWeight: 600 }}
                     onClick={handleUpload}
@@ -435,7 +434,7 @@ const AccountTab = () => {
                     <Box>
                       <Button
                         type="submit"
-                        variant="contained"
+                        // variant="contained"
                         sx={{ marginTop: "1rem", fontWeight: 600 }}
                         color="primary"
                       >
@@ -618,7 +617,7 @@ const AccountTab = () => {
                   type="submit"
                   size="large"
                   sx={{ fontWeight: 600 }}
-                  variant="contained"
+                  // variant="contained"
                   color="primary"
                 >
                   {isInfoLoading ? (

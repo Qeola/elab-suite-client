@@ -13,7 +13,7 @@ import Image from "next/image";
 export default function Register() {
   return (
     <PageContainer
-      title="Sign up | Streamline your workflows, boost your efficiency! "
+      title="Sign-Up Page | Streamline your workflows, boost your efficiency! "
       description=""
     >
       {/* <div style={{display:'flex',flexWrap:'nowrap',alignItems:'center',minHeight:'calc(100vh - 100px)'}} > */}
