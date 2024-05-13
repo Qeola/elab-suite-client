@@ -1,30 +1,57 @@
 "use client";
 
-import React from "react";
-import PageContainer from "@/app/components/container/PageContainer";
+import { Stack } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Image from "next/image";
+import Link from "next/link";
 
-// components
-import Banner from "@/app/components/landingpage/banner/Banner";
+const Maintenance = () => (
+  <Box
+    display="flex"
+    flexDirection="column"
+    height="100vh"
+    textAlign="center"
+    justifyContent="center"
+  >
+    <Container maxWidth="md">
+      <Image
+        src={"/images/backgrounds/maintenance2.svg"}
+        alt="404"
+        width={500}
+        height={500}
+        style={{ width: "100%", maxWidth: "500px", maxHeight: "500px" }}
+      />
+      <Typography align="center" variant="h1" mb={4}>
+        Maintenance Mode!!!
+      </Typography>
+      <Typography align="center" variant="h4" mb={4}>
+        Website is Under Construction. Check back later!
+      </Typography>
+      <Stack direction="row" gap={2} justifyContent={"center"} mb={4}>
+        <Button
+          color="primary"
+          variant="contained"
+          component={Link}
+          href="/auth/signin"
+          disableElevation
+        >
+          Sign In
+        </Button>
+        <Button
+          color="primary"
+          variant="contained"
+          component={Link}
+          href="/auth/signup"
+          disableElevation
+        >
+          Sign Up
+        </Button>
+      </Stack>
+    </Container>
+  </Box>
+);
 
-import LpHeader from "@/app/components/landingpage/header/Header";
-
-export default function Landingpage() {
-  return (
-    <PageContainer
-      title="eLab suite | Simplify your workflow and eliminate stress with our all-in-one solution.!"
-      description=""
-    >
-      <LpHeader />
-      <Banner />
-      {/* <DemoSlider />
-      <Frameworks />
-      <Testimonial />
-      <Features />
-      <C2a />
-      <C2a2 />
-      <Footer />  */}
-    </PageContainer>
-  );
-}
-
-Landingpage.layout = "Blank";
+export default Maintenance;

@@ -156,7 +156,7 @@ const AccountTab = () => {
   const initialValues1 = {
     name: userData.name,
     email: userData.email,
-    dob: userData.dob || "",
+    dob: userData.dob,
     phone: userData.phone,
     address: userData.address,
   };
@@ -626,7 +626,7 @@ const AccountTab = () => {
                     "Save Changes"
                   )}
                 </Button>
-                <Button size="large" variant="text" color="error">
+                <Button size="large" color="error">
                   Discard
                 </Button>
               </Stack>
