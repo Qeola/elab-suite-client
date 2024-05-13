@@ -76,7 +76,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
           {title}
         </Typography>
       ) : null}
-
+      <Typography>Get back to work quickly. Sign in now</Typography>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

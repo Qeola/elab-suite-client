@@ -149,7 +149,7 @@ export default function ConfirmEmail({ params }: any) {
             </Typography>
             <Typography fontWeight={500} mb={2} maxWidth={"58ch"}>
               Mail confirmation link has been sent to{" "}
-              <span style={{ fontWeight: "500" }}>{email}. </span>
+              <span style={{ fontWeight: "500" }}>({email}). </span>
             </Typography>
             {resendEnabled ? (
               <Typography>Didn&apos;t get email ?</Typography>
@@ -234,7 +234,7 @@ export default function ConfirmEmail({ params }: any) {
                   color: "#0965D3",
                 }}
               >
-                Back to sign up
+                Back to Sign Up
               </Typography>
             </Box>
           </Box>

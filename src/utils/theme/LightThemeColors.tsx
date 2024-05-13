@@ -3,7 +3,7 @@ const LightThemeColors = [
     name: "BLUE_THEME",
     palette: {
       primary: {
-        main: "#FFCC03",
+        main: "#0965D3",
         // light: "#ECF2FF",
         // dark: "#4570EA",
         // contrastText: "#ffffff",

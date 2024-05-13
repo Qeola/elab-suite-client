@@ -90,9 +90,9 @@ export default function Login() {
           </Box>
           <Box
             p={4}
-            width={"450px"}
+            width={"470px"}
             sx={{
-              "@media (max-width: 450px)": {
+              "@media (max-width: 470px)": {
                 width: "100%",
               },
             }}

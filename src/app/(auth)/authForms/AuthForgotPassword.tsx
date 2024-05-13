@@ -41,13 +41,13 @@ export default function AuthForgotPassword() {
   return (
     <>
       <Box>
-        <Typography variant="h3" fontWeight={600}>
+        <Typography variant="h3" fontWeight={600} mb={1}>
           Forgot your password ?
         </Typography>
-        <p>
+        <Typography>
           Enter your email address below, and we&apos;ll send you a link to
           reset it.
-        </p>
+        </Typography>
       </Box>
       <Stack mt={1} spacing={2}>
         <Formik

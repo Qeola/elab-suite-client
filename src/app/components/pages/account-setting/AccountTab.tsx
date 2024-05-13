@@ -69,7 +69,7 @@ const AccountTab = () => {
         if (reader.result) {
           setImage(reader.result as string);
         } else {
-          console.error("Error reading file"); // Handle potential errors
+          console.error("Error reading file");
         }
       };
     }
@@ -156,7 +156,7 @@ const AccountTab = () => {
   const initialValues1 = {
     name: userData.name,
     email: userData.email,
-    dob: userData.dob,
+    dob: userData.dob || "",
     phone: userData.phone,
     address: userData.address,
   };
@@ -215,7 +215,7 @@ const AccountTab = () => {
   return (
     <Grid container spacing={3}>
       {/* Change Profile */}
-      <Grid item xs={12} lg={6}>
+      <Grid item xs={12} lg={6} sx={{ paddingLeft: "0 !important" }}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
@@ -265,7 +265,6 @@ const AccountTab = () => {
                   my={3}
                 >
                   <Button
-                    variant="contained"
                     color="primary"
                     sx={{ fontWeight: 600 }}
                     onClick={handleUpload}
@@ -435,7 +434,7 @@ const AccountTab = () => {
                     <Box>
                       <Button
                         type="submit"
-                        variant="contained"
+                        // variant="contained"
                         sx={{ marginTop: "1rem", fontWeight: 600 }}
                         color="primary"
                       >
@@ -454,7 +453,7 @@ const AccountTab = () => {
         </BlankCard>
       </Grid>
       {/* Edit Details */}
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ paddingLeft: "0 !important" }}>
         <Formik
           initialValues={initialValues1}
           validationSchema={validationSchema1}
@@ -618,7 +617,7 @@ const AccountTab = () => {
                   type="submit"
                   size="large"
                   sx={{ fontWeight: 600 }}
-                  variant="contained"
+                  // variant="contained"
                   color="primary"
                 >
                   {isInfoLoading ? (

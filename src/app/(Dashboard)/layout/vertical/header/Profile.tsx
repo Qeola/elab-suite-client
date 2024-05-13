@@ -179,7 +179,7 @@ const Profile = () => {
           <Button
             onClick={handleLogout}
             href="/auth/signin"
-            variant="contained"
+            // variant="outlined"
             color="primary"
             sx={{ fontWeight: 600 }}
             component={Link}

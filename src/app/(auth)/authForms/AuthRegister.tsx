@@ -34,7 +34,7 @@ import { postRequest } from "@/utils/api/apiRequests";
 import CustomSnackbar from "@/app/components/Snackbar";
 import { useAuthentication } from "../useAuthentication";
 
-const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
+const AuthRegister = ({ title, subtitle }: registerType) => {
   const { isLoading, response, showSnackbar, handleAuthentication } =
     useAuthentication();
   const [isPasswordFocus, setIsPasswordFocus] = useState(false);
@@ -88,11 +88,11 @@ const AuthRegister = ({ title, subtitle, subtext }: registerType) => {
   return (
     <>
       {title ? (
-        <Typography fontWeight="600" variant="h4" mb={1}>
+        <Typography fontWeight="600" variant="h3" mb={1}>
           {title}
         </Typography>
       ) : null}
-
+      <Typography>Empower your business with a centralized platform</Typography>
       <Box>
         <Formik
           initialValues={initialValues}

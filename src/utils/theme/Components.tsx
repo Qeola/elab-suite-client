@@ -142,6 +142,7 @@ const components: any = (theme: Theme) => {
         root: {
           textTransform: "none",
           boxShadow: "none",
+          padding: "13px 14px",
         },
         text: {
           padding: "5px 15px",
@@ -149,21 +150,21 @@ const components: any = (theme: Theme) => {
         textPrimary: {
           backgroundColor: theme.palette.primary.light,
           "&:hover": {
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.primary.main,
             color: "white",
           },
         },
         textSecondary: {
           backgroundColor: theme.palette.secondary.light,
           "&:hover": {
-            backgroundColor: theme.palette.secondary.light,
+            backgroundColor: theme.palette.secondary.main,
             color: "white",
           },
         },
         textSuccess: {
           backgroundColor: theme.palette.success.light,
           "&:hover": {
-            backgroundColor: theme.palette.success.light,
+            backgroundColor: theme.palette.success.main,
             color: "white",
           },
         },

@@ -51,6 +51,7 @@ import {
   IconChartRadar,
   IconLogin,
   IconUserPlus,
+  IconUsers,
   IconRotate,
   IconBox,
   IconShoppingCart,
@@ -63,6 +64,7 @@ import {
   IconBoxAlignLeft,
   IconBorderStyle2,
   IconAppWindow,
+  IconUsersGroup,
 } from "@tabler/icons-react";
 
 const Menuitems: MenuitemsType[] = [
@@ -82,7 +84,7 @@ const Menuitems: MenuitemsType[] = [
   {
     id: uniqueId(),
     title: "Users",
-    icon: IconUserPlus,
+    icon: IconUsers,
     href: "/users",
   },
 
