@@ -266,6 +266,7 @@ const AccountTab = () => {
                 >
                   <Button
                     color="primary"
+                    variant="contained"
                     sx={{ fontWeight: 600 }}
                     onClick={handleUpload}
                   >
@@ -434,7 +435,7 @@ const AccountTab = () => {
                     <Box>
                       <Button
                         type="submit"
-                        // variant="contained"
+                        variant="contained"
                         sx={{ marginTop: "1rem", fontWeight: 600 }}
                         color="primary"
                       >
@@ -617,7 +618,7 @@ const AccountTab = () => {
                   type="submit"
                   size="large"
                   sx={{ fontWeight: 600 }}
-                  // variant="contained"
+                  variant="contained"
                   color="primary"
                 >
                   {isInfoLoading ? (
@@ -626,7 +627,7 @@ const AccountTab = () => {
                     "Save Changes"
                   )}
                 </Button>
-                <Button size="large" color="error">
+                <Button size="large" variant="contained" color="error">
                   Discard
                 </Button>
               </Stack>
