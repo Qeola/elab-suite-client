@@ -17,6 +17,7 @@ import BlankCard from "@/app/components/shared/BlankCard";
 import NotificationTab from "@/app/components/pages/account-setting/NotificationTab";
 import BillsTab from "@/app/components/pages/account-setting/BillsTab";
 import SecurityTab from "@/app/components/pages/account-setting/SecurityTab";
+import OrganisationTab from "@/app/components/pages/account-setting/OrganisationTab";
 
 const BCrumb = [
   {
@@ -98,7 +99,7 @@ const AccountSetting = () => {
               <Tab
                 iconPosition="start"
                 icon={<IconArticle size="22" />}
-                label="Company Information"
+                label="Organisation Information"
                 {...a11yProps(2)}
               />
               <Tab
@@ -114,9 +115,10 @@ const AccountSetting = () => {
             <TabPanel value={value} index={0}>
               <AccountTab />
             </TabPanel>
-            {/* <TabPanel value={value} index={1}>
-                <NotificationTab />
-              </TabPanel> */}
+            <TabPanel value={value} index={1}>
+              {/* <NotificationTab /> */}
+              <OrganisationTab />
+            </TabPanel>
             {/* <TabPanel value={value} index={2}>
               <BillsTab />
             </TabPanel> */}
