@@ -29,45 +29,29 @@ const BCrumb = [
 ];
 
 const AddOrganisation = () => {
-  interface Country {
-    name: string;
-    iso3: string;
-    iso2: string;
-    states: State[];
-  }
+  const [countryNames, setCountryNames] = useState<string[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [selectedState, setSelectedState] = useState<string | null>(null);
 
-  interface State {
-    id: number;
-    name: string;
-    state_code: string;
-  }
+  useEffect(() => {
+    const names = Object.values(countries).map((country) => country.name);
+    setCountryNames(names);
+  }, []);
 
-  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
-  const [selectedState, setSelectedState] = useState<State | null>(null);
-
-  const handleChangeCountry = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.SyntheticEvent<Element, Event>,
-    newCountry: any,
-  ) => {
-    setSelectedCountry(newCountry);
-    setSelectedState(
-      newCountry && newCountry.states?.length > 0 ? newCountry.states[0] : null,
+  const getStates = (selectedCountry: string | null): string[] => {
+    const foundCountry = countries.find(
+      (country) => selectedCountry === country.name,
     );
+
+    if (!foundCountry) {
+      return [];
+    }
+
+    const stateNames = foundCountry.states?.map((state) => state.name) || [];
+    return stateNames;
   };
 
-  const handleChangeState = (
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.SyntheticEvent<Element, Event>,
-    newState: any,
-  ) => {
-    setSelectedState(newState);
-  };
-
-  console.log({ selectedCountry });
-  console.log({ selectedState });
+  const filteredStates = getStates(selectedCountry);
 
   const initialValues = {
     name: "",
@@ -80,16 +64,15 @@ const AddOrganisation = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    // name: Yup.string().required("Name of organisation is required"),
-    // email: Yup.string().required("Email address is required"),
-    // country: Yup.string().required("Please select a country"),
-    // state: Yup.string().required("Please select a state"),
-    // address: Yup.string().required("Please enter a valid address"),
+    name: Yup.string().required("Name of organisation is required"),
+    email: Yup.string().required("Email address is required"),
+    country: Yup.string().required("Please select a country"),
+    state: Yup.string().required("Please select a state"),
+    address: Yup.string().required("Please enter a valid address"),
   });
 
   const onSubmit = (values: any, { setErrors }: any) => {
     console.log({ values });
-    console.log("Working!!");
     // setIsLoading(true);
     // const response = await patchRequest("/users/", values);
     // console.log({ response });
@@ -180,16 +163,22 @@ const AddOrganisation = () => {
                       }}
                       htmlFor="country"
                     >
-                      Select country
+                      Select Country
                     </CustomFormLabel>
                     <Autocomplete
                       disablePortal
                       id="country"
-                      options={countries}
+                      options={countryNames}
                       fullWidth
-                      getOptionLabel={(option) => option.name}
-                      value={selectedCountry}
-                      onChange={handleChangeCountry}
+                      getOptionLabel={(option) => option}
+                      value={values.country}
+                      onChange={(
+                        event: React.SyntheticEvent<Element, Event>,
+                        newCountry: string | null,
+                      ) => {
+                        setFieldValue("country", newCountry);
+                        setSelectedCountry(newCountry);
+                      }}
                       renderInput={(params) => <CustomTextField {...params} />}
                     />
                   </Grid>
@@ -201,18 +190,22 @@ const AddOrganisation = () => {
                       }}
                       htmlFor="state"
                     >
-                      Select state
+                      Select State
                     </CustomFormLabel>
                     <Autocomplete
                       disablePortal
                       id="state"
-                      options={
-                        selectedCountry?.states || ([] as readonly State[])
-                      }
+                      options={filteredStates}
                       fullWidth
-                      getOptionLabel={(option) => option.name}
-                      value={selectedState}
-                      onChange={handleChangeState}
+                      getOptionLabel={(option) => option}
+                      value={values.state}
+                      onChange={(
+                        event: React.SyntheticEvent<Element, Event>,
+                        newState: string | null,
+                      ) => {
+                        setFieldValue("state", newState);
+                        setSelectedState(newState);
+                      }}
                       renderInput={(params) => <CustomTextField {...params} />}
                     />
                   </Grid>
@@ -264,12 +257,12 @@ const AddOrganisation = () => {
                       sx={{
                         mt: 0,
                       }}
-                      htmlFor="text-address"
+                      htmlFor="address"
                     >
                       Address
                     </CustomFormLabel>
                     <CustomTextField
-                      id="text-address"
+                      id="address"
                       name="address"
                       value={values.address}
                       onChange={handleChange}
@@ -289,13 +282,13 @@ const AddOrganisation = () => {
                   <Button
                     type="submit"
                     size="large"
-                    // variant="contained"
+                    variant="contained"
                     sx={{ fontWeight: 600 }}
                     color="primary"
                   >
                     Add Organisation
                   </Button>
-                  <Button size="large" color="error">
+                  <Button size="large" variant="contained" color="error">
                     Cancel
                   </Button>
                 </Stack>
