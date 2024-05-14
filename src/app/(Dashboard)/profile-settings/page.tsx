@@ -101,12 +101,12 @@ const AccountSetting = () => {
                 label="Company Information"
                 {...a11yProps(2)}
               />
-              {/* <Tab
-                  iconPosition="start"
-                  icon={<IconLock size="22" />}
-                  label="Security"
-                  {...a11yProps(3)}
-                /> */}
+              <Tab
+                iconPosition="start"
+                icon={<IconLock size="22" />}
+                label="Security"
+                {...a11yProps(3)}
+              />
             </Tabs>
           </Box>
           <Divider />
@@ -117,12 +117,12 @@ const AccountSetting = () => {
             {/* <TabPanel value={value} index={1}>
                 <NotificationTab />
               </TabPanel> */}
-            <TabPanel value={value} index={2}>
+            {/* <TabPanel value={value} index={2}>
               <BillsTab />
+            </TabPanel> */}
+            <TabPanel value={value} index={2}>
+              <SecurityTab />
             </TabPanel>
-            {/* <TabPanel value={value} index={3}>
-                <SecurityTab />
-              </TabPanel> */}
           </CardContent>
         </Grid>
       </Grid>
