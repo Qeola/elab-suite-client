@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import {
   getRequest,
+  patchRequest,
   patchRequestAvatar,
   postRequest,
 } from "@/utils/api/apiRequests";
@@ -61,6 +62,20 @@ const EditOrganisation = ({ params }: any) => {
     setCountryNames(names);
   }, []);
 
+  useEffect(() => {
+    async function getOrganisation() {
+      try {
+        const response = await getRequest(`/organisations/${organisationSlug}`);
+        console.log({ response });
+        setOrgDetails(response.data.data || []);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getOrganisation();
+  }, [organisationSlug]);
+
   const getStates = (selectedCountry: string | null): string[] => {
     const foundCountry = countries.find(
       (country) => selectedCountry === country.name,
@@ -74,17 +89,19 @@ const EditOrganisation = ({ params }: any) => {
     return stateNames;
   };
 
+  // useEffect(()=>{},[])
   const filteredStates = getStates(selectedCountry);
+  console.log({ orgDetails });
 
   const initialValues = {
-    name: "",
-    email: "",
-    country: "",
-    state: "",
-    regNo: "",
-    zipcode: "",
-    sector: [],
-    address: "",
+    name: orgDetails?.name,
+    email: orgDetails?.email,
+    country: orgDetails?.country,
+    state: orgDetails?.state,
+    regNo: orgDetails?.regNo,
+    zipcode: orgDetails?.zipcode,
+    sector: orgDetails?.sector,
+    address: orgDetails?.address,
   };
 
   const validationSchema = Yup.object().shape({
@@ -101,12 +118,12 @@ const EditOrganisation = ({ params }: any) => {
   const onSubmit = async (values: any, { setErrors }: any) => {
     console.log({ values });
     setIsLoading(true);
-    const response = await postRequest(
+    const response = await patchRequest(
       `/organisations/${organisationSlug}`,
       values,
     );
     console.log({ response });
-    if (response.status == 201) {
+    if (response.status == 200) {
       setShowSnackbar(true);
       setResponse({
         msg: "Organisation added successfully!",
@@ -172,20 +189,6 @@ const EditOrganisation = ({ params }: any) => {
       console.log({ response });
     }
   };
-
-  useEffect(() => {
-    async function getOrganisation() {
-      try {
-        const response = await getRequest(`/organisations/${organisationSlug}`);
-        console.log({ response });
-        setOrgDetails(response.data.data || []);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    getOrganisation();
-  }, [organisationSlug]);
 
   return (
     <PageContainer title="Edit organisation">
@@ -257,297 +260,302 @@ const EditOrganisation = ({ params }: any) => {
       <Divider sx={{ mb: 4 }} />
       {/* <Box sx={{mb:2}}>
               </Box> */}
-      <BlankCard sx={{ marginTop: "4px" }}>
-        <CardContent>
-          <Box>
-            <Typography>Edit your organisation details below.</Typography>
-            <Grid item sx={{ width: "100%", maxWidth: "800px" }}>
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-              >
-                {({
-                  values,
-                  handleChange,
-                  errors,
-                  touched,
-                  setFieldTouched,
-                  setFieldValue,
-                }) => (
-                  <Form>
-                    <Grid container mt={2} spacing={3}>
-                      <Grid item xs={12} sm={6} lg={6}>
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="text-name"
-                        >
-                          Name of Organisation
-                        </CustomFormLabel>
-                        <CustomTextField
-                          id="text-name"
-                          name="name"
-                          value={values.name}
-                          onChange={handleChange}
-                          onBlur={() => setFieldTouched("name")}
-                          error={!!errors.name && touched.name}
-                          variant="outlined"
-                          fullWidth
-                        />
-                        <ErrorMessage
-                          name="name"
-                          component="span"
-                          className="error"
-                        />
+      {orgDetails !== null && orgDetails && (
+        <BlankCard sx={{ marginTop: "4px" }}>
+          <CardContent>
+            <Box>
+              <Typography>Edit your organisation details below.</Typography>
+              <Grid item sx={{ width: "100%", maxWidth: "800px" }}>
+                <Formik
+                  initialValues={initialValues}
+                  validationSchema={validationSchema}
+                  onSubmit={onSubmit}
+                >
+                  {({
+                    values,
+                    handleChange,
+                    errors,
+                    touched,
+                    setFieldTouched,
+                    setFieldValue,
+                  }) => (
+                    <Form>
+                      <Grid container mt={2} spacing={3}>
+                        <Grid item xs={12} sm={6} lg={6}>
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="text-name"
+                          >
+                            Name of Organisation
+                          </CustomFormLabel>
+                          <CustomTextField
+                            id="text-name"
+                            name="name"
+                            value={values.name}
+                            onChange={handleChange}
+                            onBlur={() => setFieldTouched("name")}
+                            error={!!errors.name && touched.name}
+                            variant="outlined"
+                            fullWidth
+                          />
+                          <ErrorMessage
+                            name="name"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          {/* 2 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="email"
+                          >
+                            Email Address
+                          </CustomFormLabel>
+                          <CustomTextField
+                            id="email"
+                            name="email"
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={() => setFieldTouched("email")}
+                            error={!!errors.email && touched.email}
+                            variant="outlined"
+                            fullWidth
+                          />
+                          <ErrorMessage
+                            name="email"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          {/* 5 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="country"
+                          >
+                            Select Country
+                          </CustomFormLabel>
+                          <Field name="country">
+                            {({ field }: any) => (
+                              <Autocomplete
+                                {...field}
+                                disablePortal
+                                id="country"
+                                options={countryNames}
+                                fullWidth
+                                getOptionLabel={(option) => option}
+                                value={values.country}
+                                onChange={(
+                                  event: React.SyntheticEvent<Element, Event>,
+                                  newCountry: string | null,
+                                ) => {
+                                  setFieldValue("country", newCountry);
+                                  setSelectedCountry(newCountry);
+                                }}
+                                renderInput={(params) => (
+                                  <CustomTextField {...params} />
+                                )}
+                              />
+                            )}
+                          </Field>
+                          <ErrorMessage
+                            name="country"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          {/* 6 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="state"
+                          >
+                            Select State
+                          </CustomFormLabel>
+                          <Field name="state">
+                            {({ field }: any) => (
+                              <Autocomplete
+                                {...field}
+                                disablePortal
+                                id="state"
+                                options={filteredStates}
+                                fullWidth
+                                getOptionLabel={(option) => option}
+                                value={values.state}
+                                onChange={(
+                                  event: React.SyntheticEvent<Element, Event>,
+                                  newState: string | null,
+                                ) => {
+                                  setFieldValue("state", newState);
+                                  setSelectedState(newState);
+                                }}
+                                renderInput={(params) => (
+                                  <CustomTextField {...params} />
+                                )}
+                              />
+                            )}
+                          </Field>
+                          <ErrorMessage
+                            name="state"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          {/* 5 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="reg.No"
+                          >
+                            Registration Number(optional)
+                          </CustomFormLabel>
+                          <CustomTextField
+                            id="reg.No"
+                            name="regNo"
+                            value={values.regNo}
+                            onChange={handleChange}
+                            onBlur={() => setFieldTouched("regNo")}
+                            error={!!errors.regNo && touched.regNo}
+                            variant="outlined"
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          {/* 6 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="zipcode"
+                          >
+                            Zip Code(optional)
+                          </CustomFormLabel>
+                          <CustomTextField
+                            id="zipcode"
+                            name="zipcode"
+                            value={values.zipcode}
+                            onChange={handleChange}
+                            onBlur={() => setFieldTouched("zipcode")}
+                            error={!!errors.zipcode && touched.zipcode}
+                            variant="outlined"
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          {/* 7 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="sector"
+                          >
+                            Select Sector
+                          </CustomFormLabel>
+                          <Field name="sector">
+                            {({ field }: any) => (
+                              <Autocomplete
+                                {...field}
+                                multiple
+                                fullWidth
+                                id="sector"
+                                options={Sectors}
+                                getOptionLabel={(option) => option}
+                                filterSelectedOptions
+                                value={values.sector}
+                                onChange={(
+                                  event: React.SyntheticEvent<Element, Event>,
+                                  newSectors: string[],
+                                ) => setFieldValue("sector", newSectors)}
+                                renderInput={(params) => (
+                                  <CustomTextField {...params} />
+                                )}
+                              />
+                            )}
+                          </Field>
+                          <ErrorMessage
+                            name="sector"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          {/* 7 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="address"
+                          >
+                            Address
+                          </CustomFormLabel>
+                          <CustomTextField
+                            id="address"
+                            name="address"
+                            value={values.address}
+                            onChange={handleChange}
+                            onBlur={() => setFieldTouched("address")}
+                            error={!!errors.address && touched.address}
+                            variant="outlined"
+                            fullWidth
+                          />
+                          <ErrorMessage
+                            name="address"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
                       </Grid>
-                      <Grid item xs={12} sm={6}>
-                        {/* 2 */}
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="email"
-                        >
-                          Email Address
-                        </CustomFormLabel>
-                        <CustomTextField
-                          id="email"
-                          name="email"
-                          value={values.email}
-                          onChange={handleChange}
-                          onBlur={() => setFieldTouched("email")}
-                          error={!!errors.email && touched.email}
-                          variant="outlined"
-                          fullWidth
-                        />
-                        <ErrorMessage
-                          name="email"
-                          component="span"
-                          className="error"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        {/* 5 */}
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="country"
-                        >
-                          Select Country
-                        </CustomFormLabel>
-                        <Field name="country">
-                          {({ field }: any) => (
-                            <Autocomplete
-                              {...field}
-                              disablePortal
-                              id="country"
-                              options={countryNames}
-                              fullWidth
-                              getOptionLabel={(option) => option}
-                              value={values.country}
-                              onChange={(
-                                event: React.SyntheticEvent<Element, Event>,
-                                newCountry: string | null,
-                              ) => {
-                                setFieldValue("country", newCountry);
-                                setSelectedCountry(newCountry);
-                              }}
-                              renderInput={(params) => (
-                                <CustomTextField {...params} />
-                              )}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage
-                          name="country"
-                          component="span"
-                          className="error"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        {/* 6 */}
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="state"
-                        >
-                          Select State
-                        </CustomFormLabel>
-                        <Field name="state">
-                          {({ field }: any) => (
-                            <Autocomplete
-                              {...field}
-                              disablePortal
-                              id="state"
-                              options={filteredStates}
-                              fullWidth
-                              getOptionLabel={(option) => option}
-                              value={values.state}
-                              onChange={(
-                                event: React.SyntheticEvent<Element, Event>,
-                                newState: string | null,
-                              ) => {
-                                setFieldValue("state", newState);
-                                setSelectedState(newState);
-                              }}
-                              renderInput={(params) => (
-                                <CustomTextField {...params} />
-                              )}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage
-                          name="state"
-                          component="span"
-                          className="error"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        {/* 5 */}
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="reg.No"
-                        >
-                          Registration Number(optional)
-                        </CustomFormLabel>
-                        <CustomTextField
-                          id="reg.No"
-                          name="regNo"
-                          value={values.regNo}
-                          onChange={handleChange}
-                          onBlur={() => setFieldTouched("regNo")}
-                          error={!!errors.regNo && touched.regNo}
-                          variant="outlined"
-                          fullWidth
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        {/* 6 */}
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="zipcode"
-                        >
-                          Zip Code(optional)
-                        </CustomFormLabel>
-                        <CustomTextField
-                          id="zipcode"
-                          name="zipcode"
-                          value={values.zipcode}
-                          onChange={handleChange}
-                          onBlur={() => setFieldTouched("zipcode")}
-                          error={!!errors.zipcode && touched.zipcode}
-                          variant="outlined"
-                          fullWidth
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        {/* 7 */}
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="sector"
-                        >
-                          Select Sector
-                        </CustomFormLabel>
-                        <Field name="sector">
-                          {({ field }: any) => (
-                            <Autocomplete
-                              {...field}
-                              multiple
-                              fullWidth
-                              id="sector"
-                              options={Sectors}
-                              getOptionLabel={(option) => option}
-                              filterSelectedOptions
-                              value={values.sector}
-                              onChange={(
-                                event: React.SyntheticEvent<Element, Event>,
-                                newSectors: string[],
-                              ) => setFieldValue("sector", newSectors)}
-                              renderInput={(params) => (
-                                <CustomTextField {...params} />
-                              )}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage
-                          name="sector"
-                          component="span"
-                          className="error"
-                        />
-                      </Grid>
-                      <Grid item xs={12}>
-                        {/* 7 */}
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="address"
-                        >
-                          Address
-                        </CustomFormLabel>
-                        <CustomTextField
-                          id="address"
-                          name="address"
-                          value={values.address}
-                          onChange={handleChange}
-                          onBlur={() => setFieldTouched("address")}
-                          error={!!errors.address && touched.address}
-                          variant="outlined"
-                          fullWidth
-                        />
-                        <ErrorMessage
-                          name="address"
-                          component="span"
-                          className="error"
-                        />
-                      </Grid>
-                    </Grid>
-                    <Stack
-                      direction="row"
-                      spacing={2}
-                      sx={{ justifyContent: "start" }}
-                      mt={3}
-                    >
-                      <Button
-                        type="submit"
-                        size="large"
-                        variant="contained"
-                        sx={{ fontWeight: 600 }}
-                        color="primary"
+                      <Stack
+                        direction="row"
+                        spacing={2}
+                        sx={{ justifyContent: "start" }}
+                        mt={3}
                       >
-                        {isLoading ? (
-                          <CircularProgress sx={{ color: "black" }} size={18} />
-                        ) : (
-                          " Save Changes"
-                        )}
-                      </Button>
-                      <Button
-                        size="large"
-                        variant="contained"
-                        color="error"
-                        sx={{ fontWeight: 600 }}
-                      >
-                        Discard
-                      </Button>
-                    </Stack>
-                  </Form>
-                )}
-              </Formik>
-            </Grid>
-            {showSnackbar && <CustomSnackbar response={response} />}
-          </Box>
-        </CardContent>
-      </BlankCard>
+                        <Button
+                          type="submit"
+                          size="large"
+                          variant="contained"
+                          sx={{ fontWeight: 600 }}
+                          color="primary"
+                        >
+                          {isLoading ? (
+                            <CircularProgress
+                              sx={{ color: "black" }}
+                              size={18}
+                            />
+                          ) : (
+                            " Save Changes"
+                          )}
+                        </Button>
+                        <Button
+                          size="large"
+                          variant="contained"
+                          color="error"
+                          sx={{ fontWeight: 600 }}
+                        >
+                          Discard
+                        </Button>
+                      </Stack>
+                    </Form>
+                  )}
+                </Formik>
+              </Grid>
+              {showSnackbar && <CustomSnackbar response={response} />}
+            </Box>
+          </CardContent>
+        </BlankCard>
+      )}
     </PageContainer>
   );
 };
