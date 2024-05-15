@@ -118,6 +118,7 @@ const EditOrganisation = ({ params }: any) => {
   const onSubmit = async (values: any, { setErrors }: any) => {
     console.log({ values });
     setIsLoading(true);
+
     const response = await patchRequest(
       `/organisations/${organisationSlug}`,
       values,
