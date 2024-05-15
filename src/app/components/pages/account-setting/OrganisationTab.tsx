@@ -5,15 +5,12 @@ import { getRequest } from "@/utils/api/apiRequests";
 import { useRouter } from "next/navigation";
 import { format, parseISO } from "date-fns";
 import { String } from "lodash";
+import Link from "next/link";
 
 const OrganisationTab = () => {
   const router = useRouter();
   const [organisations, setOrganisations] = useState<any[]>([]);
   const [records, setRecords] = useState<number | null>(null);
-
-  const handleOrg = (slug: string) => {
-    router.push(`organisation/${slug}`);
-  };
 
   const handleDateFormat = (rawDate: string) => {
     const parsedDate = parseISO(rawDate);
@@ -56,27 +53,31 @@ const OrganisationTab = () => {
           gap={"1.5rem"}
         >
           {organisations.map((organisation, idx) => (
-            <Button
+            <Box
               key={idx}
-              fullWidth
-              onClick={() => handleOrg(organisation.slug)}
+              component={Link}
+              href={`/organisation/${organisation.slug}`}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 padding: "1rem",
+                backgroundColor: `${"secondary.light"}`,
               }}
-              color="primary"
             >
               <Stack direction={"column"} gap={"1rem"} textAlign={"left"}>
-                <Typography fontWeight={600}>{organisation.name}</Typography>
-                <Typography>{organisation.email}</Typography>
-              </Stack>
-              <Stack sx={{ alignSelf: "end" }}>
-                <Typography>
-                  Created:{handleDateFormat(organisation.createdAt)}
+                <Typography color="textPrimary" fontWeight={600}>
+                  {organisation.name}
+                </Typography>
+                <Typography color="textPrimary">
+                  {organisation.email}
                 </Typography>
               </Stack>
-            </Button>
+              <Stack sx={{ alignSelf: "end" }}>
+                <Typography color="textPrimary">
+                  Created: {handleDateFormat(organisation.createdAt)}
+                </Typography>
+              </Stack>
+            </Box>
           ))}
         </Box>
       </CardContent>
