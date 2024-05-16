@@ -113,46 +113,6 @@ const AccountTab = () => {
     }
   };
 
-  // formik
-  const initialValues = {
-    currentPassword: "",
-    password: "",
-    confirmPassword: "",
-  };
-
-  const validationSchema = Yup.object().shape({
-    currentPassword: Yup.string().required(" Current Password is required"),
-    password: Yup.string()
-      .required("New Password is required")
-      .matches(
-        RegExp("(.*[a-z].*)"),
-        "Password must contain at least one lowercase letter",
-      )
-      .matches(
-        RegExp("(.*[A-Z].*)"),
-        "Password must contain at least one uppercase letter",
-      )
-      .matches(RegExp("(.*\\d.*)"), "Password must contain a number")
-      .matches(
-        RegExp('[!@#$%^&*(),.?":{}|<>]'),
-        "Password must contain a special character",
-      )
-      .min(8, "Password must be at least 8 characters"),
-    confirmPassword: Yup.string().required(" Confirm Password is required"),
-  });
-
-  const onSubmit = async (values: ChangePasswordValues, { setErrors }: any) => {
-    setIsLoading(true);
-    const response = await postRequest("/auth/change-password", values);
-    if (response.status == 200) {
-      setShowSnackbar(true);
-      setResponse({ msg: "Password changed successfully!", status: "success" });
-      setTimeout(() => setShowSnackbar(false), 6000);
-    }
-    setIsLoading(false);
-    setErrors({ [response[0].field || "password"]: response[0].message });
-  };
-
   const initialValues1 = {
     name: userData.name,
     email: userData.email,
@@ -182,40 +142,10 @@ const AccountTab = () => {
     // setErrors({ [response[0].field || "password"]: response[0].message });
   };
 
-  // password1
-  const [showPassword1, setShowPassword1] = useState(false);
-  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
-
-  const handleMouseDownPassword1 = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    event.preventDefault();
-  };
-
-  // password2
-  const [showPassword2, setShowPassword2] = useState(false);
-  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
-
-  const handleMouseDownPassword2 = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    event.preventDefault();
-  };
-
-  // password3
-  const [showPassword3, setShowPassword3] = useState(false);
-  const handleClickShowPassword3 = () => setShowPassword3((show) => !show);
-
-  const handleMouseDownPassword3 = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
-    event.preventDefault();
-  };
-
   return (
     <Grid container spacing={3}>
       {/* Change Profile */}
-      <Grid item xs={12} lg={6} sx={{ paddingLeft: "0 !important" }}>
+      <Grid item xs={12} lg={4} sx={{ paddingLeft: "0 !important" }}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
@@ -286,175 +216,8 @@ const AccountTab = () => {
           </CardContent>
         </BlankCard>
       </Grid>
-      {/*  Change Password */}
-      <Grid item xs={12} lg={6}>
-        <BlankCard>
-          <CardContent>
-            <Typography variant="h5" mb={1}>
-              Change Password
-            </Typography>
-            <Typography color="textSecondary" mb={3}>
-              To change your password please confirm here
-            </Typography>
-            <Box>
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-              >
-                {({
-                  values,
-                  handleChange,
-                  errors,
-                  touched,
-                  setFieldTouched,
-                }) => (
-                  <Form>
-                    <CustomFormLabel
-                      sx={{
-                        mt: 0,
-                      }}
-                      htmlFor="text-cpwd"
-                    >
-                      Current Password
-                    </CustomFormLabel>
-                    <CustomTextField
-                      id="text-cpwd"
-                      name="currentPassword"
-                      value={values.currentPassword}
-                      onChange={handleChange}
-                      onBlur={() => setFieldTouched("currentPassword")}
-                      error={
-                        !!errors.currentPassword && touched.currentPassword
-                      }
-                      type={showPassword1 ? "text" : "password"}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword1}
-                              onMouseDown={handleMouseDownPassword1}
-                              edge="end"
-                            >
-                              {showPassword1 ? (
-                                <IconEyeOff size="20" />
-                              ) : (
-                                <IconEye size="20" />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      variant="outlined"
-                      fullWidth
-                    />
-                    <ErrorMessage
-                      name="currentPassword"
-                      component="span"
-                      className="error"
-                    />
-                    {/* 2 */}
-                    <CustomFormLabel htmlFor="text-npwd">
-                      New Password
-                    </CustomFormLabel>
-                    <CustomTextField
-                      id="text-npwd"
-                      name="password"
-                      value={values.password}
-                      onChange={handleChange}
-                      onBlur={() => setFieldTouched("password")}
-                      error={!!errors.password && touched.password}
-                      type={showPassword2 ? "text" : "password"}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword2}
-                              onMouseDown={handleMouseDownPassword2}
-                              edge="end"
-                            >
-                              {showPassword2 ? (
-                                <IconEyeOff size="20" />
-                              ) : (
-                                <IconEye size="20" />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      variant="outlined"
-                      fullWidth
-                    />
-                    <ErrorMessage
-                      name="password"
-                      component="span"
-                      className="error"
-                    />
-                    {/* 3 */}
-                    <CustomFormLabel htmlFor="text-conpwd">
-                      Confirm Password
-                    </CustomFormLabel>
-                    <CustomTextField
-                      id="text-conpwd"
-                      name="confirmPassword"
-                      value={values.confirmPassword}
-                      onChange={handleChange}
-                      onBlur={() => setFieldTouched("confirmPassword")}
-                      error={
-                        !!errors.confirmPassword && touched.confirmPassword
-                      }
-                      type={showPassword3 ? "text" : "password"}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowPassword3}
-                              onMouseDown={handleMouseDownPassword3}
-                              edge="end"
-                            >
-                              {showPassword3 ? (
-                                <IconEyeOff size="20" />
-                              ) : (
-                                <IconEye size="20" />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      variant="outlined"
-                      fullWidth
-                    />
-                    <ErrorMessage
-                      name="confirmPassword"
-                      component="span"
-                      className="error"
-                    />
-                    <Box>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ marginTop: "1rem", fontWeight: 600 }}
-                        color="primary"
-                      >
-                        {isLoading ? (
-                          <CircularProgress size={18} sx={{ color: "#000" }} />
-                        ) : (
-                          "Change Password"
-                        )}
-                      </Button>
-                    </Box>
-                  </Form>
-                )}
-              </Formik>
-            </Box>
-          </CardContent>
-        </BlankCard>
-      </Grid>
       {/* Edit Details */}
-      <Grid item xs={12} sx={{ paddingLeft: "0 !important" }}>
+      <Grid item xs={12} lg={8}>
         <Formik
           initialValues={initialValues1}
           validationSchema={validationSchema1}
@@ -494,7 +257,6 @@ const AccountTab = () => {
                         onChange={handleChange}
                         onBlur={() => setFieldTouched("name")}
                         error={!!errors.name && touched.name}
-                        // value={userData.name}
                         variant="outlined"
                         fullWidth
                       />
@@ -517,7 +279,6 @@ const AccountTab = () => {
                         onChange={handleChange}
                         onBlur={() => setFieldTouched("email")}
                         error={!!errors.email && touched.email}
-                        // value={userData.email}
                         variant="outlined"
                         fullWidth
                       />
@@ -573,7 +334,6 @@ const AccountTab = () => {
                       </CustomFormLabel>
                       <CustomTextField
                         id="text-phone"
-                        // value="+91 12345 65478"
                         name="phone"
                         value={values.phone}
                         onChange={handleChange}
@@ -589,7 +349,7 @@ const AccountTab = () => {
                         sx={{
                           mt: 0,
                         }}
-                        htmlFor="text-address"
+                        htmlFor="address"
                       >
                         Address
                       </CustomFormLabel>
@@ -600,7 +360,6 @@ const AccountTab = () => {
                         onChange={handleChange}
                         onBlur={() => setFieldTouched("address")}
                         error={!!errors.address && touched.address}
-                        // value="814 Howard Street, 120065, India"
                         variant="outlined"
                         fullWidth
                       />

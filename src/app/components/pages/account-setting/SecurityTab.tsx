@@ -1,4 +1,6 @@
-import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -15,164 +17,260 @@ import {
   IconDeviceLaptop,
   IconDeviceMobile,
   IconDotsVertical,
+  IconEye,
+  IconEyeOff,
 } from "@tabler/icons-react";
+import { CircularProgress, InputAdornment } from "@mui/material";
+import CustomFormLabel from "../../forms/theme-elements/CustomFormLabel";
+import CustomTextField from "../../forms/theme-elements/CustomTextField";
+import { postRequest } from "@/utils/api/apiRequests";
+import { ChangePasswordValues } from "@/app/(auth)/authInterfaces";
+import CustomSnackbar from "../../Snackbar";
 
 const SecurityTab = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [response, setResponse] = useState({});
+  const [error, setError] = useState<string | null>(null);
+
+  // password1
+  const [showPassword1, setShowPassword1] = useState(false);
+  const handleClickShowPassword1 = () => setShowPassword1((show) => !show);
+
+  const handleMouseDownPassword1 = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+  };
+
+  // password2
+  const [showPassword2, setShowPassword2] = useState(false);
+  const handleClickShowPassword2 = () => setShowPassword2((show) => !show);
+
+  const handleMouseDownPassword2 = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+  };
+
+  // password3
+  const [showPassword3, setShowPassword3] = useState(false);
+  const handleClickShowPassword3 = () => setShowPassword3((show) => !show);
+
+  const handleMouseDownPassword3 = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+  };
+
+  // formik
+  const initialValues = {
+    currentPassword: "",
+    password: "",
+    confirmPassword: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    currentPassword: Yup.string().required(" Current Password is required"),
+    password: Yup.string()
+      .required("New Password is required")
+      .matches(
+        RegExp("(.*[a-z].*)"),
+        "Password must contain at least one lowercase letter",
+      )
+      .matches(
+        RegExp("(.*[A-Z].*)"),
+        "Password must contain at least one uppercase letter",
+      )
+      .matches(RegExp("(.*\\d.*)"), "Password must contain a number")
+      .matches(
+        RegExp('[!@#$%^&*(),.?":{}|<>]'),
+        "Password must contain a special character",
+      )
+      .min(8, "Password must be at least 8 characters"),
+    confirmPassword: Yup.string().required(" Confirm Password is required"),
+  });
+
+  const onSubmit = async (values: ChangePasswordValues, { setErrors }: any) => {
+    setIsLoading(true);
+    const response = await postRequest("/auth/change-password", values);
+    if (response.status == 200) {
+      setShowSnackbar(true);
+      setResponse({ msg: "Password changed successfully!", status: "success" });
+      setTimeout(() => setShowSnackbar(false), 6000);
+    }
+    setIsLoading(false);
+    setErrors({ [response[0].field || "password"]: response[0].message });
+  };
   return (
     <>
-      <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12} lg={8}>
-          <BlankCard>
-            <CardContent>
-              <Typography variant="h4" mb={2}>
-                Two-factor Authentication
-              </Typography>
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                mb={4}
+      <Grid item xs={12} lg={6} sx={{ paddingLeft: "0 !important" }}>
+        <BlankCard>
+          <CardContent>
+            <Typography variant="h5" mb={1}>
+              Change Password
+            </Typography>
+            <Typography color="textSecondary" mb={3}>
+              To change your password please confirm here
+            </Typography>
+            <Box>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
               >
-                <Typography variant="subtitle1" color="textSecondary">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Corporis sapiente sunt earum officiis laboriosam ut.
-                </Typography>
-                <Button variant="contained" color="primary">
-                  Enable
-                </Button>
-              </Stack>
-
-              <Divider />
-
-              {/* list 1 */}
-              <Stack direction="row" spacing={2} py={2} alignItems="center">
-                <Box>
-                  <Typography variant="h6">Authentication App</Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    Google auth app
-                  </Typography>
-                </Box>
-                <Box sx={{ ml: "auto !important" }}>
-                  <Button variant="text" color="primary">
-                    Setup
-                  </Button>
-                </Box>
-              </Stack>
-              <Divider />
-              {/* list 2 */}
-              <Stack direction="row" spacing={2} py={2} alignItems="center">
-                <Box>
-                  <Typography variant="h6">Another e-mail</Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    E-mail to send verification link
-                  </Typography>
-                </Box>
-                <Box sx={{ ml: "auto !important" }}>
-                  <Button variant="text" color="primary">
-                    Setup
-                  </Button>
-                </Box>
-              </Stack>
-              <Divider />
-              {/* list 3 */}
-              <Stack direction="row" spacing={2} py={2} alignItems="center">
-                <Box>
-                  <Typography variant="h6">SMS Recovery</Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    Your phone number or something
-                  </Typography>
-                </Box>
-                <Box sx={{ ml: "auto !important" }}>
-                  <Button variant="text" color="primary">
-                    Setup
-                  </Button>
-                </Box>
-              </Stack>
-            </CardContent>
-          </BlankCard>
-        </Grid>
-        <Grid item xs={12} lg={4}>
-          <BlankCard>
-            <CardContent>
-              <Avatar
-                variant="rounded"
-                sx={{
-                  bgcolor: "primary.light",
-                  color: "primary.main",
-                  width: 48,
-                  height: 48,
-                }}
-              >
-                <IconDeviceLaptop size="26" />
-              </Avatar>
-
-              <Typography variant="h5" mt={2}>
-                Devices
-              </Typography>
-              <Typography color="textSecondary" mt={1} mb={2}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit Rem.
-              </Typography>
-              <Button variant="contained" color="primary">
-                Sign out from all devices
-              </Button>
-
-              {/* list 1 */}
-              <Stack
-                direction="row"
-                spacing={2}
-                py={2}
-                mt={3}
-                alignItems="center"
-              >
-                <IconDeviceMobile size="26" />
-
-                <Box>
-                  <Typography variant="h6">iPhone 14</Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    London UK, Oct 23 at 1:15 AM
-                  </Typography>
-                </Box>
-                <Box sx={{ ml: "auto !important" }}>
-                  <IconButton>
-                    <IconDotsVertical size="22" />
-                  </IconButton>
-                </Box>
-              </Stack>
-              <Divider />
-              {/* list 2 */}
-              <Stack direction="row" spacing={2} py={2} alignItems="center">
-                <IconDeviceLaptop size="26" />
-
-                <Box>
-                  <Typography variant="h6">Macbook Air </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    Gujarat India, Oct 24 at 3:15 AM
-                  </Typography>
-                </Box>
-                <Box sx={{ ml: "auto !important" }}>
-                  <IconButton>
-                    <IconDotsVertical size="22" />
-                  </IconButton>
-                </Box>
-              </Stack>
-              <Stack>
-                <Button variant="text" color="primary">
-                  Need Help ?
-                </Button>
-              </Stack>
-            </CardContent>
-          </BlankCard>
-        </Grid>
+                {({
+                  values,
+                  handleChange,
+                  errors,
+                  touched,
+                  setFieldTouched,
+                }) => (
+                  <Form>
+                    <CustomFormLabel
+                      sx={{
+                        mt: 0,
+                      }}
+                      htmlFor="text-cpwd"
+                    >
+                      Current Password
+                    </CustomFormLabel>
+                    <CustomTextField
+                      id="text-cpwd"
+                      name="currentPassword"
+                      value={values.currentPassword}
+                      onChange={handleChange}
+                      onBlur={() => setFieldTouched("currentPassword")}
+                      error={
+                        !!errors.currentPassword && touched.currentPassword
+                      }
+                      type={showPassword1 ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword1}
+                              onMouseDown={handleMouseDownPassword1}
+                              edge="end"
+                            >
+                              {showPassword1 ? (
+                                <IconEyeOff size="20" />
+                              ) : (
+                                <IconEye size="20" />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="outlined"
+                      fullWidth
+                    />
+                    <ErrorMessage
+                      name="currentPassword"
+                      component="span"
+                      className="error"
+                    />
+                    {/* 2 */}
+                    <CustomFormLabel htmlFor="text-npwd">
+                      New Password
+                    </CustomFormLabel>
+                    <CustomTextField
+                      id="text-npwd"
+                      name="password"
+                      value={values.password}
+                      onChange={handleChange}
+                      onBlur={() => setFieldTouched("password")}
+                      error={!!errors.password && touched.password}
+                      type={showPassword2 ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword2}
+                              onMouseDown={handleMouseDownPassword2}
+                              edge="end"
+                            >
+                              {showPassword2 ? (
+                                <IconEyeOff size="20" />
+                              ) : (
+                                <IconEye size="20" />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="outlined"
+                      fullWidth
+                    />
+                    <ErrorMessage
+                      name="password"
+                      component="span"
+                      className="error"
+                    />
+                    {/* 3 */}
+                    <CustomFormLabel htmlFor="text-conpwd">
+                      Confirm Password
+                    </CustomFormLabel>
+                    <CustomTextField
+                      id="text-conpwd"
+                      name="confirmPassword"
+                      value={values.confirmPassword}
+                      onChange={handleChange}
+                      onBlur={() => setFieldTouched("confirmPassword")}
+                      error={
+                        !!errors.confirmPassword && touched.confirmPassword
+                      }
+                      type={showPassword3 ? "text" : "password"}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowPassword3}
+                              onMouseDown={handleMouseDownPassword3}
+                              edge="end"
+                            >
+                              {showPassword3 ? (
+                                <IconEyeOff size="20" />
+                              ) : (
+                                <IconEye size="20" />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      variant="outlined"
+                      fullWidth
+                    />
+                    <ErrorMessage
+                      name="confirmPassword"
+                      component="span"
+                      className="error"
+                    />
+                    <Box>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{ marginTop: "1rem", fontWeight: 600 }}
+                        color="primary"
+                      >
+                        {isLoading ? (
+                          <CircularProgress size={18} sx={{ color: "#000" }} />
+                        ) : (
+                          "Change Password"
+                        )}
+                      </Button>
+                    </Box>
+                  </Form>
+                )}
+              </Formik>
+            </Box>
+          </CardContent>
+        </BlankCard>
       </Grid>
-
-      <Stack direction="row" spacing={2} sx={{ justifyContent: "end" }} mt={3}>
-        <Button size="large" variant="contained" color="primary">
-          Save
-        </Button>
-        <Button size="large" variant="text" color="error">
-          Cancel
-        </Button>
-      </Stack>
+      {showSnackbar && <CustomSnackbar response={response} />}
     </>
   );
 };
