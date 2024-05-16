@@ -12,6 +12,7 @@ import {
   CardContent,
   Divider,
   Grid,
+  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -32,13 +33,16 @@ const OrganisationDetails = ({ params }: any) => {
   const organisationSlug = params.slug;
 
   const [orgDetails, setOrgDetails] = useState<any | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getOrganisation() {
       try {
+        setIsLoading(false);
         const response = await getRequest(`/organisations/${organisationSlug}`);
         console.log({ response });
         setOrgDetails(response.data.data || []);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
       }
@@ -49,11 +53,34 @@ const OrganisationDetails = ({ params }: any) => {
 
   const handleDateFormat = (rawDate: string | undefined) => {
     if (!rawDate) {
-      return "Loading...";
+      return (
+        <Skeleton
+          variant="rectangular"
+          className="skeleton-radius"
+          width={50}
+          height={15}
+          animation="wave"
+        />
+      );
     }
     const parsedDate = parseISO(rawDate);
     const formattedDate = format(parsedDate, "dd, MMMM, yyyy");
     return formattedDate;
+  };
+
+  const loadedData = (data: any) => {
+    if (!data) {
+      return (
+        <Skeleton
+          className="skeleton-radius"
+          variant="rectangular"
+          width={100}
+          height={15}
+          animation="wave"
+        />
+      );
+    }
+    return <Typography variant="inherit">{data}</Typography>;
   };
 
   console.log({ orgDetails });
@@ -80,14 +107,19 @@ const OrganisationDetails = ({ params }: any) => {
 
               <Box>
                 <Typography color={"textSecondary"} variant="h5">
-                  {orgDetails && orgDetails.name}
+                  {loadedData(orgDetails?.name)}
                 </Typography>
                 <Typography color={"textSecondary"} variant="caption">
                   Information & Technology
                 </Typography>
               </Box>
             </Stack>
-            <Stack direction="row" gap={1} alignSelf={"end"}>
+            <Stack
+              direction="row"
+              gap={1}
+              alignItems={"center"}
+              alignSelf={"end"}
+            >
               <Typography>Created on :</Typography>
               <Typography>{handleDateFormat(orgDetails?.createdAt)}</Typography>
             </Stack>
@@ -100,13 +132,13 @@ const OrganisationDetails = ({ params }: any) => {
                   <Typography color="textSecondary">
                     Organisation Name:
                   </Typography>
-                  <Typography>{orgDetails?.name}</Typography>
+                  {loadedData(orgDetails?.name)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
                 <Stack direction={"column"}>
                   <Typography color="textSecondary">Email Address:</Typography>
-                  <Typography>{orgDetails?.email}</Typography>
+                  {loadedData(orgDetails?.email)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
@@ -114,7 +146,7 @@ const OrganisationDetails = ({ params }: any) => {
                   <Typography color="textSecondary">
                     Registration Number:
                   </Typography>
-                  <Typography>{orgDetails?.regNo}</Typography>
+                  {loadedData(orgDetails?.regNo)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
@@ -132,25 +164,25 @@ const OrganisationDetails = ({ params }: any) => {
               <Grid item xs={12} sm={6} lg={4}>
                 <Stack direction={"column"}>
                   <Typography color="textSecondary">Country:</Typography>
-                  <Typography>{orgDetails?.country}</Typography>
+                  {loadedData(orgDetails?.country)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
                 <Stack direction={"column"}>
                   <Typography color="textSecondary">State:</Typography>
-                  <Typography>{orgDetails?.state}</Typography>
+                  {loadedData(orgDetails?.state)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
                 <Stack direction={"column"}>
                   <Typography color="textSecondary">Zipcode:</Typography>
-                  <Typography>{orgDetails?.zipcode}</Typography>
+                  {loadedData(orgDetails?.zipcode)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
                 <Stack direction={"column"}>
                   <Typography color="textSecondary">Address:</Typography>
-                  <Typography>{orgDetails?.address}</Typography>
+                  {loadedData(orgDetails?.address)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
