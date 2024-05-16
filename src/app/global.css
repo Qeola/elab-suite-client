@@ -7,6 +7,10 @@
   font-size: 12px;
 }
 
+.skeleton-radius {
+  border-radius: 5px;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition:

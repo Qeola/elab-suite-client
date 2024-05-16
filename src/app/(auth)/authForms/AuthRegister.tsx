@@ -88,11 +88,13 @@ const AuthRegister = ({ title, subtitle }: registerType) => {
   return (
     <>
       {title ? (
-        <Typography fontWeight="600" variant="h3" mb={1}>
+        <Typography textAlign={"center"} fontWeight="600" variant="h3" mb={1}>
           {title}
         </Typography>
       ) : null}
-      <Typography>Empower your business with a centralized platform</Typography>
+      <Typography textAlign={"center"}>
+        Empower your business with a centralized platform
+      </Typography>
       <Box>
         <Formik
           initialValues={initialValues}

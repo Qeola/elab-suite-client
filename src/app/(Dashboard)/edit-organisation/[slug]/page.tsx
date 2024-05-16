@@ -199,7 +199,8 @@ const EditOrganisation = ({ params }: any) => {
           Upload Profile
         </Typography>
         <Typography color="textSecondary" mb={3}>
-          Upload a clear image to personalise your experience.
+          Upload a clear image to personalise your organisation&apos;s
+          experience.
         </Typography>
         <Box width={"350px"}>
           <Box>
