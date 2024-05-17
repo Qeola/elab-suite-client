@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   CardContent,
+  CircularProgress,
   Divider,
   Grid,
   Skeleton,
@@ -202,15 +203,21 @@ const OrganisationDetails = ({ params }: any) => {
               </Grid>
             </Grid>
           </Box>
-          <Button
-            color="primary"
-            variant="contained"
-            sx={{ fontWeight: 600 }}
-            component={Link}
-            href={`/edit-organisation/${orgDetails?.slug}`}
-          >
-            Edit Organisation
-          </Button>
+          <Stack direction="row" spacing={2} sx={{ justifyContent: "end" }}>
+            <Button
+              type="submit"
+              size="large"
+              variant="contained"
+              sx={{ fontWeight: 600 }}
+              color="primary"
+            >
+              {isLoading ? (
+                <CircularProgress sx={{ color: "black" }} size={18} />
+              ) : (
+                " Edit Organisation"
+              )}
+            </Button>
+          </Stack>
         </CardContent>
       </BlankCard>
     </PageContainer>

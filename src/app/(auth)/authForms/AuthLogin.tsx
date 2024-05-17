@@ -72,13 +72,11 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   return (
     <>
       {title ? (
-        <Typography textAlign={"center"} fontWeight="600" variant="h3" mb={1}>
+        <Typography fontWeight="600" variant="h3" mb={1}>
           {title}
         </Typography>
       ) : null}
-      <Typography textAlign={"center"}>
-        Get back to work quickly. Sign in now
-      </Typography>
+      <Typography>Get back to work quickly. Sign in now</Typography>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

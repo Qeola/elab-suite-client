@@ -238,7 +238,7 @@ const AccountTab = () => {
                     Personal Details
                   </Typography>
                   <Typography color="textSecondary" mb={3}>
-                    To change your personal detail , edit and save from here
+                    To change your personal detail,edit and save from here
                   </Typography>
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
@@ -365,31 +365,28 @@ const AccountTab = () => {
                       />
                     </Grid>
                   </Grid>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ justifyContent: "end" }}
+                    mt={3}
+                  >
+                    <Button
+                      type="submit"
+                      size="large"
+                      sx={{ fontWeight: 600 }}
+                      variant="contained"
+                      color="primary"
+                    >
+                      {isInfoLoading ? (
+                        <CircularProgress size={18} sx={{ color: "black" }} />
+                      ) : (
+                        "Save Changes"
+                      )}
+                    </Button>
+                  </Stack>
                 </CardContent>
               </BlankCard>
-              <Stack
-                direction="row"
-                spacing={2}
-                sx={{ justifyContent: "start" }}
-                mt={3}
-              >
-                <Button
-                  type="submit"
-                  size="large"
-                  sx={{ fontWeight: 600 }}
-                  variant="contained"
-                  color="primary"
-                >
-                  {isInfoLoading ? (
-                    <CircularProgress size={18} sx={{ color: "black" }} />
-                  ) : (
-                    "Save Changes"
-                  )}
-                </Button>
-                <Button size="large" variant="contained" color="error">
-                  Discard
-                </Button>
-              </Stack>
             </Form>
           )}
         </Formik>

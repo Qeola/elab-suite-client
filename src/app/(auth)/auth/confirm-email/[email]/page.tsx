@@ -80,8 +80,8 @@ export default function ConfirmEmail({ params }: any) {
           item
           xs={0}
           sm={6}
-          lg={6}
-          xl={6}
+          lg={7}
+          xl={7}
           sx={{
             alignSelf: "stretch",
             backgroundColor: "whitesmoke",
@@ -122,24 +122,29 @@ export default function ConfirmEmail({ params }: any) {
           item
           xs={12}
           sm={6}
-          lg={6}
-          xl={6}
+          lg={5}
+          xl={5}
           display="flex"
           flexDirection={"column"}
           alignItems="center"
           justifyContent="center"
         >
-          <Box alignItems={"center"} padding={"1rem"}>
+          <Box
+            alignItems={"center"}
+            width={"100%"}
+            maxWidth={"550px"}
+            paddingLeft={4}
+          >
             <Logo />
           </Box>
           <Box
             p={4}
-            width={"600px"}
+            width={"550px"}
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              "@media (max-width: 600px)": {
+              "@media (max-width: 550px)": {
                 width: "100%",
               },
             }}

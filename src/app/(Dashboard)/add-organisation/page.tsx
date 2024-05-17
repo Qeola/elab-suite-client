@@ -367,7 +367,7 @@ const AddOrganisation = () => {
                     <Stack
                       direction="row"
                       spacing={2}
-                      sx={{ justifyContent: "start" }}
+                      sx={{ justifyContent: "end" }}
                       mt={3}
                     >
                       <Button
@@ -382,9 +382,6 @@ const AddOrganisation = () => {
                         ) : (
                           " Add Organisation"
                         )}
-                      </Button>
-                      <Button size="large" variant="contained" color="error">
-                        Cancel
                       </Button>
                     </Stack>
                   </Form>

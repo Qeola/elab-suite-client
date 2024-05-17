@@ -521,7 +521,7 @@ const EditOrganisation = ({ params }: any) => {
                       <Stack
                         direction="row"
                         spacing={2}
-                        sx={{ justifyContent: "start" }}
+                        sx={{ justifyContent: "end" }}
                         mt={3}
                       >
                         <Button

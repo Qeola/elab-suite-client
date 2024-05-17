@@ -23,6 +23,7 @@ const Maintenance = () => (
         width={500}
         height={500}
         style={{ width: "100%", maxWidth: "500px", maxHeight: "500px" }}
+        priority
       />
       <Typography align="center" variant="h1" mb={4}>
         Maintenance Mode!!!

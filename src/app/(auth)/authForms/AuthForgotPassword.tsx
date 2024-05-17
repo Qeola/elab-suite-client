@@ -41,10 +41,10 @@ export default function AuthForgotPassword() {
   return (
     <>
       <Box>
-        <Typography textAlign={"center"} variant="h3" fontWeight={600} mb={1}>
+        <Typography variant="h3" fontWeight={600} mb={1}>
           Forgot your password ?
         </Typography>
-        <Typography textAlign={"center"}>
+        <Typography>
           Enter your email address below, and we&apos;ll send you a link to
           reset it.
         </Typography>

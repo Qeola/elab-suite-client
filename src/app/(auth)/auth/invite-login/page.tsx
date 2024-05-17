@@ -86,7 +86,12 @@ export default function InviteLogin() {
           alignItems="center"
           justifyContent="center"
         >
-          <Box alignItems={"center"} padding={"1rem"}>
+          <Box
+            alignItems={"center"}
+            width={"100%"}
+            maxWidth={"470px"}
+            paddingLeft={4}
+          >
             <Logo />
           </Box>
           <Box
