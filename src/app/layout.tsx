@@ -5,7 +5,7 @@ import "../app/global.css";
 
 export const metadata = {
   title: "eLab suite ",
-  description: "Modernize Main kit",
+  description: "",
 };
 
 export default function RootLayout({

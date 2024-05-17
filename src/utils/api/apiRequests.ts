@@ -5,7 +5,7 @@ export const postRequest = async (url: string, data?: any): Promise<any> => {
     const result = await axiosInstance.post(url, data);
     return result;
   } catch (error: any) {
-    return error.errors;
+    return error.errors || error;
   }
 };
 
@@ -14,7 +14,7 @@ export const getRequest = async (url: string): Promise<any> => {
     const result = await axiosInstance.get(url);
     return result;
   } catch (error: any) {
-    return error.errors;
+    return error.errors || error;
   }
 };
 
@@ -23,7 +23,7 @@ export const putRequest = async (url: string, data?: any): Promise<any> => {
     const result = await axiosInstance.put(url, data);
     return result;
   } catch (error: any) {
-    return error.errors;
+    return error.errors || error;
   }
 };
 
@@ -39,7 +39,7 @@ export const patchRequestAvatar = async (
     });
     return result;
   } catch (error: any) {
-    return error.errors;
+    return error.errors || error;
   }
 };
 
@@ -48,7 +48,7 @@ export const patchRequest = async (url: string, data?: any): Promise<any> => {
     const result = await axiosInstance.patch(url, data);
     return result;
   } catch (error: any) {
-    return error.errors;
+    return error.errors || error;
   }
 };
 
@@ -57,6 +57,6 @@ export const deleteRequest = async (url: string): Promise<any> => {
     const result = await axiosInstance.delete(url);
     return result;
   } catch (error: any) {
-    return error.errors;
+    return error.errors || error;
   }
 };

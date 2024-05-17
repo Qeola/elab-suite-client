@@ -250,18 +250,27 @@ const SecurityTab = () => {
                       className="error"
                     />
                     <Box>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ marginTop: "1rem", fontWeight: 600 }}
-                        color="primary"
-                      >
-                        {isLoading ? (
-                          <CircularProgress size={18} sx={{ color: "#000" }} />
-                        ) : (
-                          "Change Password"
-                        )}
-                      </Button>
+                      <Stack direction={"row"} sx={{ justifyContent: "end" }}>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          sx={{
+                            marginTop: "1rem",
+                            fontWeight: 600,
+                            justifyContent: "end",
+                          }}
+                          color="primary"
+                        >
+                          {isLoading ? (
+                            <CircularProgress
+                              size={18}
+                              sx={{ color: "#000" }}
+                            />
+                          ) : (
+                            "Change Password"
+                          )}
+                        </Button>
+                      </Stack>
                     </Box>
                   </Form>
                 )}

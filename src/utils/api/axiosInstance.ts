@@ -41,7 +41,7 @@ axiosInstance.interceptors.response.use(
       }
     }
     return Promise.reject(
-      (error.response && error.response.data) || "Wrong Services",
+      (error.response && error.response.data) || "Something went wrong!",
     );
   },
 );

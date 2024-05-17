@@ -79,7 +79,7 @@ const AccountTab = () => {
 
   const handleUpload = async () => {
     if (!file) {
-      setError("Please upload an image");
+      setError("Please upload a photo");
       return;
     }
 
@@ -159,7 +159,7 @@ const AccountTab = () => {
                 <Box sx={{ width: "100%", position: "relative" }}>
                   <Avatar
                     src={image ? image : undefined}
-                    alt={"user1"}
+                    alt={"user-avatar"}
                     sx={{
                       width: 120,
                       height: 120,
@@ -197,13 +197,18 @@ const AccountTab = () => {
                   <Button
                     color="primary"
                     variant="contained"
-                    sx={{ fontWeight: 600 }}
+                    sx={{ display: "flex", alignItems: "center", gap: ".5rem" }}
                     onClick={handleUpload}
                   >
-                    {isAvatarLoading ? (
-                      <CircularProgress size={18} sx={{ color: "black" }} />
-                    ) : (
-                      "Upload Photo"
+                    <Typography sx={{ fontWeight: 600 }}>
+                      Upload Photo
+                    </Typography>
+                    {isAvatarLoading && (
+                      <CircularProgress
+                        size={15}
+                        thickness={5}
+                        sx={{ color: "white" }}
+                      />
                     )}
                   </Button>
                 </Stack>
@@ -373,15 +378,23 @@ const AccountTab = () => {
                   >
                     <Button
                       type="submit"
-                      size="large"
-                      sx={{ fontWeight: 600 }}
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: ".5rem",
+                      }}
                       variant="contained"
                       color="primary"
                     >
-                      {isInfoLoading ? (
-                        <CircularProgress size={18} sx={{ color: "black" }} />
-                      ) : (
-                        "Save Changes"
+                      <Typography sx={{ fontWeight: 600 }}>
+                        Save Changes
+                      </Typography>
+                      {isInfoLoading && (
+                        <CircularProgress
+                          size={15}
+                          thickness={5}
+                          sx={{ color: "white" }}
+                        />
                       )}
                     </Button>
                   </Stack>

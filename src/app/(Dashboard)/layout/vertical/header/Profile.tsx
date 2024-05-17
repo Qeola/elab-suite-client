@@ -38,9 +38,12 @@ const Profile = () => {
   const handleLogout = async () => {
     setIsLoading(true);
     const result = await postRequest("/auth/logout");
-    dispatch(logoutSuccess());
-    localStorage.removeItem("token");
-    router.push("/auth/signin");
+    console.log({ result });
+    if (result.data.status === "success") {
+      router.push("/auth/signin");
+      dispatch(logoutSuccess());
+      localStorage.removeItem("token");
+    }
     setIsLoading(false);
   };
 
@@ -178,11 +181,11 @@ const Profile = () => {
         <Box mt={2}>
           <Button
             onClick={handleLogout}
-            href="/auth/signin"
-            // variant="outlined"
+            variant="contained"
             color="primary"
             sx={{ fontWeight: 600 }}
             component={Link}
+            href={"/auth/signin"}
             fullWidth
           >
             Logout
