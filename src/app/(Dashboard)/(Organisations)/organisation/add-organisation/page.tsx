@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import PageContainer from "@/app/components/container/PageContainer";
 import React, { useEffect, useState } from "react";
-import Breadcrumb from "../layout/shared/breadcrumb/Breadcrumb";
+import Breadcrumb from "../../../layout/shared/breadcrumb/Breadcrumb";
 import {
   Autocomplete,
   Box,
@@ -372,15 +372,23 @@ const AddOrganisation = () => {
                     >
                       <Button
                         type="submit"
-                        size="large"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: ".5rem",
+                        }}
                         variant="contained"
-                        sx={{ fontWeight: 600 }}
                         color="primary"
                       >
-                        {isLoading ? (
-                          <CircularProgress sx={{ color: "black" }} size={18} />
-                        ) : (
-                          " Add Organisation"
+                        <Typography sx={{ fontWeight: 600 }}>
+                          Add Organisation
+                        </Typography>
+                        {isLoading && (
+                          <CircularProgress
+                            size={15}
+                            thickness={5}
+                            sx={{ color: "white" }}
+                          />
                         )}
                       </Button>
                     </Stack>

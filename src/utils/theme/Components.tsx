@@ -142,7 +142,7 @@ const components: any = (theme: Theme) => {
         root: {
           textTransform: "none",
           boxShadow: "none",
-          padding: "8px 10px",
+          padding: "12px 16px",
         },
         text: {
           padding: "5px 15px",

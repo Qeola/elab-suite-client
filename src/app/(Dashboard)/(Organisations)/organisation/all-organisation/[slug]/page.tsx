@@ -2,7 +2,7 @@
 
 import PageContainer from "@/app/components/container/PageContainer";
 import React, { useEffect, useState } from "react";
-import Breadcrumb from "../../layout/shared/breadcrumb/Breadcrumb";
+import Breadcrumb from "../../../../layout/shared/breadcrumb/Breadcrumb";
 import { getRequest } from "@/utils/api/apiRequests";
 import BlankCard from "@/app/components/shared/BlankCard";
 import {
@@ -205,8 +205,9 @@ const OrganisationDetails = ({ params }: any) => {
           </Box>
           <Stack direction="row" spacing={2} sx={{ justifyContent: "end" }}>
             <Button
+              component={Link}
+              href={`/organisation/edit-organisation/${organisationSlug}`}
               type="submit"
-              size="large"
               variant="contained"
               sx={{ fontWeight: 600 }}
               color="primary"

@@ -10,6 +10,7 @@ import RecentTransactions from "@/app/components/dashboard/RecentTransactions";
 import ProductPerformance from "@/app/components/dashboard/ProductPerformance";
 import MonthlyEarnings from "@/app/components/dashboard/MonthlyEarnings";
 import flagsmith from "@/utils/flagsmith";
+import { Typography } from "@mui/material";
 
 export default function Dashboard() {
   // const flags = await flagsmith.getEnvironmentFlags();
@@ -17,13 +18,21 @@ export default function Dashboard() {
   return (
     <PageContainer title="Dashboard" description="this is Dashboard">
       <Box mt={3}>
-        <Grid container spacing={3}>
+        <Grid
+          container
+          spacing={3}
+          sx={{
+            minHeight: "80vh",
+            placeItems: "center",
+            justifyContent: "center",
+          }}
+        >
           {/* { flags.isFeatureEnabled('profile') && */}
-          <Grid item xs={12} lg={8}>
+          {/* <Grid item xs={12} lg={8}>
             <SalesOverview />
-          </Grid>
+          </Grid> */}
           {/* } */}
-          <Grid item xs={12} lg={4}>
+          {/* <Grid item xs={12} lg={4}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <YearlyBreakup />
@@ -32,13 +41,16 @@ export default function Dashboard() {
                 <MonthlyEarnings />
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} lg={4}>
+          </Grid> */}
+          {/* <Grid item xs={12} lg={4}>
             <RecentTransactions />
-          </Grid>
-          <Grid item xs={12} lg={8}>
+          </Grid> */}
+          {/* <Grid item xs={12} lg={8}>
             <ProductPerformance />
-          </Grid>
+          </Grid> */}
+          <Typography variant="h5">
+            Dashboard is under construction!. Exercise Patience!
+          </Typography>
         </Grid>
       </Box>
     </PageContainer>

@@ -3,7 +3,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import React, { useEffect, useState } from "react";
-import Breadcrumb from "../../layout/shared/breadcrumb/Breadcrumb";
+import Breadcrumb from "../../../../layout/shared/breadcrumb/Breadcrumb";
 import PageContainer from "@/app/components/container/PageContainer";
 import BlankCard from "@/app/components/shared/BlankCard";
 import {
@@ -127,7 +127,7 @@ const EditOrganisation = ({ params }: any) => {
     if (response.status == 200) {
       setShowSnackbar(true);
       setResponse({
-        msg: "Organisation added successfully!",
+        msg: "Organisation edited successfully!",
         status: "success",
       });
       setTimeout(() => setShowSnackbar(false), 6000);
@@ -157,7 +157,7 @@ const EditOrganisation = ({ params }: any) => {
 
   const handleUpload = async () => {
     if (!file) {
-      setError("Please upload an image");
+      setError("Please upload a logo");
       return;
     }
 
@@ -173,7 +173,7 @@ const EditOrganisation = ({ params }: any) => {
       const formData = new FormData();
       formData.append("image", file, file?.name);
       const response = await patchRequestAvatar(
-        "/users/update-avatar",
+        `/organisations/${organisationSlug}/update-logo`,
         formData,
       );
       if (response.data.status === "success") {
@@ -181,7 +181,7 @@ const EditOrganisation = ({ params }: any) => {
         //   dispatch(updateUserAvatar(response.data.data.avatar));
         setShowSnackbar(true);
         setResponse({
-          msg: "Avatar uploaded successfully!",
+          msg: "Logo uploaded successfully!",
           status: "success",
         });
         setTimeout(() => setShowSnackbar(false), 6000);
@@ -196,13 +196,9 @@ const EditOrganisation = ({ params }: any) => {
       <Breadcrumb title="Edit Organisation" items={BCrumb} />
       <Grid item xs={12} lg={4} sx={{ paddingLeft: "0 !important" }}>
         <Typography variant="h5" mb={1}>
-          Upload Profile
+          Upload Logo
         </Typography>
-        <Typography color="textSecondary" mb={3}>
-          Upload a clear image to personalise your organisation&apos;s
-          experience.
-        </Typography>
-        <Box width={"350px"}>
+        <Box sx={{ display: "flex", gap: "1rem" }}>
           <Box>
             <Box sx={{ position: "relative" }}>
               <Avatar
@@ -236,30 +232,41 @@ const EditOrganisation = ({ params }: any) => {
                 />
               </IconButton>
             </Box>
-            <Stack direction="row" justifyContent="center" spacing={2} my={3}>
+          </Box>
+          <Stack paddingTop={1} direction={"column"} gap={1}>
+            <Typography color="textSecondary">
+              Upload a clear logo of your organisation
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              Allowed JPG, GIF or PNG. Max size of 800K
+              <Typography className="error">{error}</Typography>
+            </Typography>
+            <Stack direction="row" spacing={2}>
               <Button
-                color="primary"
-                variant="contained"
-                sx={{ fontWeight: 600 }}
+                type="submit"
                 onClick={handleUpload}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: ".5rem",
+                }}
+                variant="contained"
+                color="primary"
               >
-                {isAvatarLoading ? (
-                  <CircularProgress size={18} sx={{ color: "black" }} />
-                ) : (
-                  "Upload Photo"
+                <Typography sx={{ fontWeight: 600 }}>Upload Logo</Typography>
+                {isAvatarLoading && (
+                  <CircularProgress
+                    size={15}
+                    thickness={5}
+                    sx={{ color: "white" }}
+                  />
                 )}
               </Button>
             </Stack>
-            <Typography variant="subtitle1" color="textSecondary" mb={4}>
-              Allowed JPG, GIF or PNG. Max size of 800K
-              <Typography textAlign="center" className="error">
-                {error}
-              </Typography>
-            </Typography>
-          </Box>
+          </Stack>
         </Box>
       </Grid>
-      <Divider sx={{ mb: 4 }} />
+      <Divider sx={{ my: 4 }} />
       {/* <Box sx={{mb:2}}>
               </Box> */}
       {orgDetails !== null && orgDetails && (
@@ -526,27 +533,24 @@ const EditOrganisation = ({ params }: any) => {
                       >
                         <Button
                           type="submit"
-                          size="large"
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: ".5rem",
+                          }}
                           variant="contained"
-                          sx={{ fontWeight: 600 }}
                           color="primary"
                         >
-                          {isLoading ? (
+                          <Typography sx={{ fontWeight: 600 }}>
+                            Save Changes
+                          </Typography>
+                          {isLoading && (
                             <CircularProgress
-                              sx={{ color: "black" }}
-                              size={18}
+                              size={15}
+                              thickness={5}
+                              sx={{ color: "white" }}
                             />
-                          ) : (
-                            " Save Changes"
                           )}
-                        </Button>
-                        <Button
-                          size="large"
-                          variant="contained"
-                          color="error"
-                          sx={{ fontWeight: 600 }}
-                        >
-                          Discard
                         </Button>
                       </Stack>
                     </Form>
