@@ -33,6 +33,7 @@ import { SignupValues } from "../authInterfaces";
 import { postRequest } from "@/utils/api/apiRequests";
 import CustomSnackbar from "@/app/components/Snackbar";
 import { useAuthentication } from "../useAuthentication";
+import AuthButton from "@/app/components/auth/AuthButton";
 
 const AuthRegister = ({ title, subtitle }: registerType) => {
   const { isLoading, response, showSnackbar, handleAuthentication } =
@@ -183,40 +184,7 @@ const AuthRegister = ({ title, subtitle }: registerType) => {
                 />
               </Stack>
               {isPasswordFocus && <PasswordStrengthBar password={password} />}
-              <Button
-                variant="contained"
-                size="large"
-                sx={{
-                  color: "black",
-                  pointerEvents: isLoading ? "none" : "auto",
-                  backgroundColor: "#FFCC03",
-                  fontWeight: 600,
-                  marginTop: "1rem",
-                  "&:hover": {
-                    opacity: 0.8,
-                    transition: "opacity 200ms ease-in",
-                    backgroundColor: "#FFCC03",
-                    boxShadow: "none",
-                  },
-                }}
-                fullWidth
-                type="submit"
-              >
-                <Typography
-                  fontWeight={600}
-                  sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
-                >
-                  {!isLoading ? (
-                    <span>Sign Up</span>
-                  ) : (
-                    <CircularProgress
-                      size={18}
-                      sx={{ color: "#060016", marginBlock: ".1rem" }}
-                      thickness={5}
-                    />
-                  )}
-                </Typography>
-              </Button>
+              <AuthButton isLoading={isLoading}>Sign Up</AuthButton>
             </Form>
           )}
         </Formik>

@@ -18,6 +18,7 @@ import { useState } from "react";
 import { IconEye, IconEyeOff } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import PasswordStrengthBar from "./PasswordStrengthBar";
+import AuthButton from "@/app/components/auth/AuthButton";
 
 const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
   //   password
@@ -25,6 +26,7 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordFocus, setIsPasswordFocus] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
@@ -79,7 +81,6 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
         initialValues={{ password: "", confirmPassword: "" }}
         validationSchema={validationSchema}
         onSubmit={(values) => {
-          console.log({ values });
           router.push("/dashboard");
         }}
       >
@@ -180,26 +181,9 @@ const AuthInviteLogin = ({ title, subtitle, subtext }: loginType) => {
               </Box>
             </Stack>
             <Box>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                sx={{
-                  color: "black",
-                  backgroundColor: "#FFCC03",
-                  fontWeight: 600,
-                  marginTop: "1.5rem",
-                  "&:hover": {
-                    opacity: 0.8,
-                    transition: "opacity 200ms ease-in",
-                    backgroundColor: "#FFCC03",
-                    boxShadow: "none",
-                  },
-                }}
-                fullWidth
-              >
+              <AuthButton isLoading={isLoading}>
                 Complete registration
-              </Button>
+              </AuthButton>
             </Box>
           </Form>
         )}

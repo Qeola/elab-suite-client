@@ -17,6 +17,7 @@ import { postRequest } from "@/utils/api/apiRequests";
 import { useRouter } from "next/navigation";
 import { logoutSuccess } from "@/store/authentication/AuthenticationSlice";
 import { useDispatch } from "react-redux";
+import { CircularProgress } from "@mui/material";
 
 const Profile = () => {
   const router = useRouter();
@@ -27,7 +28,6 @@ const Profile = () => {
     (state: AppState) => state.authentication,
   );
   const [userData, setUserData] = useState(authenticationState.userData.user);
-  console.log({ authenticationState });
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
   };
@@ -38,16 +38,13 @@ const Profile = () => {
   const handleLogout = async () => {
     setIsLoading(true);
     const result = await postRequest("/auth/logout");
-    console.log({ result });
-    if (result.data.status === "success") {
+    if (result?.data?.status === "success") {
       router.push("/auth/signin");
       dispatch(logoutSuccess());
       localStorage.removeItem("token");
     }
     setIsLoading(false);
   };
-
-  // console.log(userData);
 
   return (
     <Box>
@@ -121,10 +118,6 @@ const Profile = () => {
           </Box>
         </Stack>
         <Divider />
-        {/* <Box>
-          <Link href="/add-organisation">Add an organisation</Link>
-          <Link href="/profile-settings">Account Settings</Link>
-        </Box> */}
         {dropdownData.profile.map((profile) => (
           <Box key={profile.title}>
             <Box sx={{ py: 2, px: 0 }} className="hover-text-primary">
@@ -178,19 +171,31 @@ const Profile = () => {
             </Box>
           </Box>
         ))}
-        <Box mt={2}>
+        <Stack direction={"row"} mt={1}>
           <Button
-            onClick={handleLogout}
-            variant="contained"
-            color="primary"
-            sx={{ fontWeight: 600 }}
+            // onClick={handleLogout}
             component={Link}
             href={"/auth/signin"}
+            type="submit"
             fullWidth
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: ".5rem",
+            }}
+            variant="contained"
+            color="primary"
           >
-            Logout
+            <Typography sx={{ fontWeight: 600 }}>Logout</Typography>
+            {isLoading && (
+              <CircularProgress
+                size={15}
+                thickness={5}
+                sx={{ color: "white" }}
+              />
+            )}
           </Button>
-        </Box>
+        </Stack>
       </Menu>
     </Box>
   );

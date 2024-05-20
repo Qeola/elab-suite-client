@@ -41,7 +41,6 @@ const OrganisationDetails = ({ params }: any) => {
       try {
         setIsLoading(false);
         const response = await getRequest(`/organisations/${organisationSlug}`);
-        console.log({ response });
         setOrgDetails(response.data.data || []);
         setIsLoading(false);
       } catch (err) {
@@ -84,7 +83,6 @@ const OrganisationDetails = ({ params }: any) => {
     return <Typography variant="inherit">{data}</Typography>;
   };
 
-  console.log({ orgDetails });
   return (
     <PageContainer title="Organisation" description="organisation">
       <Breadcrumb title="Organisation Details" items={BCrumb} />
@@ -111,7 +109,7 @@ const OrganisationDetails = ({ params }: any) => {
                   {loadedData(orgDetails?.name)}
                 </Typography>
                 <Typography color={"textSecondary"} variant="caption">
-                  Information & Technology
+                  {loadedData(orgDetails?.tagline)}
                 </Typography>
               </Box>
             </Stack>
@@ -170,8 +168,8 @@ const OrganisationDetails = ({ params }: any) => {
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
                 <Stack direction={"column"}>
-                  <Typography color="textSecondary">State:</Typography>
-                  {loadedData(orgDetails?.state)}
+                  <Typography color="textSecondary">Website:</Typography>
+                  {loadedData(orgDetails?.website)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>

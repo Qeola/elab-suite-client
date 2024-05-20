@@ -17,9 +17,7 @@ export const Profile = () => {
   );
   const [userData, setUserData] = useState(authenticationState.userData.user);
 
-  useEffect(() => {
-    console.log("UseEffect");
-  }, [userData]);
+  useEffect(() => {}, [userData]);
   const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up("lg"));
   const hideMenu = lgUp
     ? customizer.isCollapse && !customizer.isSidebarHover

@@ -26,7 +26,7 @@ const Maintenance = () => (
         priority
       />
       <Typography align="center" variant="h1" mb={4}>
-        Maintenance Mode!!!
+        Construction Mode!!!
       </Typography>
       <Typography align="center" variant="h4" mb={4}>
         Website is Under Construction. Check back later!

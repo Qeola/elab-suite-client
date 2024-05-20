@@ -11,6 +11,10 @@
   border-radius: 5px;
 }
 
+.authButton {
+  height: auto !important;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition:

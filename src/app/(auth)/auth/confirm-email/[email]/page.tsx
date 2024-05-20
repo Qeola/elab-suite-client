@@ -45,7 +45,6 @@ export default function ConfirmEmail({ params }: any) {
       setResendEnabled(false);
       setIsLoading(false);
     }
-    console.log({ response });
     setMessage(response[0].message || response.data.message);
     setIsLoading(false);
   };
@@ -198,6 +197,7 @@ export default function ConfirmEmail({ params }: any) {
                 fontWeight: 600,
                 width: "250px",
                 marginTop: "1rem",
+                padding: "12px 24px",
                 pointerEvents: resendEnabled ? "auto" : "none",
                 "&:hover": {
                   opacity: 0.8,
@@ -215,8 +215,8 @@ export default function ConfirmEmail({ params }: any) {
                   <span>
                     {isLoading ? (
                       <CircularProgress
-                        size={14}
-                        sx={{ color: "#060016" }}
+                        size={18}
+                        sx={{ color: "#060016", marginTop: ".3rem" }}
                         thickness={5}
                       />
                     ) : (

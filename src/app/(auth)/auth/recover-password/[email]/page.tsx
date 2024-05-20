@@ -181,6 +181,7 @@ export default function RecoverPassword({ params }: any) {
                 fontWeight: 600,
                 width: "250px",
                 marginTop: "1rem",
+                padding: "12px 24px",
                 pointerEvents: resendEnabled ? "auto" : "none",
                 "&:hover": {
                   opacity: 0.8,

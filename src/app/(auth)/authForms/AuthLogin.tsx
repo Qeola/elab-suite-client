@@ -30,6 +30,7 @@ import { loginSuccess } from "@/store/authentication/AuthenticationSlice";
 import { useDispatch } from "react-redux";
 import { useAuthentication } from "../useAuthentication";
 import CustomSnackbar from "@/app/components/Snackbar";
+import AuthButton from "@/app/components/auth/AuthButton";
 
 const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   const { isLoading, response, showSnackbar, handleAuthentication } =
@@ -53,14 +54,6 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
   const router = useRouter();
   const initialValues = { email: "", password: "" };
   const onSubmit = async (values: LoginValues, { setErrors }: any) => {
-    // setIsLoading(true);
-    // console.log({ values });
-    // const result = await postRequest("/login", values);
-    // console.log({ result });
-
-    // );
-    // router.push("/dashboard");
-    // setIsLoading(false);
     const response = await handleAuthentication(
       "/auth/login",
       values,
@@ -167,40 +160,7 @@ const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
               </Stack>
             </Stack>
             <Box>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                sx={{
-                  color: "black",
-                  pointerEvents: isLoading ? "none" : "auto",
-                  marginTop: "1.2rem",
-                  backgroundColor: "#FFCC03",
-                  fontWeight: 600,
-                  "&:hover": {
-                    opacity: 0.8,
-                    transition: "opacity 200ms ease-in",
-                    backgroundColor: "#FFCC03",
-                    boxShadow: "none",
-                  },
-                }}
-                fullWidth
-              >
-                <Typography
-                  fontWeight={600}
-                  sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
-                >
-                  {!isLoading ? (
-                    <span>Sign In</span>
-                  ) : (
-                    <CircularProgress
-                      size={18}
-                      sx={{ color: "#060016", marginBlock: ".1rem" }}
-                      thickness={5}
-                    />
-                  )}
-                </Typography>
-              </Button>
+              <AuthButton isLoading={isLoading}>Sign In</AuthButton>
             </Box>
           </Form>
         )}

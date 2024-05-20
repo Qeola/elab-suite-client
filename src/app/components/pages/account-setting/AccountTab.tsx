@@ -75,8 +75,6 @@ const AccountTab = () => {
     }
   };
 
-  console.log({ file });
-
   const handleUpload = async () => {
     if (!file) {
       setError("Please upload a photo");
@@ -109,7 +107,6 @@ const AccountTab = () => {
         setTimeout(() => setShowSnackbar(false), 6000);
       }
       setIsAvatarLoading(false);
-      console.log({ response });
     }
   };
 
@@ -126,10 +123,8 @@ const AccountTab = () => {
   });
 
   const onSubmit1 = async (values: any, { setErrors }: any) => {
-    console.log(values);
     setIsInfoLoading(true);
     const response = await patchRequest(`/users/${userData.username}`, values);
-    console.log({ response });
     if (response.status == 200) {
       setShowSnackbar(true);
       setResponse({ msg: "Profile updated successfully!", status: "success" });

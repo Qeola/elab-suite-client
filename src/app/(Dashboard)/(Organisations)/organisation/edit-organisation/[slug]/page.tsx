@@ -16,6 +16,8 @@ import {
   Divider,
   Grid,
   IconButton,
+  InputAdornment,
+  Skeleton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -25,12 +27,25 @@ import {
   patchRequestAvatar,
   postRequest,
 } from "@/utils/api/apiRequests";
-import { PhotoCamera } from "@mui/icons-material";
+import { FacebookOutlined, LinkedIn, PhotoCamera } from "@mui/icons-material";
 import countries from "../countryStates";
 import { Sectors } from "../sectors";
 import CustomSnackbar from "@/app/components/Snackbar";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
+import "../Quill.css";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+const ReactQuill: any = dynamic(
+  async () => {
+    const { default: RQ } = await import("react-quill");
+    // eslint-disable-next-line react/display-name
+    return ({ ...props }) => <RQ {...props} />;
+  },
+  {
+    ssr: false,
+  },
+);
 
 const BCrumb = [
   {
@@ -66,7 +81,6 @@ const EditOrganisation = ({ params }: any) => {
     async function getOrganisation() {
       try {
         const response = await getRequest(`/organisations/${organisationSlug}`);
-        console.log({ response });
         setOrgDetails(response.data.data || []);
       } catch (err) {
         console.log(err);
@@ -76,54 +90,53 @@ const EditOrganisation = ({ params }: any) => {
     getOrganisation();
   }, [organisationSlug]);
 
-  const getStates = (selectedCountry: string | null): string[] => {
-    const foundCountry = countries.find(
-      (country) => selectedCountry === country.name,
-    );
-
-    if (!foundCountry) {
-      return [];
-    }
-
-    const stateNames = foundCountry.states?.map((state) => state.name) || [];
-    return stateNames;
-  };
-
-  // useEffect(()=>{},[])
-  const filteredStates = getStates(selectedCountry);
-  console.log({ orgDetails });
+  interface Socials {
+    facebook: string;
+    linkedin: string;
+  }
 
   const initialValues = {
-    name: orgDetails?.name,
-    email: orgDetails?.email,
-    country: orgDetails?.country,
-    state: orgDetails?.state,
-    regNo: orgDetails?.regNo,
-    zipcode: orgDetails?.zipcode,
-    sector: orgDetails?.sector,
-    address: orgDetails?.address,
+    name: orgDetails?.name || "",
+    email: orgDetails?.email || "",
+    country: orgDetails?.country || "",
+    regNo: orgDetails?.regNo || "",
+    zipcode: orgDetails?.zipcode || "",
+    website: orgDetails?.website || "",
+    tagline: orgDetails?.tagline || "",
+    sector: orgDetails?.sector || [],
+    description: orgDetails?.description || "",
+    address: orgDetails?.address || "",
+    socials: {
+      facebook: orgDetails?.socials?.facebook || "",
+      linkedin: orgDetails?.socials?.linkedin || "",
+    },
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Name of organisation is required"),
     email: Yup.string().required("Email address is required"),
-    country: Yup.string().required("Please select a country"),
-    state: Yup.string().required("Please select a state"),
+    country: Yup.string().nullable().required("Please select a country"),
     sector: Yup.array()
       .of(Yup.string().required("Sector is required"))
       .min(1, "Please select at least one sector"),
+    website: Yup.string().url("Please enter a valid URL").optional(),
     address: Yup.string().required("Please enter a valid address"),
+    socials: Yup.object().shape({
+      facebook: Yup.string()
+        .url("Please enter a valid Facebook URL")
+        .optional(),
+      linkedin: Yup.string()
+        .url("Please enter a valid LinkedIn URL")
+        .optional(),
+    }),
   });
 
   const onSubmit = async (values: any, { setErrors }: any) => {
-    console.log({ values });
-
     setIsLoading(true);
     const response = await patchRequest(
       `/organisations/${organisationSlug}`,
       values,
     );
-    console.log({ response });
     if (response.status == 200) {
       setShowSnackbar(true);
       setResponse({
@@ -153,8 +166,6 @@ const EditOrganisation = ({ params }: any) => {
     }
   };
 
-  console.log({ file });
-
   const handleUpload = async () => {
     if (!file) {
       setError("Please upload a logo");
@@ -178,7 +189,6 @@ const EditOrganisation = ({ params }: any) => {
       );
       if (response.data.status === "success") {
         setIsAvatarLoading(false);
-        //   dispatch(updateUserAvatar(response.data.data.avatar));
         setShowSnackbar(true);
         setResponse({
           msg: "Logo uploaded successfully!",
@@ -187,7 +197,6 @@ const EditOrganisation = ({ params }: any) => {
         setTimeout(() => setShowSnackbar(false), 6000);
       }
       setIsAvatarLoading(false);
-      console.log({ response });
     }
   };
 
@@ -198,7 +207,7 @@ const EditOrganisation = ({ params }: any) => {
         <Typography variant="h5" mb={1}>
           Upload Logo
         </Typography>
-        <Box sx={{ display: "flex", gap: "1rem" }}>
+        <Box sx={{ display: "flex", gap: "2rem" }}>
           <Box>
             <Box sx={{ position: "relative" }}>
               <Avatar
@@ -267,18 +276,18 @@ const EditOrganisation = ({ params }: any) => {
         </Box>
       </Grid>
       <Divider sx={{ my: 4 }} />
-      {/* <Box sx={{mb:2}}>
-              </Box> */}
-      {orgDetails !== null && orgDetails && (
-        <BlankCard sx={{ marginTop: "4px" }}>
-          <CardContent>
-            <Box>
-              <Typography>Edit your organisation details below.</Typography>
+      <BlankCard sx={{ marginTop: "4px" }}>
+        <CardContent>
+          <Box>
+            <Typography>Edit your organisation details below.</Typography>
+
+            {orgDetails ? (
               <Grid item sx={{ width: "100%", maxWidth: "800px" }}>
                 <Formik
                   initialValues={initialValues}
                   validationSchema={validationSchema}
                   onSubmit={onSubmit}
+                  enableReinitialize
                 >
                   {({
                     values,
@@ -342,7 +351,6 @@ const EditOrganisation = ({ params }: any) => {
                           />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          {/* 5 */}
                           <CustomFormLabel
                             sx={{
                               mt: 0,
@@ -369,52 +377,24 @@ const EditOrganisation = ({ params }: any) => {
                                   setSelectedCountry(newCountry);
                                 }}
                                 renderInput={(params) => (
-                                  <CustomTextField {...params} />
+                                  <CustomTextField
+                                    {...params}
+                                    InputProps={{
+                                      ...params.InputProps,
+                                      style: {
+                                        height: "49px",
+                                        padding: "0 10px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                      },
+                                    }}
+                                  />
                                 )}
                               />
                             )}
                           </Field>
                           <ErrorMessage
                             name="country"
-                            component="span"
-                            className="error"
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          {/* 6 */}
-                          <CustomFormLabel
-                            sx={{
-                              mt: 0,
-                            }}
-                            htmlFor="state"
-                          >
-                            Select State
-                          </CustomFormLabel>
-                          <Field name="state">
-                            {({ field }: any) => (
-                              <Autocomplete
-                                {...field}
-                                disablePortal
-                                id="state"
-                                options={filteredStates}
-                                fullWidth
-                                getOptionLabel={(option) => option}
-                                value={values.state}
-                                onChange={(
-                                  event: React.SyntheticEvent<Element, Event>,
-                                  newState: string | null,
-                                ) => {
-                                  setFieldValue("state", newState);
-                                  setSelectedState(newState);
-                                }}
-                                renderInput={(params) => (
-                                  <CustomTextField {...params} />
-                                )}
-                              />
-                            )}
-                          </Field>
-                          <ErrorMessage
-                            name="state"
                             component="span"
                             className="error"
                           />
@@ -441,7 +421,6 @@ const EditOrganisation = ({ params }: any) => {
                           />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                          {/* 6 */}
                           <CustomFormLabel
                             sx={{
                               mt: 0,
@@ -461,8 +440,54 @@ const EditOrganisation = ({ params }: any) => {
                             fullWidth
                           />
                         </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="website"
+                          >
+                            Website(optional)
+                          </CustomFormLabel>
+                          <CustomTextField
+                            id="website"
+                            name="website"
+                            placeholder="https://"
+                            value={values.website}
+                            onChange={handleChange}
+                            onBlur={() => setFieldTouched("website")}
+                            error={!!errors.website && touched.website}
+                            variant="outlined"
+                            fullWidth
+                          />
+                          <ErrorMessage
+                            name="website"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
                         <Grid item xs={12}>
                           {/* 7 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="tagline"
+                          >
+                            Tagline(optional)
+                          </CustomFormLabel>
+                          <CustomTextField
+                            id="tagline"
+                            name="tagline"
+                            value={values.tagline}
+                            onChange={handleChange}
+                            onBlur={() => setFieldTouched("tagline")}
+                            error={!!errors.tagline && touched.tagline}
+                            variant="outlined"
+                            fullWidth
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
                           <CustomFormLabel
                             sx={{
                               mt: 0,
@@ -487,7 +512,18 @@ const EditOrganisation = ({ params }: any) => {
                                   newSectors: string[],
                                 ) => setFieldValue("sector", newSectors)}
                                 renderInput={(params) => (
-                                  <CustomTextField {...params} />
+                                  <CustomTextField
+                                    {...params}
+                                    InputProps={{
+                                      ...params.InputProps,
+                                      style: {
+                                        height: "49px",
+                                        padding: "0 10px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                      },
+                                    }}
+                                  />
                                 )}
                               />
                             )}
@@ -499,7 +535,25 @@ const EditOrganisation = ({ params }: any) => {
                           />
                         </Grid>
                         <Grid item xs={12}>
-                          {/* 7 */}
+                          <CustomFormLabel
+                            sx={{
+                              mt: 0,
+                            }}
+                            htmlFor="description"
+                          >
+                            Description
+                          </CustomFormLabel>
+                          <ReactQuill
+                            id="description"
+                            name="description"
+                            value={values.description}
+                            onChange={(content: any) => {
+                              setFieldValue("description", content);
+                            }}
+                            placeholder="Type here..."
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
                           <CustomFormLabel
                             sx={{
                               mt: 0,
@@ -520,6 +574,66 @@ const EditOrganisation = ({ params }: any) => {
                           />
                           <ErrorMessage
                             name="address"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={12} lg={12}>
+                          <Divider sx={{ my: 2 }} />
+                          <Typography mt={4}>
+                            Enter your social profile links below
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <CustomTextField
+                            id="socials.facebook"
+                            name="socials.facebook"
+                            placeholder="https://"
+                            value={values.socials.facebook}
+                            onChange={handleChange}
+                            error={
+                              !!errors.socials?.facebook &&
+                              touched.socials?.facebook
+                            }
+                            variant="outlined"
+                            fullWidth
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <FacebookOutlined sx={{ color: "#0965D3" }} />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                          <ErrorMessage
+                            name="socials.facebook"
+                            component="span"
+                            className="error"
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <CustomTextField
+                            id="socials.linkedin"
+                            name="socials.linkedin"
+                            placeholder="https://"
+                            value={values.socials.linkedin}
+                            onChange={handleChange}
+                            error={
+                              !!errors.socials?.linkedin &&
+                              touched.socials?.linkedin
+                            }
+                            variant="outlined"
+                            fullWidth
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment position="start">
+                                  <LinkedIn sx={{ color: "#0965D3" }} />
+                                </InputAdornment>
+                              ),
+                            }}
+                          />
+                          <ErrorMessage
+                            name="socials.linkedin"
                             component="span"
                             className="error"
                           />
@@ -557,11 +671,21 @@ const EditOrganisation = ({ params }: any) => {
                   )}
                 </Formik>
               </Grid>
-              {showSnackbar && <CustomSnackbar response={response} />}
-            </Box>
-          </CardContent>
-        </BlankCard>
-      )}
+            ) : (
+              <Box sx={{ mt: 4 }}>
+                <Skeleton
+                  className="skeleton-radius"
+                  variant="rectangular"
+                  height={400}
+                  width="100%"
+                  animation="wave"
+                />
+              </Box>
+            )}
+            {showSnackbar && <CustomSnackbar response={response} />}
+          </Box>
+        </CardContent>
+      </BlankCard>
     </PageContainer>
   );
 };

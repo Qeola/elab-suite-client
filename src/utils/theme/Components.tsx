@@ -142,7 +142,8 @@ const components: any = (theme: Theme) => {
         root: {
           textTransform: "none",
           boxShadow: "none",
-          padding: "12px 16px",
+          padding: "8px 16px",
+          height: "45.34px",
         },
         text: {
           padding: "5px 15px",
