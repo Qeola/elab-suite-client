@@ -60,7 +60,7 @@ interface ProfileType {
 }
 const profile: ProfileType[] = [
   {
-    href: "/add-organisation",
+    href: "/organisation/add-organisation",
     title: "Add Organisation",
     subtitle: "Create new organisation",
     icon: "/images/svgs/icon-tasks.svg",

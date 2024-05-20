@@ -23,9 +23,10 @@ const Maintenance = () => (
         width={500}
         height={500}
         style={{ width: "100%", maxWidth: "500px", maxHeight: "500px" }}
+        priority
       />
       <Typography align="center" variant="h1" mb={4}>
-        Maintenance Mode!!!
+        Construction Mode!!!
       </Typography>
       <Typography align="center" variant="h4" mb={4}>
         Website is Under Construction. Check back later!

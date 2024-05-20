@@ -15,14 +15,12 @@ export const useAuthentication = () => {
     setIsLoading(true);
     try {
       const result = await postRequest(endpoint, values);
-      console.log({ result });
       setResponse(result.data || result);
       // setShowSnackbar(true);
       setIsLoading(false);
       setTimeout(() => setShowSnackbar(false), 6000);
       return result.data || result;
     } catch (error: any) {
-      console.error("Authentication failed:", error);
       setResponse(error.errors);
       // setShowSnackbar(true);
       setIsLoading(false);

@@ -21,8 +21,9 @@ const Logo = () => {
           <Image
             src="/images/logos/elab-logo-light.png"
             alt="logo"
-            height={customizer.TopbarHeight}
-            width={174}
+            height={43}
+            // height={customizer.TopbarHeight}
+            width={180}
             priority
           />
         ) : (

@@ -26,8 +26,6 @@ const CustomSnackbar = ({ response }: any) => {
     setOpen(false);
   };
 
-  console.log("SnackResponse:", response);
-
   return (
     <>
       <MuiSnackbar

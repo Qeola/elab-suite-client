@@ -18,6 +18,7 @@ import Language from "./Language";
 import { AppState } from "@/store/store";
 import Navigation from "./Navigation";
 import MobileRightSidebar from "./MobileRightSidebar";
+import OrganisationList from "./OrganisationList";
 
 const Header = () => {
   const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up("lg"));
@@ -66,6 +67,8 @@ const Header = () => {
         {/* Search Dropdown */}
         {/* ------------------------------------------- */}
         {/* <Search /> */}
+        <OrganisationList />
+
         {lgUp ? (
           <>
             <Navigation />

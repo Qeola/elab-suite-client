@@ -1,4 +1,5 @@
 export const Sectors = [
+  "Aviation",
   "Agriculture",
   "Automotive",
   "Banking & Finance",
@@ -8,6 +9,7 @@ export const Sectors = [
   "Construction",
   "Legal",
   "E-commerce",
+  "Fashion",
   "Consumer Goods",
   "Education",
   "Energy & Utilities",
@@ -24,5 +26,6 @@ export const Sectors = [
   "Transportation & Logistics",
   "Government & Public sector",
   "Non-profit/NGO",
-  "Aerospace & Defense",
+  "Aerospace",
+  "Defense",
 ];

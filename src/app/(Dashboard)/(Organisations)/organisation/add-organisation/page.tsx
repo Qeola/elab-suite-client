@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import PageContainer from "@/app/components/container/PageContainer";
 import React, { useEffect, useState } from "react";
-import Breadcrumb from "../layout/shared/breadcrumb/Breadcrumb";
+import Breadcrumb from "../../../layout/shared/breadcrumb/Breadcrumb";
 import {
   Autocomplete,
   Box,
@@ -37,7 +37,6 @@ const BCrumb = [
 const AddOrganisation = () => {
   const [countryNames, setCountryNames] = useState<string[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [selectedState, setSelectedState] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [response, setResponse] = useState({});
@@ -47,28 +46,13 @@ const AddOrganisation = () => {
     setCountryNames(names);
   }, []);
 
-  const getStates = (selectedCountry: string | null): string[] => {
-    const foundCountry = countries.find(
-      (country) => selectedCountry === country.name,
-    );
-
-    if (!foundCountry) {
-      return [];
-    }
-
-    const stateNames = foundCountry.states?.map((state) => state.name) || [];
-    return stateNames;
-  };
-
-  const filteredStates = getStates(selectedCountry);
-
   const initialValues = {
     name: "",
     email: "",
     country: "",
-    state: "",
     regNo: "",
     zipcode: "",
+    website: "",
     sector: [],
     address: "",
   };
@@ -77,18 +61,16 @@ const AddOrganisation = () => {
     name: Yup.string().required("Name of organisation is required"),
     email: Yup.string().required("Email address is required"),
     country: Yup.string().required("Please select a country"),
-    state: Yup.string().required("Please select a state"),
     sector: Yup.array()
       .of(Yup.string().required("Sector is required"))
       .min(1, "Please select at least one sector"),
+    website: Yup.string().url("Please enter a valid URL").optional(),
     address: Yup.string().required("Please enter a valid address"),
   });
 
   const onSubmit = async (values: any, { setErrors }: any) => {
-    console.log({ values });
     setIsLoading(true);
     const response = await postRequest("/organisations", values);
-    console.log({ response });
     if (response.status == 201) {
       setShowSnackbar(true);
       setResponse({
@@ -207,6 +189,14 @@ const AddOrganisation = () => {
                                 setFieldValue("country", newCountry);
                                 setSelectedCountry(newCountry);
                               }}
+                              sx={{
+                                "& .MuiInputBase-root": {
+                                  height: "49px",
+                                },
+                                "& .MuiAutocomplete-input": {
+                                  paddingBottom: "3px",
+                                },
+                              }}
                               renderInput={(params) => (
                                 <CustomTextField {...params} />
                               )}
@@ -219,45 +209,7 @@ const AddOrganisation = () => {
                           className="error"
                         />
                       </Grid>
-                      <Grid item xs={12} sm={6}>
-                        {/* 6 */}
-                        <CustomFormLabel
-                          sx={{
-                            mt: 0,
-                          }}
-                          htmlFor="state"
-                        >
-                          Select State
-                        </CustomFormLabel>
-                        <Field name="state">
-                          {({ field }: any) => (
-                            <Autocomplete
-                              {...field}
-                              disablePortal
-                              id="state"
-                              options={filteredStates}
-                              fullWidth
-                              getOptionLabel={(option) => option}
-                              value={values.state}
-                              onChange={(
-                                event: React.SyntheticEvent<Element, Event>,
-                                newState: string | null,
-                              ) => {
-                                setFieldValue("state", newState);
-                                setSelectedState(newState);
-                              }}
-                              renderInput={(params) => (
-                                <CustomTextField {...params} />
-                              )}
-                            />
-                          )}
-                        </Field>
-                        <ErrorMessage
-                          name="state"
-                          component="span"
-                          className="error"
-                        />
-                      </Grid>
+
                       <Grid item xs={12} sm={6}>
                         {/* 5 */}
                         <CustomFormLabel
@@ -300,6 +252,34 @@ const AddOrganisation = () => {
                           fullWidth
                         />
                       </Grid>
+                      <Grid item xs={12} sm={6}>
+                        {/* 6 */}
+                        <CustomFormLabel
+                          sx={{
+                            mt: 0,
+                          }}
+                          htmlFor="website"
+                        >
+                          Website(optional)
+                        </CustomFormLabel>
+                        <CustomTextField
+                          id="website"
+                          name="website"
+                          placeholder="https://"
+                          value={values.website}
+                          onChange={handleChange}
+                          onBlur={() => setFieldTouched("website")}
+                          error={!!errors.website && touched.website}
+                          variant="outlined"
+                          fullWidth
+                        />
+                        <ErrorMessage
+                          name="website"
+                          component="span"
+                          className="error"
+                        />
+                      </Grid>
+
                       <Grid item xs={12}>
                         {/* 7 */}
                         <CustomFormLabel
@@ -367,24 +347,29 @@ const AddOrganisation = () => {
                     <Stack
                       direction="row"
                       spacing={2}
-                      sx={{ justifyContent: "start" }}
+                      sx={{ justifyContent: "end" }}
                       mt={3}
                     >
                       <Button
                         type="submit"
-                        size="large"
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: ".5rem",
+                        }}
                         variant="contained"
-                        sx={{ fontWeight: 600 }}
                         color="primary"
                       >
-                        {isLoading ? (
-                          <CircularProgress sx={{ color: "black" }} size={18} />
-                        ) : (
-                          " Add Organisation"
+                        <Typography sx={{ fontWeight: 600 }}>
+                          Add Organisation
+                        </Typography>
+                        {isLoading && (
+                          <CircularProgress
+                            size={15}
+                            thickness={5}
+                            sx={{ color: "white" }}
+                          />
                         )}
-                      </Button>
-                      <Button size="large" variant="contained" color="error">
-                        Cancel
                       </Button>
                     </Stack>
                   </Form>

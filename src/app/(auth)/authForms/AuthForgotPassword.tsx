@@ -18,6 +18,7 @@ import { postRequest } from "@/utils/api/apiRequests";
 import { useRouter } from "next/navigation";
 import { ForgotPasswordValue } from "../authInterfaces";
 import { useAuthentication } from "../useAuthentication";
+import AuthButton from "@/app/components/auth/AuthButton";
 
 export default function AuthForgotPassword() {
   const router = useRouter();
@@ -41,10 +42,10 @@ export default function AuthForgotPassword() {
   return (
     <>
       <Box>
-        <Typography textAlign={"center"} variant="h3" fontWeight={600} mb={1}>
+        <Typography variant="h3" fontWeight={600} mb={1}>
           Forgot your password ?
         </Typography>
-        <Typography textAlign={"center"}>
+        <Typography>
           Enter your email address below, and we&apos;ll send you a link to
           reset it.
         </Typography>
@@ -80,40 +81,7 @@ export default function AuthForgotPassword() {
                 />
                 <ErrorMessage name="email" component="span" className="error" />
               </Box>
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                sx={{
-                  color: "black",
-                  pointerEvents: isLoading ? "none" : "auto",
-                  backgroundColor: "#FFCC03",
-                  fontWeight: 600,
-                  marginTop: "1rem",
-                  "&:hover": {
-                    opacity: 0.8,
-                    transition: "opacity 200ms ease-in",
-                    backgroundColor: "#FFCC03",
-                    boxShadow: "none",
-                  },
-                }}
-                fullWidth
-              >
-                <Typography
-                  fontWeight={600}
-                  sx={{ display: "flex", alignItems: "center", gap: ".3rem" }}
-                >
-                  {!isLoading ? (
-                    <span>Next</span>
-                  ) : (
-                    <CircularProgress
-                      size={18}
-                      sx={{ color: "#060016", marginBlock: ".1rem" }}
-                      thickness={5}
-                    />
-                  )}
-                </Typography>
-              </Button>
+              <AuthButton isLoading={isLoading}>Next</AuthButton>
             </Form>
           )}
         </Formik>

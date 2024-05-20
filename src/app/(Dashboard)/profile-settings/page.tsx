@@ -76,7 +76,7 @@ const AccountSetting = () => {
 
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Box sx={{ maxWidth: { xs: 320, sm: 480, lg: 768 } }}>
+          <Box sx={{ maxWidth: { xs: 320, sm: 768, md: 1200 } }}>
             <Tabs
               value={value}
               onChange={handleChange}

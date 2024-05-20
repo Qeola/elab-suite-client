@@ -104,7 +104,8 @@ const SecurityTab = () => {
   };
   return (
     <>
-      <Grid item xs={12} lg={6} sx={{ paddingLeft: "0 !important" }}>
+      {" "}
+      <Box sx={{ maxWidth: "420px", width: "100%" }}>
         <BlankCard>
           <CardContent>
             <Typography variant="h5" mb={1}>
@@ -250,18 +251,33 @@ const SecurityTab = () => {
                       className="error"
                     />
                     <Box>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        sx={{ marginTop: "1rem", fontWeight: 600 }}
-                        color="primary"
+                      <Stack
+                        direction={"row"}
+                        sx={{ justifyContent: "end" }}
+                        mt={3}
                       >
-                        {isLoading ? (
-                          <CircularProgress size={18} sx={{ color: "#000" }} />
-                        ) : (
-                          "Change Password"
-                        )}
-                      </Button>
+                        <Button
+                          type="submit"
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: ".5rem",
+                          }}
+                          variant="contained"
+                          color="primary"
+                        >
+                          <Typography sx={{ fontWeight: 600 }}>
+                            Change Password
+                          </Typography>
+                          {isLoading && (
+                            <CircularProgress
+                              size={15}
+                              thickness={5}
+                              sx={{ color: "white" }}
+                            />
+                          )}
+                        </Button>
+                      </Stack>
                     </Box>
                   </Form>
                 )}
@@ -269,7 +285,7 @@ const SecurityTab = () => {
             </Box>
           </CardContent>
         </BlankCard>
-      </Grid>
+      </Box>
       {showSnackbar && <CustomSnackbar response={response} />}
     </>
   );

@@ -2,7 +2,7 @@
 
 import PageContainer from "@/app/components/container/PageContainer";
 import React, { useEffect, useState } from "react";
-import Breadcrumb from "../../layout/shared/breadcrumb/Breadcrumb";
+import Breadcrumb from "../../../../layout/shared/breadcrumb/Breadcrumb";
 import { getRequest } from "@/utils/api/apiRequests";
 import BlankCard from "@/app/components/shared/BlankCard";
 import {
@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   CardContent,
+  CircularProgress,
   Divider,
   Grid,
   Skeleton,
@@ -40,7 +41,6 @@ const OrganisationDetails = ({ params }: any) => {
       try {
         setIsLoading(false);
         const response = await getRequest(`/organisations/${organisationSlug}`);
-        console.log({ response });
         setOrgDetails(response.data.data || []);
         setIsLoading(false);
       } catch (err) {
@@ -83,7 +83,6 @@ const OrganisationDetails = ({ params }: any) => {
     return <Typography variant="inherit">{data}</Typography>;
   };
 
-  console.log({ orgDetails });
   return (
     <PageContainer title="Organisation" description="organisation">
       <Breadcrumb title="Organisation Details" items={BCrumb} />
@@ -110,7 +109,7 @@ const OrganisationDetails = ({ params }: any) => {
                   {loadedData(orgDetails?.name)}
                 </Typography>
                 <Typography color={"textSecondary"} variant="caption">
-                  Information & Technology
+                  {loadedData(orgDetails?.tagline)}
                 </Typography>
               </Box>
             </Stack>
@@ -169,8 +168,8 @@ const OrganisationDetails = ({ params }: any) => {
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
                 <Stack direction={"column"}>
-                  <Typography color="textSecondary">State:</Typography>
-                  {loadedData(orgDetails?.state)}
+                  <Typography color="textSecondary">Website:</Typography>
+                  {loadedData(orgDetails?.website)}
                 </Stack>
               </Grid>
               <Grid item xs={12} sm={6} lg={4}>
@@ -202,15 +201,22 @@ const OrganisationDetails = ({ params }: any) => {
               </Grid>
             </Grid>
           </Box>
-          <Button
-            color="primary"
-            variant="contained"
-            sx={{ fontWeight: 600 }}
-            component={Link}
-            href={`/edit-organisation/${orgDetails?.slug}`}
-          >
-            Edit Organisation
-          </Button>
+          <Stack direction="row" spacing={2} sx={{ justifyContent: "end" }}>
+            <Button
+              component={Link}
+              href={`/organisation/edit-organisation/${organisationSlug}`}
+              type="submit"
+              variant="contained"
+              sx={{ fontWeight: 600 }}
+              color="primary"
+            >
+              {isLoading ? (
+                <CircularProgress sx={{ color: "black" }} size={18} />
+              ) : (
+                " Edit Organisation"
+              )}
+            </Button>
+          </Stack>
         </CardContent>
       </BlankCard>
     </PageContainer>

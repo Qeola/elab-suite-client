@@ -45,7 +45,6 @@ export default function ConfirmEmail({ params }: any) {
       setResendEnabled(false);
       setIsLoading(false);
     }
-    console.log({ response });
     setMessage(response[0].message || response.data.message);
     setIsLoading(false);
   };
@@ -80,8 +79,8 @@ export default function ConfirmEmail({ params }: any) {
           item
           xs={0}
           sm={6}
-          lg={6}
-          xl={6}
+          lg={7}
+          xl={7}
           sx={{
             alignSelf: "stretch",
             backgroundColor: "whitesmoke",
@@ -122,24 +121,29 @@ export default function ConfirmEmail({ params }: any) {
           item
           xs={12}
           sm={6}
-          lg={6}
-          xl={6}
+          lg={5}
+          xl={5}
           display="flex"
           flexDirection={"column"}
           alignItems="center"
           justifyContent="center"
         >
-          <Box alignItems={"center"} padding={"1rem"}>
+          <Box
+            alignItems={"center"}
+            width={"100%"}
+            maxWidth={"550px"}
+            paddingLeft={4}
+          >
             <Logo />
           </Box>
           <Box
             p={4}
-            width={"600px"}
+            width={"550px"}
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              "@media (max-width: 600px)": {
+              "@media (max-width: 550px)": {
                 width: "100%",
               },
             }}
@@ -193,6 +197,7 @@ export default function ConfirmEmail({ params }: any) {
                 fontWeight: 600,
                 width: "250px",
                 marginTop: "1rem",
+                padding: "12px 24px",
                 pointerEvents: resendEnabled ? "auto" : "none",
                 "&:hover": {
                   opacity: 0.8,
@@ -210,8 +215,8 @@ export default function ConfirmEmail({ params }: any) {
                   <span>
                     {isLoading ? (
                       <CircularProgress
-                        size={14}
-                        sx={{ color: "#060016" }}
+                        size={18}
+                        sx={{ color: "#060016", marginTop: ".3rem" }}
                         thickness={5}
                       />
                     ) : (

@@ -75,11 +75,9 @@ const AccountTab = () => {
     }
   };
 
-  console.log({ file });
-
   const handleUpload = async () => {
     if (!file) {
-      setError("Please upload an image");
+      setError("Please upload a photo");
       return;
     }
 
@@ -109,7 +107,6 @@ const AccountTab = () => {
         setTimeout(() => setShowSnackbar(false), 6000);
       }
       setIsAvatarLoading(false);
-      console.log({ response });
     }
   };
 
@@ -126,10 +123,8 @@ const AccountTab = () => {
   });
 
   const onSubmit1 = async (values: any, { setErrors }: any) => {
-    console.log(values);
     setIsInfoLoading(true);
     const response = await patchRequest(`/users/${userData.username}`, values);
-    console.log({ response });
     if (response.status == 200) {
       setShowSnackbar(true);
       setResponse({ msg: "Profile updated successfully!", status: "success" });
@@ -159,7 +154,7 @@ const AccountTab = () => {
                 <Box sx={{ width: "100%", position: "relative" }}>
                   <Avatar
                     src={image ? image : undefined}
-                    alt={"user1"}
+                    alt={"user-avatar"}
                     sx={{
                       width: 120,
                       height: 120,
@@ -197,13 +192,18 @@ const AccountTab = () => {
                   <Button
                     color="primary"
                     variant="contained"
-                    sx={{ fontWeight: 600 }}
+                    sx={{ display: "flex", alignItems: "center", gap: ".5rem" }}
                     onClick={handleUpload}
                   >
-                    {isAvatarLoading ? (
-                      <CircularProgress size={18} sx={{ color: "black" }} />
-                    ) : (
-                      "Upload Photo"
+                    <Typography sx={{ fontWeight: 600 }}>
+                      Upload Photo
+                    </Typography>
+                    {isAvatarLoading && (
+                      <CircularProgress
+                        size={15}
+                        thickness={5}
+                        sx={{ color: "white" }}
+                      />
                     )}
                   </Button>
                 </Stack>
@@ -238,7 +238,7 @@ const AccountTab = () => {
                     Personal Details
                   </Typography>
                   <Typography color="textSecondary" mb={3}>
-                    To change your personal detail , edit and save from here
+                    To change your personal detail,edit and save from here
                   </Typography>
                   <Grid container spacing={3}>
                     <Grid item xs={12} sm={6}>
@@ -365,31 +365,36 @@ const AccountTab = () => {
                       />
                     </Grid>
                   </Grid>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    sx={{ justifyContent: "end" }}
+                    mt={3}
+                  >
+                    <Button
+                      type="submit"
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: ".5rem",
+                      }}
+                      variant="contained"
+                      color="primary"
+                    >
+                      <Typography sx={{ fontWeight: 600 }}>
+                        Save Changes
+                      </Typography>
+                      {isInfoLoading && (
+                        <CircularProgress
+                          size={15}
+                          thickness={5}
+                          sx={{ color: "white" }}
+                        />
+                      )}
+                    </Button>
+                  </Stack>
                 </CardContent>
               </BlankCard>
-              <Stack
-                direction="row"
-                spacing={2}
-                sx={{ justifyContent: "start" }}
-                mt={3}
-              >
-                <Button
-                  type="submit"
-                  size="large"
-                  sx={{ fontWeight: 600 }}
-                  variant="contained"
-                  color="primary"
-                >
-                  {isInfoLoading ? (
-                    <CircularProgress size={18} sx={{ color: "black" }} />
-                  ) : (
-                    "Save Changes"
-                  )}
-                </Button>
-                <Button size="large" variant="contained" color="error">
-                  Discard
-                </Button>
-              </Stack>
             </Form>
           )}
         </Formik>

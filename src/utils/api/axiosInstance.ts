@@ -30,18 +30,16 @@ axiosInstance.interceptors.response.use(
   (error) => {
     if (error.isAxiosError) {
       if (error.code === "ECONNABORTED") {
-        console.error("Request timed out!");
         toast.error(
           "Request timed out. Please check your internet connection.",
         );
       } else if (error.code === "ERR_NETWORK") {
-        console.error("Network error:", error);
-        toast.error("Network error occurred. Please try again later.");
+        toast.error("Network error!. Please try again");
       } else {
       }
     }
     return Promise.reject(
-      (error.response && error.response.data) || "Wrong Services",
+      (error.response && error.response.data) || "Something went wrong!",
     );
   },
 );
